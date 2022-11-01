@@ -4,6 +4,7 @@ import {ClientService} from '../services/client.service';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ClientListItem} from "../model/client-list-item";
 import {ClientMapper} from "../mappers/client-mapper.service";
+import {ClientEventsService} from "../services/client-events.service";
 
 @Component({
   selector: 'app-client-add',
@@ -12,10 +13,7 @@ import {ClientMapper} from "../mappers/client-mapper.service";
 })
 export class ClientAddComponent implements OnInit {
 
-  @Output()
-  ClientCreated: EventEmitter<ClientListItem> = new EventEmitter<ClientListItem>();
-
-  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientAddComponent>) {
+  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientAddComponent>,private clientEventsServices:ClientEventsService) {
   }
 
   addClientForm: FormGroup = new FormGroup({});
@@ -74,7 +72,7 @@ export class ClientAddComponent implements OnInit {
       country: form.value.country,
     }).subscribe(result => {
       this.dialogRef.close();
-      this.ClientCreated.emit(result);
+      this.clientEventsServices.ClientCreated.emit(result);
     });
   }
 

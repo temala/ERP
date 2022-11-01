@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { Client } from '../model/client';
 import { ClientService } from '../services/client.service';
 import {ClientListItem} from "../model/client-list-item";
+import {ClientEventsService} from "../services/client-events.service";
 
 @Component({
   selector: 'app-client-update',
@@ -12,10 +13,7 @@ import {ClientListItem} from "../model/client-list-item";
 })
 export class ClientUpdateComponent implements OnInit {
 
-  @Output()
-  ClientUpdated: EventEmitter<Client> = new EventEmitter<Client>();
-
-  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: Client) { }
+  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: Client,private eventsServices: ClientEventsService) { }
 
   updateClientForm: FormGroup = new FormGroup({});
   showMore: boolean = false;
@@ -73,7 +71,7 @@ export class ClientUpdateComponent implements OnInit {
       country: form.value.country,
     }).subscribe(clientListItem=>{
       this.dialogRef.close();
-      this.ClientUpdated.emit(clientListItem);
+      this.eventsServices.ClientUpdated.emit(clientListItem);
     });
   }
 }
