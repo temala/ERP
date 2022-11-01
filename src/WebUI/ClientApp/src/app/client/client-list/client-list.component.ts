@@ -5,6 +5,7 @@ import {ClientService} from '../services/client.service';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
+import {ClientEventsService} from "../services/client-events.service";
 
 @Component({
   selector: 'app-client-list',
@@ -21,7 +22,9 @@ export class ClientListComponent implements AfterViewInit {
 
   public selectedClient!: ClientListItem;
 
-  constructor(public addClientDialog: MatDialog, private clientServices: ClientService) {
+  constructor(public addClientDialog: MatDialog, private clientServices: ClientService, private eventsServices: ClientEventsService) {
+    eventsServices.ClientDeleted.subscribe(item=>this.removeDeletedItem(item));
+    eventsServices.ClientCreated.subscribe(item=>this.addCreatedItem(item));
   }
 
   openDialog(): void {
@@ -29,11 +32,6 @@ export class ClientListComponent implements AfterViewInit {
       width: '600px',
       maxHeight: '90vh',
       panelClass: 'custom-dialog-box'
-    });
-
-    addDialogInstance.componentInstance.ClientCreated.subscribe(insertedClient => {
-      this.clients.data.push(insertedClient);
-      this.clients.data =[...this.clients.data];
     });
   }
 
@@ -53,5 +51,16 @@ export class ClientListComponent implements AfterViewInit {
 
   onClientSelected(client: ClientListItem) {
     this.selectedClient = client;
+  }
+
+  addCreatedItem(insertedClient) {
+    this.clients.data.push(insertedClient);
+    this.clients.data = [...this.clients.data];
+  }
+
+  removeDeletedItem(clientItem) {
+    this.clients.data = this.clients.data.filter(item => {
+      return item !== clientItem;
+    });
   }
 }

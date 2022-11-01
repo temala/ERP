@@ -41,6 +41,10 @@ export class ClientService implements ISearchService<ClientListItem> {
   Add(client:Client){
     return this.http.post(`${environment.apiURL}/clients`,client).pipe(map(response => this.mapper.MapClientListItem(response)));
   }
+
+  Delete(id:string){
+    return this.http.delete(`${environment.apiURL}/clients/${id}`);
+  }
 }
 
 

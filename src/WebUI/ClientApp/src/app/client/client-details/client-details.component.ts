@@ -1,9 +1,10 @@
-import { Client } from './../model/client';
-import { ClientListItem } from "../model/client-list-item";
+import {Client} from './../model/client';
+import {ClientListItem} from "../model/client-list-item";
 import {Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { ClientService } from '../services/client.service';
-import { ClientUpdateComponent } from '../client-update/client-update.component';
+import {ClientService} from '../services/client.service';
+import {ClientUpdateComponent} from '../client-update/client-update.component';
+import {ClientEventsService} from "../services/client-events.service";
 
 @Component({
   selector: 'app-client-details',
@@ -16,7 +17,9 @@ export class ClientDetailsComponent implements OnInit, OnChanges {
 
   public clientInfo!: Client;
 
-  constructor(public updateClientDialog: MatDialog, private clientServices: ClientService) { }
+  constructor(public updateClientDialog: MatDialog, private clientServices: ClientService, private eventsServices: ClientEventsService) {
+    eventsServices.ClientUpdated.subscribe(item => this.updateItem(item));
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.getClientInfo();
@@ -40,15 +43,14 @@ export class ClientDetailsComponent implements OnInit, OnChanges {
       panelClass: 'custom-dialog-box',
       data: this.clientInfo
     });
-
-    updateDialog.componentInstance.ClientUpdated.subscribe(client=>{
-      this.clientInfo = client;
-      this.selectedClient.name = client.name;
-    });
   }
 
-  onDelete()
-  {
+  onDelete() {
+    this.clientServices.Delete(this.selectedClient.id).subscribe(_ => this.eventsServices.ClientDeleted.emit(this.selectedClient));
+  }
 
+  updateItem(client) {
+    this.clientInfo = client;
+    this.selectedClient.name = client.name;
   }
 }
