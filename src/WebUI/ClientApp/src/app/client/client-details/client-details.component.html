@@ -1,0 +1,61 @@
+<mat-card class="m-20 full-height">
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+    <h3>{{selectedClient.name}}</h3>
+    <span class="spacer"></span>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+      <button (click)="onEdit()" mat-flat-button color="primary" class="action">
+        <mat-icon class="mr-2">edit</mat-icon>
+        <span i18n>Edit</span>
+      </button>
+      <button (click)="onDelete()" mat-flat-button color="accent" class="action">
+        <mat-icon class="mr-2">delete</mat-icon>
+        <span i18n>Delete</span>
+      </button>
+    </div>
+  </mat-toolbar>
+  <div class="m-20">
+    <h4 i18n>Client identification number: <b>{{selectedClient.id}}</b></h4>
+    <mat-tab-group animationDuration="0ms" *ngIf="clientInfo!=undefined">
+      <mat-tab i18n-label label="Contact information">
+        <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>N° Tel</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.telephone}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>Contact Name</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.contactName}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>E-Mail</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.email}}</mat-label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab i18n-label label="Company informations">
+        <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>Company name</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.companyName}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>N° Siret</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.siret}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>N° TVA</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.tva}}</mat-label>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-label fxFlex="50" i18n>Contact Title</mat-label>
+            <mat-label fxFlex="50" i18n>{{clientInfo.title}}</mat-label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab i18n-label label="Invoices">
+        <app-client-invoice-list [client]="selectedClient"></app-client-invoice-list>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</mat-card>

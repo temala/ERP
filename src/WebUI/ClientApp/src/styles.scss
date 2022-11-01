@@ -1,0 +1,16 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-drawer-content {
+  min-height: calc(100vh - 64px);
+}
+
+.custom-dialog-box {
+  mat-dialog-container {
+    padding: 0;
+  }
+}

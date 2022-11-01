@@ -1,0 +1,84 @@
+<table mat-table [dataSource]="invoices" matSort matTableExporter #exporter="matTableExporter">
+        <!-- Position Column -->
+        <ng-container matColumnDef="invoiceNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="totalTTC">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Total.TTC </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalTTC|
+                        currency:' €'}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="totalHT">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Total .HT </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalHT |
+                        currency:' €'}}
+                </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="tax">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> VAT </th>
+                <td mat-cell *matCellDef="let element"> {{element.tax |
+                        currency:' €'}}
+                </td>
+        </ng-container>
+
+        <ng-container matColumnDef="issueDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Issue date </th>
+                <td mat-cell *matCellDef="let element"> {{element.issueDate | date}}
+                </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dueDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Due date </th>
+                <td mat-cell *matCellDef="let element"> {{element.dueDate | date}}
+                </td>
+        </ng-container>
+
+        <ng-container matColumnDef="daysToPay">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Days to payout </th>
+                <td mat-cell *matCellDef="let element"> {{element.daysToPay}}
+                </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+
+                        <div>
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon class="feature-icon mr-3">
+                                                menu
+                                        </mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                        <button mat-menu-item
+                                                (click)="exporter.exportTable('xlsx', {fileName:'clients', sheet: 'clients', Props: {Author: 'RT Consulting'}})"
+                                                i18n>Export to Excel</button>
+                                        <button mat-menu-item (click)="exporter.exportTable('csv')" i18n>Export to
+                                                Csv</button>
+                                        <button mat-menu-item (click)="exporter.exportTable('json')" i18n>Export to
+                                                Json</button>
+                                        <button mat-menu-item (click)="exporter.exportTable('txt')" i18n>Export to
+                                                Txt</button>
+                                </mat-menu>
+                        </div>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                        <mat-chip-list>
+                                <mat-chip [style.background-color]="element.status|clientInvoiceStatusColor">
+                                        {{element.status | clientInvoiceStatus}}
+                                </mat-chip>
+                        </mat-chip-list>
+                </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+</table>

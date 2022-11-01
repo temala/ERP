@@ -1,0 +1,16 @@
+<div *ngIf="isAuthenticated | async">
+  <span class="welcome-text" [routerLink]='["/authentication/profile"]' i18n>Hello {{ userName | async }}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>person_pin</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item [routerLink]='["/authentication/logout"]'>
+      <span i18n>Logout</span>
+    </a>
+  </mat-menu>
+</div>
+<div *ngIf="(isAuthenticated | async) !== true">
+  <span class="welcome-text" [routerLink]='["/authentication/register"]' i18n>Register</span>
+  <span class="welcome-text" [routerLink]='["/authentication/login"]' i18n>Login</span>
+</div>
+
