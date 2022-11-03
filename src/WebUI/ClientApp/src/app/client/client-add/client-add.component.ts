@@ -18,27 +18,9 @@ export class ClientAddComponent implements OnInit {
   showMore: boolean = false;
 
   ngOnInit(): void {
-    this.clientServices.getNextClientId().subscribe(nextClientId => {
-      this.addClientForm.setValue({
-        id: nextClientId,
-        name: "",
-        contactName: "",
-        email: "",
-        telephone: "",
-        companyName: "",
-        siret: "",
-        tva: "",
-        title: "",
-        address: "",
-        postalCode: "",
-        town: "",
-        country: "",
-      });
-    });
 
     this.addClientForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.maxLength(70)]],
-      id: [null, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       contactName: [null],
       email: [null],
       telephone: [null],
@@ -55,7 +37,7 @@ export class ClientAddComponent implements OnInit {
 
   AddClient(form: FormGroup) {
     this.clientServices.Add({
-      id: form.value.id,
+      id: 0,
       name: form.value.name,
       contactName: form.value.contactName,
       email: form.value.email,

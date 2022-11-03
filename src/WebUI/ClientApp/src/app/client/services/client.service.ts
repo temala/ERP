@@ -30,10 +30,6 @@ export class ClientService implements ISearchService<ClientListItem> {
     return this.http.get(`${environment.fakeApiURL}/client-invoices?id=${id}`).pipe(map(response => this.mapper.MapClientInvoices(response)));
   }
 
-  getNextClientId() {
-    return this.http.get(`${environment.fakeApiURL}/next-client-id`).pipe(map(response => this.mapper.MapClientNextId(response)));
-  }
-
   Update(client:Client){
     return this.http.put(`${environment.apiURL}/clients?id=${client.id}`,client).pipe(map(response => this.mapper.MapClient(response)));
   }

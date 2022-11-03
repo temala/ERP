@@ -1,89 +1,90 @@
 <mat-toolbar color="primary">
-        <span i18n>New client</span>
+  <span i18n>New client</span>
 </mat-toolbar>
 
 <form [formGroup]="addClientForm" (ngSubmit)="AddClient(addClientForm)" fxLayout="column">
-        <div class="small-padding">
-                <div class="input-row">
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Id</mat-label>
-                                <input matInput formControlName="id">
-                        </mat-form-field>
+  <div class="small-padding">
+    <div class="input-row">
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+    </div>
 
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Name</mat-label>
-                                <input matInput formControlName="name">
-                        </mat-form-field>
-                </div>
+    <div *ngIf="showMore" class="input-row">
+      <h3 class="small-padding" i18n>Contact information</h3>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Contact Name</mat-label>
+        <input matInput formControlName="contactName">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>N° Tel</mat-label>
+        <input matInput formControlName="telephone">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>E-Mail</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </div>
+    <div *ngIf="showMore" class="input-row">
+      <h3 class="small-padding" i18n>Company informations</h3>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Company name</mat-label>
+        <input matInput formControlName="companyName">
+      </mat-form-field>
 
-                <div *ngIf="showMore" class="input-row">
-                        <h3 class="small-padding" i18n>Contact information</h3>
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>N° Tel</mat-label>
-                                <input matInput formControlName="telephone">
-                        </mat-form-field>
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Contact Name</mat-label>
-                                <input matInput formControlName="contactName">
-                        </mat-form-field>
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>E-Mail</mat-label>
-                                <input matInput formControlName="email">
-                        </mat-form-field>
-                </div>
-                <div *ngIf="showMore" class="input-row">
-                        <h3 class="small-padding" i18n>Company informations</h3>
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Company name</mat-label>
-                                <input matInput formControlName="companyName">
-                        </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>N° Siret</mat-label>
+        <input matInput formControlName="siret">
+      </mat-form-field>
 
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>N° Siret</mat-label>
-                                <input matInput formControlName="siret">
-                        </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>N° TVA</mat-label>
+        <input matInput formControlName="tva">
+      </mat-form-field>
 
-                        <mat-form-field appearance="standard" >
-                                <mat-label i18n>N° TVA</mat-label>
-                                <input matInput formControlName="tva">
-                        </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Contact Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+    </div>
+    <div *ngIf="showMore" class="input-row">
+      <h3 class="small-padding" i18n>Invoice address</h3>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Address</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
 
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Contact Title</mat-label>
-                                <input matInput formControlName="title">
-                        </mat-form-field>
-                </div>
-                <div *ngIf="showMore" class="input-row">
-                        <h3 class="small-padding" i18n>Invoice address</h3>
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Address</mat-label>
-                                <input matInput formControlName="address">
-                        </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Postal code</mat-label>
+        <input matInput formControlName="postalCode">
+      </mat-form-field>
 
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Postal code</mat-label>
-                                <input matInput formControlName="postalCode">
-                        </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Town</mat-label>
+        <input matInput formControlName="town">
+      </mat-form-field>
 
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Town</mat-label>
-                                <input matInput formControlName="town">
-                        </mat-form-field>
-
-                        <mat-form-field appearance="standard">
-                                <mat-label i18n>Country</mat-label>
-                                <mat-select matInput formControlName="country">
-                                        <mat-option value="France">France</mat-option>
-                                </mat-select>
-                        </mat-form-field>
-                </div>
-                <p><button *ngIf="!showMore" mat-button color="primary" type="button" (click)="toggleShowMore()"
-                                i18n>More...</button></p>
-                <p><button *ngIf="showMore" mat-button color="primary" type="button" (click)="toggleShowMore()"
-                                i18n>Less...</button></p>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="action-padding">
-                <button mat-flat-button color="primary" type="submit" i18n>Save</button>
-        </div>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Country</mat-label>
+        <mat-select matInput formControlName="country">
+          <mat-option value="France">France</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <p>
+      <button *ngIf="!showMore" mat-button color="primary" type="button" (click)="toggleShowMore()"
+              i18n>More...
+      </button>
+    </p>
+    <p>
+      <button *ngIf="showMore" mat-button color="primary" type="button" (click)="toggleShowMore()"
+              i18n>Less...
+      </button>
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="action-padding">
+    <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+  </div>
 </form>

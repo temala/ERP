@@ -24,7 +24,7 @@ export class AppComponent {
     {
       title: $localize `Clients`,
       icon: 'account_circle',
-      link: '/client-list',
+      link: '/client',
     },
   ];
 }
