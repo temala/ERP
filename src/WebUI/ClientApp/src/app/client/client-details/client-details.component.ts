@@ -1,10 +1,11 @@
-import {Client} from './../model/client';
+import {Client} from '../model/client';
 import {ClientListItem} from "../model/client-list-item";
 import {Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {ClientService} from '../services/client.service';
 import {ClientUpdateComponent} from '../client-update/client-update.component';
 import {ClientEventsService} from "../services/client-events.service";
+import {ClientDeleteMessageComponent} from "../client-delete-message/client-delete-message.component";
 
 @Component({
   selector: 'app-client-details',
@@ -17,7 +18,7 @@ export class ClientDetailsComponent implements OnInit, OnChanges {
 
   public clientInfo!: Client;
 
-  constructor(public updateClientDialog: MatDialog, private clientServices: ClientService, private eventsServices: ClientEventsService) {
+  constructor(public updateClientDialog: MatDialog, public deleteClientDialog: MatDialog, private clientServices: ClientService, private eventsServices: ClientEventsService) {
     eventsServices.ClientUpdated.subscribe(item => this.updateItem(item));
   }
 
@@ -37,7 +38,7 @@ export class ClientDetailsComponent implements OnInit, OnChanges {
   }
 
   onEdit() {
-    let updateDialog = this.updateClientDialog.open(ClientUpdateComponent, {
+    this.updateClientDialog.open(ClientUpdateComponent, {
       width: '600px',
       maxHeight: '90vh',
       panelClass: 'custom-dialog-box',
@@ -46,7 +47,12 @@ export class ClientDetailsComponent implements OnInit, OnChanges {
   }
 
   onDelete() {
-    this.clientServices.Delete(this.selectedClient.id).subscribe(_ => this.eventsServices.ClientDeleted.emit(this.selectedClient));
+    this.deleteClientDialog.open(ClientDeleteMessageComponent, {
+      width: '600px',
+      maxHeight: '90vh',
+      panelClass: 'custom-dialog-box',
+      data: this.selectedClient
+    });
   }
 
   updateItem(client) {

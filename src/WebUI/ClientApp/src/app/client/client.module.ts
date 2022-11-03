@@ -9,6 +9,8 @@ import { ClientDetailsComponent } from './client-details/client-details.componen
 import { ClientInvoiceListComponent } from './client-invoice-list/client-invoice-list.component';
 import { ClientInvoiceStatusPipe } from './pipe/client-invoice-status.pipe';
 import { ClientInvoiceStatusColorPipe } from './pipe/client-invoice-status-color.pipe';
+import { ClientDeleteMessageComponent } from './client-delete-message/client-delete-message.component';
+import { ClientDetailsEmptyComponent } from './client-details-empty/client-details-empty.component';
 
 @NgModule({
   declarations: [ClientListComponent,
@@ -17,7 +19,9 @@ import { ClientInvoiceStatusColorPipe } from './pipe/client-invoice-status-color
     ClientDetailsComponent,
     ClientInvoiceListComponent,
     ClientInvoiceStatusPipe,
-    ClientInvoiceStatusColorPipe],
+    ClientInvoiceStatusColorPipe,
+    ClientDeleteMessageComponent,
+    ClientDetailsEmptyComponent],
   imports: [
     CommonModule,
     MaterialModule,

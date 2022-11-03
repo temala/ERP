@@ -56,9 +56,11 @@ export class ClientListComponent implements AfterViewInit {
   addCreatedItem(insertedClient) {
     this.clients.data.push(insertedClient);
     this.clients.data = [...this.clients.data];
+    this.selectedClient = insertedClient;
   }
 
   removeDeletedItem(clientItem) {
+    this.selectedClient=null;
     this.clients.data = this.clients.data.filter(item => {
       return item !== clientItem;
     });

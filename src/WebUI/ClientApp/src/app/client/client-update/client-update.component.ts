@@ -16,7 +16,6 @@ export class ClientUpdateComponent implements OnInit {
   constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: Client,private eventsServices: ClientEventsService) { }
 
   updateClientForm: FormGroup = new FormGroup({});
-  showMore: boolean = false;
 
   ngOnInit(): void {
     this.updateClientForm = this.formBuilder.group({

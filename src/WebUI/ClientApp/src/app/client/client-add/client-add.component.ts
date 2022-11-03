@@ -1,9 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ClientService} from '../services/client.service';
 import {MatDialogRef} from "@angular/material/dialog";
-import {ClientListItem} from "../model/client-list-item";
-import {ClientMapper} from "../mappers/client-mapper.service";
 import {ClientEventsService} from "../services/client-events.service";
 
 @Component({
