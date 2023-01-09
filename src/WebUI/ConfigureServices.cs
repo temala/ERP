@@ -26,7 +26,7 @@ public static class ConfigureServices
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
-        services.AddRazorPages();
+        services.AddRazorPages().AddRazorRuntimeCompilation();
 
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
