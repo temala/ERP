@@ -6,7 +6,6 @@ import { of } from 'rxjs';
 import { LoginActions } from '../api-authorization.constants';
 import { HttpParams } from '@angular/common/http';
 import { AuthorizeService } from '../authorize.service';
-import { HomeComponent } from 'src/app/home/home.component';
 
 class RouterStub {
   url = '';
@@ -29,9 +28,9 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-        { path: 'authentication/login-failed', component: HomeComponent }
+        { path: 'authentication/login-failed'}
       ])],
-      declarations: [LoginComponent, HomeComponent],
+      declarations: [LoginComponent],
       providers: [{
         provide: ActivatedRoute, useValue: {
           snapshot: {
