@@ -10,5 +10,5 @@ export class Mission implements ISearchable {
         id: number;
         name: string;        
         priceHT: number =0;           
-        tva: string = "";
+        tva: number = 0;
 }

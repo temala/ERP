@@ -47,6 +47,6 @@ export class MissionListItem implements ISearchable {
         }
 
         public get TTC(): number {
-                return this._TVA + this._HT;
+                return (this._TVA*this._HT)/100 + this._HT;
         }
 }

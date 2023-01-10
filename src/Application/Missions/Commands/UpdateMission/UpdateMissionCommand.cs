@@ -1,71 +1,44 @@
 ﻿using ERP.Application.Common.Exceptions;
 using ERP.Application.Common.Interfaces;
-using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Domain.Entities;
 using MediatR;
 
-namespace ERP.Application.Clients.Commands.UpdateClient;
+namespace ERP.Application.Missions.Commands.UpdateMission;
 
-public record UpdateClientCommand : IRequest<Client>
+public record UpdateMissionCommand : IRequest<Mission>
 {
     public int Id { get; set; }
     
     public string Name { get; set; }
+    public decimal PriceHT { get; set; }
+    public decimal Tva { get; set; }
 
-    public string? ContactName { get; set; }
-
-    public string? Email { get; set; }
-
-    public string? Telephone { get; set; }
-
-    public string? CompanyName { get; set; }
-
-    public string? Siret { get; set; }
-
-    public string? Tva { get; set; }
-
-    public string? Title { get; set; }
-
-    public string? Address { get; set; }
-
-    public string? PostalCode { get; set; }
-
-    public string? Town { get; set; }
-
-    public string? Country { get; set; }
+   
 }
 
-public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand,Client>
+public class UpdateMissionCommandHandler : IRequestHandler<UpdateMissionCommand,Mission>
 {
     private readonly IApplicationDbContext _context;
 
-    public UpdateClientCommandHandler(IApplicationDbContext context)
+    public UpdateMissionCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Client> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
+    public async Task<Mission> Handle(UpdateMissionCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Clients
+        var entity = await _context.Missions
             .FindAsync(new object[] {request.Id}, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Client), request.Id);
+            throw new NotFoundException(nameof(Mission), request.Id);
         }
 
         entity.Name = request.Name;
-        entity.ContactName = request.ContactName;
-        entity.Email = request.Email;
-        entity.Telephone = request.Telephone;
-        entity.CompanyName = request.CompanyName;
-        entity.Siret = request.Siret;
+        entity.PriceHT = request.PriceHT;
         entity.Tva = request.Tva;
-        entity.Title = request.Title;
-        entity.Address = request.Address;
-        entity.PostalCode = request.PostalCode;
-        entity.Town = request.Town;
-        entity.Country = request.Country;
+        
 
         await _context.SaveChangesAsync(cancellationToken);
 

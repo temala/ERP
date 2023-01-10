@@ -1,8 +1,8 @@
 namespace ERP.Domain.Events;
 
-public class MissionCreated: BaseEvent
+public class MissionCreatedEvent: BaseEvent
 {
-    public MissionCreated(Mission item)
+    public MissionCreatedEvent(Mission item)
     {
         Item = item;
     }

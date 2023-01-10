@@ -1,11 +1,11 @@
 ﻿namespace ERP.Domain.Events;
 
-public class ClientDeletedEvent : BaseEvent
+public class MissionDeletedEvent : BaseEvent
 {
-    public ClientDeletedEvent(Client item)
+    public MissionDeletedEvent(Mission item)
     {
         Item = item;
     }
 
-    public Client Item { get; }
+    public Mission Item { get; }
 }

@@ -4,32 +4,32 @@ using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
 
-namespace ERP.Application.Clients.Commands.DeleteClient;
+namespace ERP.Application.Missions.Commands.DeleteMission;
 
-public record DeleteClientCommand(int Id) : IRequest;
+public record DeleteMissionCommand(int Id) : IRequest;
 
-public class DeleteClientCommandHandler : IRequestHandler<DeleteClientCommand>
+public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public DeleteClientCommandHandler(IApplicationDbContext context)
+    public DeleteMissionCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Clients
+        var entity = await _context.Missions
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Client), request.Id);
+            throw new NotFoundException(nameof(Mission), request.Id);
         }
 
-        _context.Clients.Remove(entity);
+        _context.Missions.Remove(entity);
 
-        entity.AddDomainEvent(new ClientDeletedEvent(entity));
+        entity.AddDomainEvent(new MissionDeletedEvent(entity));
 
         await _context.SaveChangesAsync(cancellationToken);
 

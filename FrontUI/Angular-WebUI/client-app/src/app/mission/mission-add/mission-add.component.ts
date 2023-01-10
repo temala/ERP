@@ -30,7 +30,7 @@ export class MissionAddComponent implements OnInit {
       id: 0,
       name: form.value.name,
       priceHT: form.value.priceHT,
-      tva: form.value.email,      
+      tva: form.value.tva,      
     }).subscribe(result => {
       this.dialogRef.close();
       this.missionEventsServices.MissionCreated.emit(result);
