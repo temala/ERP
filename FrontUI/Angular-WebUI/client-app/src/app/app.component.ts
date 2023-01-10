@@ -26,5 +26,10 @@ export class AppComponent {
       icon: 'account_circle',
       link: '/client',
     },
+    {
+      title: $localize `Missions`,
+      icon: 'work',
+      link: '/mission',
+    },
   ];
 }

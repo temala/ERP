@@ -1,0 +1,96 @@
+<div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+        <div fxFlex="50">
+          <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+            <span i18n>Missions</span>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <app-search (searching)="find($event)"></app-search>
+              <button (click)="openDialog()" mat-flat-button color="primary" class="action">
+                <mat-icon class="mr-2">add</mat-icon>
+                <span i18n>New mission</span>
+              </button>
+            </div>
+          </mat-toolbar>
+          <div>
+            <table mat-table [dataSource]="missions" matSort matTableExporter #exporter="matTableExporter">
+              <!-- Position Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> No.</th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+      
+              <!-- Weight Column -->
+              <ng-container matColumnDef="HT">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Price H.T</th>
+                <td mat-cell *matCellDef="let element"> {{element.HT |
+                  currency:' €'}}
+                </td>
+              </ng-container>
+      
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="TVA">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> VAT</th>
+                <td mat-cell *matCellDef="let element"> {{element.TVA |
+                  currency:' €'}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="TTC">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Price T.T.C</th>
+                <td mat-cell *matCellDef="let element"> {{element.TTC |
+                  currency:' €'}}
+                </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>
+      
+                  <div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon class="feature-icon mr-3">
+                        menu
+                      </mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item
+                              (click)="exporter.exportTable('xlsx', {fileName:'missions', sheet: 'missions', Props: {Author: 'RT Consulting'}})"
+                              i18n>Export to Excel
+                      </button>
+                      <button mat-menu-item
+                              (click)="exporter.exportTable('csv')" i18n>Export to Csv
+                      </button>
+                      <button mat-menu-item
+                              (click)="exporter.exportTable('json')" i18n>Export to Json
+                      </button>
+                      <button mat-menu-item
+                              (click)="exporter.exportTable('txt')" i18n>Export to Txt
+                      </button>
+                    </mat-menu>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element"></td>
+      
+              </ng-container>
+      
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row (click)="onMissionSelected(row)"
+                  [ngClass]="{'highlight': selectedMission && selectedMission.id == row.id}"
+                  *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="selectedMission" fxFlex="50" class="bg-darker">
+          <app-mission-details [selectedMission]="selectedMission"></app-mission-details>
+        </div>
+        <div *ngIf="!selectedMission" fxFlex="50" class="bg-darker">
+          <app-mission-details-empty></app-mission-details-empty>
+        </div>      
+      </div>
+      
