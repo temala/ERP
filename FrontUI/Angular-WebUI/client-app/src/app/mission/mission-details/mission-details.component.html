@@ -1,0 +1,39 @@
+<mat-card class="m-20 full-height">
+        <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+          <h3>{{selectedMission.name}}</h3>
+          <span class="spacer"></span>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+            <button (click)="onEdit()" mat-flat-button color="primary" class="action">
+              <mat-icon class="mr-2">edit</mat-icon>
+              <span i18n>Edit</span>
+            </button>
+            <button (click)="onDelete()" mat-flat-button color="accent" class="action">
+              <mat-icon class="mr-2">delete</mat-icon>
+              <span i18n>Delete</span>
+            </button>
+          </div>
+        </mat-toolbar>
+        <div class="m-20">
+          <h4 i18n>Mission identification number: <b>{{selectedMission.id}}</b></h4>
+          <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20" *ngIf="missionInfo!=undefined">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <mat-label fxFlex="50" i18n>Mission name</mat-label>
+                  <mat-label fxFlex="50" i18n>{{missionInfo.name}}</mat-label>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <mat-label fxFlex="50" i18n>Price H.T</mat-label>
+                  <mat-label fxFlex="50" i18n>{{missionInfo.HT}}</mat-label>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <mat-label fxFlex="50" i18n>TVA %</mat-label>
+                  <mat-label fxFlex="50" i18n>{{missionInfo.TVA}}</mat-label>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <mat-label fxFlex="50" i18n>Price T.T.C</mat-label>
+                        <mat-label fxFlex="50" i18n>{{missionInfo.TTC}}</mat-label>
+                </div>
+              </div>
+        </div>
+      
+      </mat-card>
+      

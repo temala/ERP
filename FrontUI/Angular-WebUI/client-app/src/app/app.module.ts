@@ -11,6 +11,7 @@ import {MaterialModule} from './core.module';
 import {AuthorizeInterceptor} from "../api-authorization/authorize.interceptor";
 import {ApiAuthorizationModule} from "../api-authorization/api-authorization.module";
 import {ClientListComponent} from "./client/client-list/client-list.component";
+import { MissionModule } from './mission/mission.module';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {ClientListComponent} from "./client/client-list/client-list.component";
         BrowserAnimationsModule,
         HttpClientModule,
         ClientModule,
+        MissionModule,
         MaterialModule,
     ],
     providers: [
