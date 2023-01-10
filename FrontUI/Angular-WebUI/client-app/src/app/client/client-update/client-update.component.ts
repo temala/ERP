@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { Client } from '../model/client';
 import { ClientService } from '../services/client.service';
@@ -13,9 +13,9 @@ import {ClientEventsService} from "../services/client-events.service";
 })
 export class ClientUpdateComponent implements OnInit {
 
-  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: Client,private eventsServices: ClientEventsService) { }
+  constructor(private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<ClientUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: Client,private eventsServices: ClientEventsService) { }
 
-  updateClientForm: FormGroup = new FormGroup({});
+  updateClientForm: UntypedFormGroup = new UntypedFormGroup({});
 
   ngOnInit(): void {
     this.updateClientForm = this.formBuilder.group({
@@ -53,7 +53,7 @@ export class ClientUpdateComponent implements OnInit {
     }
   }
 
-  UpdateClient(form: FormGroup) {
+  UpdateClient(form: UntypedFormGroup) {
     this.clientServices.Update({
       id: form.value.id,
       name: form.value.name,

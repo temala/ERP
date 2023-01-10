@@ -13,28 +13,25 @@ import {ApiAuthorizationModule} from "../api-authorization/api-authorization.mod
 import {ClientListComponent} from "./client/client-list/client-list.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavigationMenuComponent,
-    AppHeaderComponent
-  ],
-  imports: [
-    ApiAuthorizationModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ClientModule,
-    MaterialModule,
-  ],
-  entryComponents: [
-    ClientListComponent
-  ],
-  providers: [
-    HttpClient,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true}
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavigationMenuComponent,
+        AppHeaderComponent
+    ],
+    imports: [
+        ApiAuthorizationModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        ClientModule,
+        MaterialModule,
+    ],
+    providers: [
+        HttpClient,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

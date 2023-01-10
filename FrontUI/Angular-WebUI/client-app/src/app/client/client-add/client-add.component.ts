@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {ClientService} from '../services/client.service';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ClientEventsService} from "../services/client-events.service";
@@ -11,10 +11,10 @@ import {ClientEventsService} from "../services/client-events.service";
 })
 export class ClientAddComponent implements OnInit {
 
-  constructor(private clientServices: ClientService, private formBuilder: FormBuilder, private dialogRef: MatDialogRef<ClientAddComponent>,private clientEventsServices:ClientEventsService) {
+  constructor(private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<ClientAddComponent>,private clientEventsServices:ClientEventsService) {
   }
 
-  addClientForm: FormGroup = new FormGroup({});
+  addClientForm: UntypedFormGroup = new UntypedFormGroup({});
   showMore: boolean = false;
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class ClientAddComponent implements OnInit {
     });
   }
 
-  AddClient(form: FormGroup) {
+  AddClient(form: UntypedFormGroup) {
     this.clientServices.Add({
       id: 0,
       name: form.value.name,

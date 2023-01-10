@@ -45,8 +45,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { CdkMenuModule } from '@angular/cdk/menu';
-import { DialogModule } from '@angular/cdk/dialog';
 import { SearchComponent } from './search/search.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -57,7 +55,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
                 A11yModule,
                 CdkAccordionModule,
                 ClipboardModule,
-                CdkMenuModule,
                 CdkStepperModule,
                 CdkTableModule,
                 CdkTreeModule,
@@ -100,7 +97,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
                 OverlayModule,
                 PortalModule,
                 ScrollingModule,
-                DialogModule,
+                MatDialogModule,
                 MatTableExporterModule,
                 SearchComponent,
                 FormsModule,
