@@ -11,14 +11,15 @@ export class MissionMapper {
       id: response.id,
       name: response.name,
       priceHT: response.priceHT,
-      tva: response.tva,    
+      tva: response.tva,
+      client:response.client,    
     };
 
     return result;
   }
 
   MapMissionListItem(serviceResponsItem: any): MissionListItem {
-    return new MissionListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva)
+    return new MissionListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva,serviceResponsItem.client)
   }
 
   MapMissionNextId(response: any): number {
@@ -29,7 +30,7 @@ export class MissionMapper {
 
     let result: MissionListItem[] = [];
     serviceRespons.items.forEach((serviceResponsItem: any) => {
-      result.push(new MissionListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva));
+      result.push(new MissionListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva,serviceResponsItem.client));
     });
 
 

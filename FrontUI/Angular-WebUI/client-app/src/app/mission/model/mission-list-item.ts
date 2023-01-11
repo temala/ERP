@@ -1,3 +1,4 @@
+import { Client } from './../../client/model/client';
 import { ISearchable } from "src/app/common/ISearchable";
 
 
@@ -7,15 +8,17 @@ export class MissionListItem implements ISearchable {
         private _name: string;
         private _HT: number;
         private _TVA: number;
+        private _client: Client;
 
         /**
          *
          */
-        constructor(id: string, name: string, priceHT: number, TVA: number) {
+        constructor(id: string, name: string, priceHT: number, TVA: number,client:Client) {
                 this._id = id;
                 this._name = name;
                 this._HT =priceHT;
                 this._TVA =TVA;
+                this._client =client;
         }
 
         public get id(): string {
@@ -48,5 +51,12 @@ export class MissionListItem implements ISearchable {
 
         public get TTC(): number {
                 return (this._TVA*this._HT)/100 + this._HT;
+        }
+
+        public get Client(): Client {
+                return this._client;
+        }
+        public set Client(v: Client) {
+                this._client = v;
         }
 }

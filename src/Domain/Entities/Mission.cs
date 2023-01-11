@@ -7,4 +7,7 @@ public class Mission: BaseAuditableEntity
     public decimal? Tva { get; set; }
     
     public decimal? PriceHT { get; set; }
+
+    public int ClientId { get; set; }
+    public Client Client { get; set; }
 }

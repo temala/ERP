@@ -18,7 +18,7 @@ export class MissionListComponent implements AfterViewInit {
   
   @ViewChild(MatSort) sort = new MatSort();
 
-  public displayedColumns: string[] = ['id', 'name','HT','TVA','TTC', 'actions'];
+  public displayedColumns: string[] = ['id', 'name','client','HT','TVA','TTC', 'actions'];
 
   public missions!: MatTableDataSource<MissionListItem>;
 

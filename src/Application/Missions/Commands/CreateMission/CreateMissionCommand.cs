@@ -15,6 +15,8 @@ public class CreateMissionCommand: IRequest<MissionListItemDto>
     public decimal? Tva { get; set; }
     
     public decimal? PriceHT { get; set; }
+    
+    public Client Client { get; set; }
 }
 
 public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand, MissionListItemDto>
@@ -33,6 +35,7 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
             Name = request.Name,
             Tva = request.Tva,
             PriceHT = request.PriceHT,
+            ClientId = request.Client.Id,
         };
 
         entity.AddDomainEvent(new MissionCreatedEvent(entity));
@@ -41,6 +44,6 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT};
+        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=entity.Client};
     }
 }

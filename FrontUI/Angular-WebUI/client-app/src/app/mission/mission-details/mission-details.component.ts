@@ -34,7 +34,7 @@ export class MissionDetailsComponent implements OnInit , OnChanges{
   getMissionInfo() {
     if (this.selectedMission)
       this.clientServices.getMission(this.selectedMission.id).subscribe(missionResult => {
-        this.missionInfo = new MissionListItem(missionResult.id.toString(),missionResult.name,missionResult.priceHT,missionResult.tva);
+        this.missionInfo = new MissionListItem(missionResult.id.toString(),missionResult.name,missionResult.priceHT,missionResult.tva,this.selectedMission.Client);
       });
   }
 
@@ -56,11 +56,12 @@ export class MissionDetailsComponent implements OnInit , OnChanges{
     });
   }
 
-  updateItem(client:Mission) {
-    this.missionInfo = new MissionListItem(client.id.toString(),client.name,client.priceHT,client.tva);;
-    this.selectedMission.name = client.name;
-    this.selectedMission.HT = client.priceHT;
-    this.selectedMission.TVA = client.tva;
+  updateItem(mission:Mission) {
+    this.missionInfo = new MissionListItem(mission.id.toString(),mission.name,mission.priceHT,mission.tva,mission.client);
+    this.selectedMission.name = mission.name;
+    this.selectedMission.HT = mission.priceHT;
+    this.selectedMission.TVA = mission.tva;
+    this.selectedMission.Client = mission.client;
   }
 
 }
