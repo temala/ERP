@@ -1,3 +1,4 @@
+import { Client } from './../../client/model/client';
 import { ISearchable } from './../../common/ISearchable';
 
 export class Mission implements ISearchable {
@@ -11,4 +12,5 @@ export class Mission implements ISearchable {
         name: string;        
         priceHT: number =0;           
         tva: number = 0;
+        client!:Client;
 }

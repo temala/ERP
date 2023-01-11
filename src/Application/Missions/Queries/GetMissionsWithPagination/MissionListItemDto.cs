@@ -12,4 +12,5 @@ public class MissionListItemDto : IMapFrom<Mission>
     public decimal? Tva { get; set; }
     
     public decimal? PriceHT { get; set; }
+    public Client Client { get; set; }
 }

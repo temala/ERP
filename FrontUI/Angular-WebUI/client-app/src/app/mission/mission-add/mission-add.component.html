@@ -9,6 +9,12 @@
               <mat-label i18n>Name</mat-label>
               <input matInput formControlName="name">
             </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label i18n>Client</mat-label>
+                <mat-select matInput formControlName="client">
+                  <mat-option *ngFor="let client of clients" [value]="client">{{client.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
           </div>
           <div class="input-row">
             <h3 class="small-padding" i18n>Mission information</h3>

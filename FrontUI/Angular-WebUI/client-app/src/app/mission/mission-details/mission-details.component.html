@@ -15,24 +15,66 @@
         </mat-toolbar>
         <div class="m-20">
           <h4 i18n>Mission identification number: <b>{{selectedMission.id}}</b></h4>
-          <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20" *ngIf="missionInfo!=undefined">
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <mat-label fxFlex="50" i18n>Mission name</mat-label>
-                  <mat-label fxFlex="50" i18n>{{missionInfo.name}}</mat-label>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <mat-label fxFlex="50" i18n>Price H.T</mat-label>
-                  <mat-label fxFlex="50" i18n>{{missionInfo.HT}}</mat-label>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <mat-label fxFlex="50" i18n>TVA %</mat-label>
-                  <mat-label fxFlex="50" i18n>{{missionInfo.TVA}}</mat-label>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                        <mat-label fxFlex="50" i18n>Price T.T.C</mat-label>
-                        <mat-label fxFlex="50" i18n>{{missionInfo.TTC}}</mat-label>
-                </div>
-              </div>
+          <mat-tab-group animationDuration="0ms" *ngIf="missionInfo!=undefined">
+                <mat-tab i18n-label label="Mission information">
+                        <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20" *ngIf="missionInfo!=undefined">
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                  <mat-label fxFlex="50" i18n>Mission name</mat-label>
+                                  <mat-label fxFlex="50" i18n>{{missionInfo.name}}</mat-label>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                        <mat-label fxFlex="50" i18n>Client name</mat-label>
+                                        <mat-label fxFlex="50" i18n>{{missionInfo.Client.name}}</mat-label>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                  <mat-label fxFlex="50" i18n>Price H.T</mat-label>
+                                  <mat-label fxFlex="50" i18n>{{missionInfo.HT | currency:' €'}}</mat-label>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                  <mat-label fxFlex="50" i18n>TVA %</mat-label>
+                                  <mat-label fxFlex="50" i18n>{{missionInfo.TVA | currency:' %'}}</mat-label>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                        <mat-label fxFlex="50" i18n>Price T.T.C</mat-label>
+                                        <mat-label fxFlex="50" i18n>{{missionInfo.TTC | currency:' €'}}</mat-label>
+                                </div>
+                              </div>
+                </mat-tab>
+                <mat-tab i18n-label label="Client informations">
+                  <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>N° Tel</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.telephone}}</mat-label>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>Contact Name</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.contactName}}</mat-label>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>E-Mail</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.email}}</mat-label>
+                        </div>
+                      </div>
+                      <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>Company name</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.companyName}}</mat-label>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>N° Siret</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.siret}}</mat-label>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>N° TVA</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.tva}}</mat-label>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between center">
+                          <mat-label fxFlex="50" i18n>Contact Title</mat-label>
+                          <mat-label fxFlex="50" i18n>{{missionInfo.Client.title}}</mat-label>
+                        </div>
+                      </div>
+                </mat-tab>
+          </mat-tab-group>
         </div>
       
       </mat-card>
