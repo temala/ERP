@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+        <span i18n>New CRA</span>
+</mat-toolbar>
+
+<form [formGroup]="addCraForm" (ngSubmit)="AddCra(addCraForm)" fxLayout="column">
+        <div class="small-padding">
+                <div class="input-row">
+                        <mat-form-field appearance="standard">
+                                <mat-label i18n>Mission</mat-label>
+                                <mat-select matInput formControlName="mission">
+                                        <mat-option *ngFor="let mission of missions"
+                                                [value]="mission">{{mission.name}}</mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                </div>
+                <div class="input-row">
+                        <h3 class="small-padding" i18n>Month</h3>
+                        <mat-radio-group   class="vertical-radio-group" matInput formControlName="month" appearance="standard">
+                                <mat-label i18n>Month</mat-label>
+                                <mat-radio-button class="vertical-radio-button" *ngFor="let month of months" [value]="month">
+                                        {{month}}
+                                </mat-radio-button>
+                        </mat-radio-group>
+                </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="action-padding">
+                <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+        </div>
+</form>

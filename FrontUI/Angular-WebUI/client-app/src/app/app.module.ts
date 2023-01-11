@@ -12,6 +12,7 @@ import {AuthorizeInterceptor} from "../api-authorization/authorize.interceptor";
 import {ApiAuthorizationModule} from "../api-authorization/api-authorization.module";
 import {ClientListComponent} from "./client/client-list/client-list.component";
 import { MissionModule } from './mission/mission.module';
+import { CraModule } from './cra/cra.module';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { MissionModule } from './mission/mission.module';
         HttpClientModule,
         ClientModule,
         MissionModule,
+        CraModule,
         MaterialModule,
     ],
     providers: [

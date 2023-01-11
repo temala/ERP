@@ -31,5 +31,10 @@ export class AppComponent {
       icon: 'work',
       link: '/mission',
     },
+    {
+      title: $localize `C.R.A`,
+      icon: 'calendar_today',
+      link: '/cra',
+    },
   ];
 }
