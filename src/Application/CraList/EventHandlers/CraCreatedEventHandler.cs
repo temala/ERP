@@ -3,13 +3,13 @@ using ERP.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.EventHandlers;
+namespace Microsoft.Extensions.DependencyInjection.Cras.EventHandlers;
 
-public class MissionCreatedEventHandler: INotificationHandler<ClientCreatedEvent>
+public class CraCreatedEventHandler: INotificationHandler<ClientCreatedEvent>
 {
-    private readonly ILogger<MissionCreatedEventHandler> _logger;
+    private readonly ILogger<CraCreatedEventHandler> _logger;
 
-    public MissionCreatedEventHandler(ILogger<MissionCreatedEventHandler> logger)
+    public CraCreatedEventHandler(ILogger<CraCreatedEventHandler> logger)
     {
         _logger = logger;
     }

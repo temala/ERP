@@ -7,6 +7,7 @@ import { CraListComponent } from './cra-list/cra-list.component';
 import { CraAddComponent } from './cra-add/cra-add.component';
 import { CraUpdateComponent } from './cra-update/cra-update.component';
 import { MaterialModule } from '../core.module';
+import { craPeriodPipe } from './pipes/cra-period.pipe';
 
 
 
@@ -16,8 +17,10 @@ import { MaterialModule } from '../core.module';
     CraDetailsComponent,
     CraListComponent,
     CraAddComponent,
-    CraUpdateComponent
-  ],
+    CraUpdateComponent,
+    craPeriodPipe,
+    ],
+    
   imports: [
     CommonModule,
     MaterialModule,

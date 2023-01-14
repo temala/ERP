@@ -3,41 +3,46 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
 
-namespace ERP.Application.Missions.Commands.UpdateMission;
+namespace ERP.Application.Cras.Commands.UpdateCra;
 
-public record UpdateMissionCommand : IRequest<Mission>
+public record UpdateCraCommand : IRequest<Cra>
 {
     public int Id { get; set; }
     
-    public string Name { get; set; }
-    public decimal PriceHT { get; set; }
-    public decimal Tva { get; set; }
+    public int Month { get; set; }
+    
+    public int Year { get; set; }
+    
+    public DateTime[] days { get; set; }
+
+    public Mission Mission { get; set; }
 
    
 }
 
-public class UpdateMissionCommandHandler : IRequestHandler<UpdateMissionCommand,Mission>
+public class UpdateCraCommandHandler : IRequestHandler<UpdateCraCommand,Cra>
 {
     private readonly IApplicationDbContext _context;
 
-    public UpdateMissionCommandHandler(IApplicationDbContext context)
+    public UpdateCraCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Mission> Handle(UpdateMissionCommand request, CancellationToken cancellationToken)
+    public async Task<Cra> Handle(UpdateCraCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Missions
+        var entity = await _context.CraList
             .FindAsync(new object[] {request.Id}, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Mission), request.Id);
+            throw new NotFoundException(nameof(Cra), request.Id);
         }
 
-        entity.Name = request.Name;
-        entity.PriceHT = request.PriceHT;
-        entity.Tva = request.Tva;
+        entity.Month = request.Month;
+        entity.Year = request.Year;
+        entity.Days = request.days.Select(day=>new CraDay(){Year =day.Year,Month = day.Month,Day = day.Day}).ToList();
+        entity.MissionId = request.Mission.Id;
         
 
         await _context.SaveChangesAsync(cancellationToken);

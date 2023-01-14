@@ -1,11 +1,11 @@
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionById;
+namespace Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCraById;
 
 // ReSharper disable once UnusedType.Global
-public class GetMissionByIdQueryValidator : AbstractValidator<GetMissionByIdQuery>
+public class GetCraByIdQueryValidator : AbstractValidator<GetCraByIdQuery>
 {
-    public GetMissionByIdQueryValidator()
+    public GetCraByIdQueryValidator()
     {
         RuleFor(q=>q.Id)
             .GreaterThanOrEqualTo(1)

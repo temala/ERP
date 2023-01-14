@@ -4,33 +4,33 @@ using ERP.Application.Common.Interfaces;
 using ERP.Application.Common.Mappings;
 using ERP.Application.Common.Models;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
+using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
 
 namespace ERP.Application.Clients.Queries.GetClientsWithPagination;
 
-public record GetMissionsWithPaginationQuery : IRequest<PaginatedList<MissionListItemDto>>
+public record GetCrasWithPaginationQuery : IRequest<PaginatedList<CraListItemDto>>
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
 
 // ReSharper disable once UnusedType.Global
-public class GetMissionsWithPaginationQueryHandler : IRequestHandler<GetMissionsWithPaginationQuery, PaginatedList<MissionListItemDto>>
+public class GetCrasWithPaginationQueryHandler : IRequestHandler<GetCrasWithPaginationQuery, PaginatedList<CraListItemDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetMissionsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetCrasWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<PaginatedList<MissionListItemDto>> Handle(GetMissionsWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<CraListItemDto>> Handle(GetCrasWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Missions
-            .OrderBy(x => x.Name)
-            .ProjectTo<MissionListItemDto>(_mapper.ConfigurationProvider)
+        return await _context.CraList
+            .OrderBy(x => x.Month)
+            .ProjectTo<CraListItemDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

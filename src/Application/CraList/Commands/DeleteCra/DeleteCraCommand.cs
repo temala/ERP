@@ -4,32 +4,32 @@ using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
 
-namespace ERP.Application.Missions.Commands.DeleteMission;
+namespace ERP.Application.Cras.Commands.DeleteCra;
 
-public record DeleteMissionCommand(int Id) : IRequest;
+public record DeleteCraCommand(int Id) : IRequest;
 
-public class DeleteMissionCommandHandler : IRequestHandler<DeleteMissionCommand>
+public class DeleteCraCommandHandler : IRequestHandler<DeleteCraCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public DeleteMissionCommandHandler(IApplicationDbContext context)
+    public DeleteCraCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteMissionCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteCraCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Missions
+        var entity = await _context.CraList
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Mission), request.Id);
+            throw new NotFoundException(nameof(Cra), request.Id);
         }
 
-        _context.Missions.Remove(entity);
+        _context.CraList.Remove(entity);
 
-        entity.AddDomainEvent(new MissionDeletedEvent(entity));
+        entity.AddDomainEvent(new CraDeletedEvent(entity));
 
         await _context.SaveChangesAsync(cancellationToken);
 

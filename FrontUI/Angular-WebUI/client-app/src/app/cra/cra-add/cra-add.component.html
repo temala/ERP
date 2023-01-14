@@ -14,11 +14,10 @@
                         </mat-form-field>
                 </div>
                 <div class="input-row">
-                        <h3 class="small-padding" i18n>Month</h3>
-                        <mat-radio-group   class="vertical-radio-group" matInput formControlName="month" appearance="standard">
-                                <mat-label i18n>Month</mat-label>
-                                <mat-radio-button class="vertical-radio-button" *ngFor="let month of months" [value]="month">
-                                        {{month}}
+                        <h3 class="small-padding" i18n>Please select the activity period</h3>
+                        <mat-radio-group   class="vertical-radio-group" matInput formControlName="period" appearance="standard">
+                                <mat-radio-button class="vertical-radio-button" *ngFor="let period of periods" [value]="period">
+                                        {{period | periodName}}
                                 </mat-radio-button>
                         </mat-radio-group>
                 </div>

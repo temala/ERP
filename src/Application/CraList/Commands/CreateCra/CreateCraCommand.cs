@@ -4,46 +4,46 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
+using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
+namespace Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
 
-public class CreateMissionCommand: IRequest<MissionListItemDto>
+public class CreateCraCommand: IRequest<CraListItemDto>
 {
-    public string Name { get; set; }
+    public int Month { get; set; }
+    
+    public int Year { get; set; }
+    
+    public DateTime[] Days { get; set; }
 
-    public decimal? Tva { get; set; }
-    
-    public decimal? PriceHT { get; set; }
-    
-    public Client Client { get; set; }
+    public Mission Mission { get; set; }
 }
 
-public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand, MissionListItemDto>
+public class CreateCraCommandHandler : IRequestHandler<CreateCraCommand, CraListItemDto>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateMissionCommandHandler(IApplicationDbContext context)
+    public CreateCraCommandHandler(IApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<MissionListItemDto> Handle(CreateMissionCommand request, CancellationToken cancellationToken)
+    public async Task<CraListItemDto> Handle(CreateCraCommand request, CancellationToken cancellationToken)
     {
-        var entity = new Mission
+        var entity = new Cra
         {
-            Name = request.Name,
-            Tva = request.Tva,
-            PriceHT = request.PriceHT,
-            ClientId = request.Client.Id,
+            Month = request.Month,
+            Year = request.Year,
+            MissionId = request.Mission.Id,
+            Days = request.Days.Select(day=>new CraDay(){Year = day.Year,Month = day.Month,Day = day.Day}).ToList()
         };
 
-        entity.AddDomainEvent(new MissionCreatedEvent(entity));
+        entity.AddDomainEvent(new CraCreatedEvent(entity));
 
-        _context.Missions.Add(entity);
+        _context.CraList.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=entity.Client};
+        return new CraListItemDto() {Id = entity.Id, Month = entity.Month,Year = entity.Year,Days = entity.Days.ToList(), Mission= entity.Mission};
     }
 }

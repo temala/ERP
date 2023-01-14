@@ -1,22 +1,18 @@
 using ERP.Application.Clients.Commands.CreateClient;
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
+namespace Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
 
-public class CreateMissionCommandValidator: AbstractValidator<CreateMissionCommand>
+public class CreateCraCommandValidator: AbstractValidator<CreateCraCommand>
 {
-    public CreateMissionCommandValidator()
+    public CreateCraCommandValidator()
     {
-        RuleFor(v => v.Name)
-            .MaximumLength(200)
-            .NotEmpty();
-        
-        RuleFor(v => v.PriceHT)
+        RuleFor(v => v.Month)
             .GreaterThan(0)
-            .NotEmpty();
+            .LessThan(13);
         
-        RuleFor(v => v.Tva)
-            .GreaterThan(0)
-            .NotEmpty();
+        RuleFor(v => v.Year)
+            .GreaterThan(DateTime.Now.Year-10)
+            .LessThan(DateTime.Now.Year+10);
     }
 }

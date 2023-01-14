@@ -7,6 +7,7 @@ import { MissionService } from 'src/app/mission/services/mission.service';
 import { CraEventsService } from '../services/cra-events.service';
 import { CraService } from '../services/cra.service';
 import * as moment from 'moment';
+import { craPeriod } from '../model/cra';
 
 @Component({
   selector: 'app-cra-add',
@@ -22,23 +23,23 @@ export class CraAddComponent implements OnInit {
 
   missions!: MissionListItem[];
 
-  months: string[] = [];
+  periods: craPeriod[] = [];
 
   ngOnInit(): void {
 
     this.PopulateMonths();
 
     this.addCraForm = this.formBuilder.group({
-      month: [this.months[1], [Validators.required]],
+      period: [this.periods[1], [Validators.required]],
       days: [null],
       mission: [null]
     });
 
     this.missionServices.getlist().subscribe(missions => {
       this.missions = missions;
-      
+
       this.addCraForm = this.formBuilder.group({
-        month: [this.months[1], [Validators.required]],
+        period: [this.periods[1], [Validators.required]],       
         days: [null],
         mission: [this.missions.length === 1 ? this.missions[0] : null]
       });
@@ -47,15 +48,16 @@ export class CraAddComponent implements OnInit {
   }
 
   private PopulateMonths() {
-    this.months.push(moment().subtract(1, 'month').format('MMMM-YYYY'));
-    this.months.push(moment().format('MMMM-YYYY'));
-    this.months.push(moment().add(1, 'month').format('MMMM-YYYY'));
+    this.periods.push({year: moment().subtract(1, 'month').year(),month:moment().subtract(1, 'month').month()});
+    this.periods.push({year: moment().year(),month:moment().month()});
+    this.periods.push({year: moment().add(1, 'month').year(),month:moment().add(1, 'month').month()});
   }
 
   AddCra(form: UntypedFormGroup) {
     this.craServices.Add({
       id: 0,
-      month: form.value.month,
+      month: form.value.period.month+1,
+      year: form.value.period.year,
       days: [],
       mission: new Mission(form.value.mission.id, form.value.mission.name),
     }).subscribe(result => {

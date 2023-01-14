@@ -3,28 +3,28 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionById;
+namespace Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCraById;
 
 
-public record GetMissionByIdQuery : IRequest<Mission>
+public record GetCraByIdQuery : IRequest<Cra>
 {
     public int Id { get; init; }
 }
 
 // ReSharper disable once UnusedType.Global
-public class GetMissionByIdQueryHandler : IRequestHandler<GetMissionByIdQuery, Mission?>
+public class GetCraByIdQueryHandler : IRequestHandler<GetCraByIdQuery, Cra?>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetMissionByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetCraByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<Mission?> Handle(GetMissionByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Cra?> Handle(GetCraByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Missions.FindAsync(request.Id);
+        return await _context.CraList.FindAsync(request.Id);
     }
 }

@@ -1,11 +1,12 @@
+
 namespace ERP.Domain.Events;
 
-public class MissionCreatedEvent: BaseEvent
+public class CraCreatedEvent: BaseEvent
 {
-    public MissionCreatedEvent(Mission item)
+    public CraCreatedEvent(Cra item)
     {
         Item = item;
     }
 
-    public Mission Item { get; }
+    public Cra Item { get; }
 }

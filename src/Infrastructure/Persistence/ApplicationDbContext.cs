@@ -12,10 +12,12 @@ using Microsoft.Extensions.Options;
 
 namespace ERP.Infrastructure.Persistence;
 
-public class ApplicationDbContext2 : DbContext
+public class ApplicationMigrationDbContext: DbContext
 {
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Mission> Missions => Set<Mission>();
+    public DbSet<Cra> CraList => Set<Cra>();
+    public DbSet<CraDay> CraDays => Set<CraDay>();
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -49,7 +51,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     }    
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Mission> Missions => Set<Mission>();
-
+    public DbSet<Cra> CraList => Set<Cra>();
+    public DbSet<CraDay> CraDays => Set<CraDay>();
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

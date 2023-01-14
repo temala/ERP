@@ -3,9 +3,9 @@
 namespace ERP.Application.Clients.Queries.GetClientsWithPagination;
 
 // ReSharper disable once UnusedType.Global
-public class GetMissionsWithPaginationQueryValidator : AbstractValidator<GetMissionsWithPaginationQuery>
+public class GetCrasWithPaginationQueryValidator : AbstractValidator<GetCrasWithPaginationQuery>
 {
-    public GetMissionsWithPaginationQueryValidator()
+    public GetCrasWithPaginationQueryValidator()
     {
         RuleFor(x => x.PageNumber)
             .GreaterThanOrEqualTo(1).WithMessage("PageNumber at least greater than or equal to 1.");

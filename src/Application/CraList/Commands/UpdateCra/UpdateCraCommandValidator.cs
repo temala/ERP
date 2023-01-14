@@ -1,22 +1,18 @@
-﻿using ERP.Application.Missions.Commands.UpdateMission;
+﻿using ERP.Application.Cras.Commands.UpdateCra;
 using FluentValidation;
 
 namespace ERP.Application.Clients.Commands.UpdateClient;
 
-public class UpdateMissionCommandValidator : AbstractValidator<UpdateMissionCommand>
+public class UpdateCraCommandValidator : AbstractValidator<UpdateCraCommand>
 {
-    public UpdateMissionCommandValidator()
+    public UpdateCraCommandValidator()
     {
-        RuleFor(v => v.Name)
-            .MaximumLength(200)
-            .NotEmpty();
-        
-        RuleFor(v => v.PriceHT)
+        RuleFor(v => v.Month)
             .GreaterThan(0)
-            .NotEmpty();
+            .LessThan(13);
         
-        RuleFor(v => v.Tva)
-            .GreaterThan(0)
-            .NotEmpty();
+        RuleFor(v => v.Year)
+            .GreaterThan(DateTime.Now.Year-10)
+            .LessThan(DateTime.Now.Year+10);
     }
 }

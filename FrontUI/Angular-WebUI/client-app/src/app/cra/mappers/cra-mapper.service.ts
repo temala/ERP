@@ -13,8 +13,14 @@ export class CraMapper {
       id: response.id,
       days: response.days,
       month: response.month,
+      year: response.year,
       mission:response.mission,    
     };
+
+    if(response.days==null)
+    {
+      result.days=[];
+    }
 
     return result;
   }
@@ -31,7 +37,10 @@ export class CraMapper {
 
     let result: CraListItem[] = [];
     serviceRespons.items.forEach((serviceResponsItem: any) => {
-      result.push(new CraListItem(serviceResponsItem.id, serviceResponsItem.month));
+      var craItem = new CraListItem(serviceResponsItem.id, serviceResponsItem.period) ;
+      craItem.mission=serviceResponsItem.mission;
+      craItem.days=serviceResponsItem.days;
+      result.push(craItem);
     });
 
 
