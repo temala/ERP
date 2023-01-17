@@ -6,6 +6,6 @@
           <span class="spacer"></span>
         </mat-toolbar>
         <div class="m-20">
-                <mat-calendar #calendar [dateClass]="isSelected" (selectedChange)="updateDays($event)"></mat-calendar>
+                <mat-calendar #calendar [startAt]="selectedPeriod" [dateClass]="isSelected" (selectedChange)="updateDays($event)"></mat-calendar>
         </div>      
 </mat-card>

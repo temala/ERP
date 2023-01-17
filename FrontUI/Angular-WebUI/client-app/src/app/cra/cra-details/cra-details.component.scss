@@ -12,15 +12,37 @@
 
 .full-height {
         height: calc(100vh - 128px);
+        min-height: 900px;
 }
 
+.mat-calendar-body-cell 
+{
+        height: 95% !important;
+}
 .mat-calendar-body-cell.selected {
-        background-color: #00ffc6 !important;
-        border-radius: 9%;
-        border: 1px solid #36ddb8;
-        
+        background-color: #28eda7 !important;
+        border-radius: 3%;
+}
+
+.mat-calendar-body-cell.weekend {
+        background-color: #e8e8e8 !important;
+        border-radius: 0%;
 }
 
 .mat-calendar-body-cell.selected>.mat-calendar-body-cell-content {
         color: white !important;
 }
+
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical)
+{
+        border-radius: 3%;
+        background-color: #a1e4cd !important;
+}
+
+.mat-calendar-body-cell:hover>.mat-calendar-body-cell-content{
+        color: white !important;
+}
+
+.mat-calendar-controls {
+        display: none !important
+    }

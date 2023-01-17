@@ -12,14 +12,15 @@ import { CraService } from '../services/cra.service';
   selector: 'app-cra-details',
   templateUrl: './cra-details.component.html',
   styleUrls: ['./cra-details.component.scss'],
-  encapsulation:ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class CraDetailsComponent implements OnInit {
 
-  @ViewChild(MatCalendar, {static: false}) calendar!: MatCalendar<Date>;
+  @ViewChild(MatCalendar, { static: false }) calendar!: MatCalendar<Date>;
   @Input() selectedCra!: CraListItem;
 
   public craInfo!: Cra;
+  public selectedPeriod: Date=new Date(1996,0,1);
 
   constructor(public updateCraDialog: MatDialog, public deleteCraDialog: MatDialog, private craServices: CraService, private eventsServices: CraEventsService) {
     eventsServices.CraUpdated.subscribe(item => this.updateItem(item));
@@ -37,6 +38,9 @@ export class CraDetailsComponent implements OnInit {
     if (this.selectedCra)
       this.craServices.getCra(this.selectedCra.id.toString()).subscribe(craResult => {
         this.craInfo = craResult;
+        this.selectedPeriod.setMonth(craResult.month-1);
+        this.selectedPeriod.setUTCFullYear(craResult.year);
+        this.calendar.updateTodaysDate();
       });
   }
 
@@ -62,28 +66,39 @@ export class CraDetailsComponent implements OnInit {
 
   }
 
+  private dateExists(event: any) {
+    if (this.craInfo != undefined) {
+      return this.craInfo.days.findIndex(date => toStringDate(event) == toStringDate(date));
+    }
+    return -1;
+
+    function toStringDate(item: Date) {
+      return `${item.getDate()}/${item.getMonth() + 1}/${item.getFullYear()}`;
+    }
+  }
+
+  private isWeekEnd(event: any) {
+    return (moment(event).day() % 6 == 0)
+  }
+
   updateDays(event: any) {
     if (event.getDate() != null) {
-      const date = new Date(event.getFullYear(), event.getMonth(), event.getDate());
-      this.craInfo.days.push(date);
+      const index = this.dateExists(event);
+      if (index == -1) {
+        this.craInfo.days.push(event);
+      }
+      else {
+        this.craInfo.days.splice(index, 1);
+      }
+
       this.calendar.updateTodaysDate();
     }
   }
 
+
+
   isSelected = (event: any) => {
-    const inputDateString = `${event.getMonth()}/${event.getDate()}/${event.getFullYear()}`;
-    if (this.craInfo != undefined) {
-      const result = this.craInfo.days.filter(date=> {
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-        const dateString = `${monthIndex}/${day}/${year}`;
-        return dateString.includes(inputDateString);        
-    });
-     
-    return result.length>0 ? "selected" : "";
-    }
-    return "";
+    return this.dateExists(event)>=0 ? "selected" : (this.isWeekEnd(event) ? "weekend" : "");
   };
 
 }
