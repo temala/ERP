@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace ERP.Domain.Entities;
 
@@ -26,5 +27,6 @@ public class CraDay
     
     public int CraId { get; set; }
     
+    [JsonIgnore]
     public Cra Cra { get; set; }
 }

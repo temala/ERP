@@ -1,3 +1,4 @@
+import { craDay } from './../model/cra';
 import {Injectable} from "@angular/core";
 import {Cra} from "../model/cra";
 import {CraListItem} from "../model/cra-list-item";
@@ -11,10 +12,10 @@ export class CraMapper {
   MapCra(response: any): Cra {
     let result: Cra = {
       id: response.id,
-      days: response.days,
+      days: response.days.map(d => new craDay(d.year,d.month-1,d.day)),
       month: response.month,
       year: response.year,
-      mission:response.mission,    
+      missionId:response.missionId,    
     };
 
     if(response.days==null)

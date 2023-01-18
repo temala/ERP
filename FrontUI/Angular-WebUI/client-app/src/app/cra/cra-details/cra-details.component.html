@@ -4,6 +4,16 @@
         <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
           <h3 i18n>Select working days to complete your CRA</h3>
           <span class="spacer"></span>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+            <button (click)="onEdit()" mat-flat-button color="primary" class="action">
+              <mat-icon class="mr-2">save</mat-icon>
+              <span i18n>Save</span>
+            </button>
+            <button (click)="onDelete()" mat-flat-button color="accent" class="action">
+              <mat-icon class="mr-2">delete</mat-icon>
+              <span i18n>Delete</span>
+            </button>
+          </div>
         </mat-toolbar>
         <div class="m-20">
                 <mat-calendar #calendar [startAt]="selectedPeriod" [dateClass]="isSelected" (selectedChange)="updateDays($event)"></mat-calendar>

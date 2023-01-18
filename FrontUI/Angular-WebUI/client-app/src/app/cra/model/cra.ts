@@ -13,7 +13,7 @@ export class Cra implements ISearchable {
         year: number;
         month: number;
         days: craDay[] = [];
-        mission!: Mission;
+        missionId!: number;
 }
 
 export class craDay extends Date {

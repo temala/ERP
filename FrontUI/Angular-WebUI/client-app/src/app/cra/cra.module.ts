@@ -5,7 +5,6 @@ import { CraDetailsEmptyComponent } from './cra-details-empty/cra-details-empty.
 import { CraDetailsComponent } from './cra-details/cra-details.component';
 import { CraListComponent } from './cra-list/cra-list.component';
 import { CraAddComponent } from './cra-add/cra-add.component';
-import { CraUpdateComponent } from './cra-update/cra-update.component';
 import { MaterialModule } from '../core.module';
 import { craPeriodPipe } from './pipes/cra-period.pipe';
 
@@ -17,7 +16,6 @@ import { craPeriodPipe } from './pipes/cra-period.pipe';
     CraDetailsComponent,
     CraListComponent,
     CraAddComponent,
-    CraUpdateComponent,
     craPeriodPipe,
     ],
     

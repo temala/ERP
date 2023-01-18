@@ -2,7 +2,6 @@ import { Component, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation }
 import { MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { CraUpdateComponent } from '../cra-update/cra-update.component';
 import { Cra } from '../model/cra';
 import { CraListItem } from '../model/cra-list-item';
 import { CraEventsService } from '../services/cra-events.service';
@@ -45,11 +44,8 @@ export class CraDetailsComponent implements OnInit {
   }
 
   onEdit() {
-    this.updateCraDialog.open(CraUpdateComponent, {
-      width: '600px',
-      maxHeight: '90vh',
-      panelClass: 'custom-dialog-box',
-      data: this.craInfo
+    this.craServices.Update(this.craInfo).subscribe(craListItem=>{      
+      this.eventsServices.CraUpdated.emit(craListItem);
     });
   }
 

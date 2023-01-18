@@ -59,7 +59,7 @@ export class CraAddComponent implements OnInit {
       month: form.value.period.month+1,
       year: form.value.period.year,
       days: [],
-      mission: new Mission(form.value.mission.id, form.value.mission.name),
+      missionId: form.value.mission.id,
     }).subscribe(result => {
       this.dialogRef.close();
       this.craEventsServices.CraCreated.emit(result);
