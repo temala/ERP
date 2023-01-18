@@ -3,20 +3,24 @@ import { ISearchable } from './../../common/ISearchable';
 
 export class Cra implements ISearchable {
 
-        constructor(id: number,year:number, month: number) {
+        constructor(id: number, year: number, month: number) {
                 this.id = id;
                 this.year = year;
                 this.month = month;
         }
 
         id: number;
-        year: number;             
-        month: number;             
-        days: Date[] =[];           
-        mission!:Mission;
+        year: number;
+        month: number;
+        days: craDay[] = [];
+        mission!: Mission;
+}
+
+export class craDay extends Date {
+        public isHalfDay: boolean = false;
 }
 
 export class craPeriod {
-        month:number=0;
-        year: number=0;        
+        month: number = 0;
+        year: number = 0;
 }

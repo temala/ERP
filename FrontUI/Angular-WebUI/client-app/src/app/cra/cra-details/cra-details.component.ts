@@ -20,7 +20,7 @@ export class CraDetailsComponent implements OnInit {
   @Input() selectedCra!: CraListItem;
 
   public craInfo!: Cra;
-  public selectedPeriod: Date=new Date(1996,0,1);
+  public selectedPeriod: Date = new Date(1996, 0, 1);
 
   constructor(public updateCraDialog: MatDialog, public deleteCraDialog: MatDialog, private craServices: CraService, private eventsServices: CraEventsService) {
     eventsServices.CraUpdated.subscribe(item => this.updateItem(item));
@@ -38,7 +38,7 @@ export class CraDetailsComponent implements OnInit {
     if (this.selectedCra)
       this.craServices.getCra(this.selectedCra.id.toString()).subscribe(craResult => {
         this.craInfo = craResult;
-        this.selectedPeriod.setMonth(craResult.month-1);
+        this.selectedPeriod.setMonth(craResult.month - 1);
         this.selectedPeriod.setUTCFullYear(craResult.year);
         this.calendar.updateTodaysDate();
       });
@@ -88,7 +88,13 @@ export class CraDetailsComponent implements OnInit {
         this.craInfo.days.push(event);
       }
       else {
-        this.craInfo.days.splice(index, 1);
+        const selectedDay = this.craInfo.days[index];
+        if (!selectedDay.isHalfDay) {
+          selectedDay.isHalfDay = true;
+        }
+        else {
+          this.craInfo.days.splice(index, 1);
+        }
       }
 
       this.calendar.updateTodaysDate();
@@ -98,7 +104,19 @@ export class CraDetailsComponent implements OnInit {
 
 
   isSelected = (event: any) => {
-    return this.dateExists(event)>=0 ? "selected" : (this.isWeekEnd(event) ? "weekend" : "");
+    const index = this.dateExists(event);
+    if( index>= 0)
+    {
+      const selectedDay = this.craInfo.days[index];
+
+      if(selectedDay.isHalfDay)
+      {
+          return "morning-selected";
+      }
+      return "selected"
+    }
+
+    return (this.isWeekEnd(event) ? "weekend" : "");
   };
 
 }
