@@ -62,7 +62,7 @@ export class MissionListComponent implements AfterViewInit {
   }
 
   removeDeletedItem(missionItem:MissionListItem) {
-    this.selectedMission;
+    this.selectedMission= null as any;
     this.missions.data = this.missions.data.filter(item => {
       return item !== missionItem;
     });

@@ -15,6 +15,7 @@ export class CraMapper {
       days: response.days.map(d => new craDay(d.year,d.month-1,d.day)),
       month: response.month,
       year: response.year,
+      mission:response.mission,
       missionId:response.missionId,    
     };
 
@@ -27,7 +28,11 @@ export class CraMapper {
   }
 
   MapCraListItem(serviceResponsItem: any): CraListItem {
-    return new CraListItem(serviceResponsItem.id, serviceResponsItem.month)
+    var craItem =  new CraListItem(serviceResponsItem.id, serviceResponsItem.period);
+    craItem.mission=serviceResponsItem.mission;
+    craItem.days=serviceResponsItem.days;
+
+    return craItem;
   }
 
   MapCraNextId(response: any): number {

@@ -63,7 +63,7 @@ export class CraListComponent  implements AfterViewInit {
   }
 
   removeDeletedItem(craItem:CraListItem) {
-    this.selectedCra;
+    this.selectedCra= null as any;
     this.craList.data = this.craList.data.filter(item => {
       return item !== craItem;
     });

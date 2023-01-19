@@ -60,7 +60,7 @@ export class ClientListComponent implements AfterViewInit {
   }
 
   removeDeletedItem(clientItem:ClientListItem) {
-    this.selectedClient;
+    this.selectedClient = null as any;
     this.clients.data = this.clients.data.filter(item => {
       return item !== clientItem;
     });

@@ -32,7 +32,7 @@ export class CraService {
     return this.http.post(`${environment.apiURL}/craList`,cra).pipe(map(response => this.mapper.MapCraListItem(response)));
   }
 
-  Delete(id:string){
-    return this.http.delete(`${environment.apiURL}/cras/${id}`);
+  Delete(id:number){
+    return this.http.delete(`${environment.apiURL}/craList/${id}`);
   }
 }

@@ -26,6 +26,6 @@ public class GetCraByIdQueryHandler : IRequestHandler<GetCraByIdQuery, Cra?>
 
     public async Task<Cra?> Handle(GetCraByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _context.CraList.Include(cra => cra.Days).FirstOrDefaultAsync(cra => cra.Id == request.Id);
+        return await _context.CraList.Include(cra => cra.Days).Include(c=>c.Mission).FirstOrDefaultAsync(cra => cra.Id == request.Id);
     }
 }

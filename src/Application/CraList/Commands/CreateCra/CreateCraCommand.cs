@@ -4,6 +4,7 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
 
 namespace Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
@@ -16,6 +17,8 @@ public class CreateCraCommand: IRequest<CraListItemDto>
     
     public DateTime[] Days { get; set; }
 
+    public int MissionId { get; set; }
+    
     public Mission Mission { get; set; }
 }
 
@@ -34,7 +37,7 @@ public class CreateCraCommandHandler : IRequestHandler<CreateCraCommand, CraList
         {
             Month = request.Month,
             Year = request.Year,
-            MissionId = request.Mission.Id,
+            MissionId = request.MissionId,
             Days = request.Days.Select(day=>new CraDay(){Year = day.Year,Month = day.Month,Day = day.Day}).ToList()
         };
 
@@ -44,6 +47,8 @@ public class CreateCraCommandHandler : IRequestHandler<CreateCraCommand, CraList
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new CraListItemDto() {Id = entity.Id, Month = entity.Month,Year = entity.Year,Days = entity.Days.ToList(), Mission= entity.Mission};
+        var savedCra = _context.CraList.Include(cra=>cra.Mission).OrderBy(cra=>cra.Id).Last();
+        
+        return new CraListItemDto() {Id = savedCra.Id, Month = savedCra.Month,Year = savedCra.Year,Days = savedCra.Days.ToList(), Mission= savedCra.Mission};
     }
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation }
 import { MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { CraDeleteMessageComponent } from '../cra-delete-message/cra-delete-message.component';
 import { Cra } from '../model/cra';
 import { CraListItem } from '../model/cra-list-item';
 import { CraEventsService } from '../services/cra-events.service';
@@ -50,12 +51,12 @@ export class CraDetailsComponent implements OnInit {
   }
 
   onDelete() {
-    // this.deleteCraDialog.open(CraDeleteMessageComponent, {
-    //   width: '600px',
-    //   maxHeight: '90vh',
-    //   panelClass: 'custom-dialog-box',
-    //   data: this.selectedCra
-    // });
+    this.deleteCraDialog.open(CraDeleteMessageComponent, {
+      width: '600px',
+      maxHeight: '90vh',
+      panelClass: 'custom-dialog-box',
+      data: this.selectedCra
+    });
   }
 
   updateItem(cra: Cra) {
