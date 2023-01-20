@@ -25,6 +25,8 @@ public class CraDay
     
     public int Year { get; set; }
     
+    public bool IsHalfDay { get; set; }
+    
     public int CraId { get; set; }
     
     [JsonIgnore]

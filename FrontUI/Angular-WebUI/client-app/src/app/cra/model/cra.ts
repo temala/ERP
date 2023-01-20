@@ -17,8 +17,22 @@ export class Cra implements ISearchable {
         mission!: Mission;
 }
 
-export class craDay extends Date {
-        public isHalfDay: boolean = false;
+export class craDay {
+        public id!:number;
+        public day!: number;
+        public month!: number;
+        public year!: number;
+        public isHalfDay: boolean = false;        
+
+        constructor(date: Date) {
+                this.day = date.getDate();
+                this.month = date.getMonth() + 1;
+                this.year = date.getFullYear();
+        }
+
+        public getValue() {
+                return `${this.day}/${this.month}/${this.year}`;
+        }
 }
 
 export class craPeriod {

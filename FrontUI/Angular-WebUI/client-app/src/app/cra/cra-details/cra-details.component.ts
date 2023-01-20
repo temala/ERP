@@ -1,5 +1,6 @@
+import { craDay } from './../model/cra';
 import { Component, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatCalendar, MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatCalendar } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { CraDeleteMessageComponent } from '../cra-delete-message/cra-delete-message.component';
@@ -39,7 +40,7 @@ export class CraDetailsComponent implements OnInit {
       this.craServices.getCra(this.selectedCra.id.toString()).subscribe(craResult => {
         this.craInfo = craResult;
         this.selectedPeriod.setMonth(craResult.month - 1);
-        this.selectedPeriod.setUTCFullYear(craResult.year);
+        this.selectedPeriod.setFullYear(craResult.year);
         this.calendar.updateTodaysDate();
       });
   }
@@ -63,15 +64,11 @@ export class CraDetailsComponent implements OnInit {
 
   }
 
-  private dateExists(event: any) {
+  private dateExists(event: Date) {
     if (this.craInfo != undefined) {
-      return this.craInfo.days.findIndex(date => toStringDate(event) == toStringDate(date));
+      return this.craInfo.days.findIndex(date => date.getValue() == new craDay(event).getValue());
     }
     return -1;
-
-    function toStringDate(item: Date) {
-      return `${item.getDate()}/${item.getMonth() + 1}/${item.getFullYear()}`;
-    }
   }
 
   private isWeekEnd(event: any) {
@@ -81,8 +78,8 @@ export class CraDetailsComponent implements OnInit {
   updateDays(event: any) {
     if (event.getDate() != null) {
       const index = this.dateExists(event);
-      if (index == -1) {
-        this.craInfo.days.push(event);
+      if (index == -1) {        
+        this.craInfo.days.push(new craDay(event));
       }
       else {
         const selectedDay = this.craInfo.days[index];

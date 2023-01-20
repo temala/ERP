@@ -44,6 +44,6 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=entity.Client};
+        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=request.Client};
     }
 }

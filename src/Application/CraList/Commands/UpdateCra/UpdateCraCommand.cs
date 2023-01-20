@@ -13,7 +13,7 @@ public record UpdateCraCommand : IRequest<Cra>
     
     public int Year { get; set; }
     
-    public DateTime[] days { get; set; }
+    public CraDay[] days { get; set; }
 
     public int MissionId { get; set; }
 }
@@ -39,7 +39,7 @@ public class UpdateCraCommandHandler : IRequestHandler<UpdateCraCommand,Cra>
 
         entity.Month = request.Month;
         entity.Year = request.Year;
-        entity.Days = request.days.Select(day=>new CraDay(){Year =day.Year,Month = day.Month,Day = day.Day}).ToList();
+        entity.Days = request.days.ToList();
         entity.MissionId = request.MissionId;
         
 

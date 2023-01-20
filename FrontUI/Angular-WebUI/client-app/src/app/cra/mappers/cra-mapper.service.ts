@@ -12,7 +12,10 @@ export class CraMapper {
   MapCra(response: any): Cra {
     let result: Cra = {
       id: response.id,
-      days: response.days.map(d => new craDay(d.year,d.month-1,d.day)),
+      days: response.days.map(d => {
+        const day: craDay = {id:d.id, day:d.day,month: d.month,year:d.year,isHalfDay: d.isHalfDay,getValue: craDay.prototype.getValue };
+        return day;
+      } ),
       month: response.month,
       year: response.year,
       mission:response.mission,
@@ -30,7 +33,10 @@ export class CraMapper {
   MapCraListItem(serviceResponsItem: any): CraListItem {
     var craItem =  new CraListItem(serviceResponsItem.id, serviceResponsItem.period);
     craItem.mission=serviceResponsItem.mission;
-    craItem.days=serviceResponsItem.days;
+    craItem.days=serviceResponsItem.days.map(d => {
+      const day: craDay = {id:d.id, day:d.day,month: d.month,year:d.year,isHalfDay: d.isHalfDay,getValue: craDay.prototype.getValue };
+      return day;
+    } );
 
     return craItem;
   }
