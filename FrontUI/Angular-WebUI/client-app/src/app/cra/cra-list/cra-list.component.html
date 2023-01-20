@@ -33,7 +33,7 @@
              
               <ng-container matColumnDef="days">  
                 <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Days number</th>
-                <td mat-cell *matCellDef="let element"> {{element.days.length}}
+                <td mat-cell *matCellDef="let element"> {{element.days | craDaysCount }}
                 </td>
               </ng-container>
       

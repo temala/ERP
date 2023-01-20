@@ -8,6 +8,7 @@ import { CraAddComponent } from './cra-add/cra-add.component';
 import { MaterialModule } from '../core.module';
 import { craPeriodPipe } from './pipes/cra-period.pipe';
 import { CraDeleteMessageComponent } from './cra-delete-message/cra-delete-message.component';
+import { craDaysCount } from './pipes/cra-days-count.pipe';
 
 
 
@@ -18,6 +19,7 @@ import { CraDeleteMessageComponent } from './cra-delete-message/cra-delete-messa
     CraListComponent,
     CraAddComponent,
     craPeriodPipe,
+    craDaysCount,
     CraDeleteMessageComponent,
     ],
     
