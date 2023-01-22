@@ -37,7 +37,7 @@ export class CraDetailsComponent implements OnInit {
 
   getCraInfo() {
     if (this.selectedCra)
-      this.craServices.getCra(this.selectedCra.id.toString()).subscribe(craResult => {
+      this.craServices.getCra(this.selectedCra.id).subscribe(craResult => {
         this.craInfo = craResult;
         this.selectedPeriod.setMonth(craResult.month - 1);
         this.selectedPeriod.setFullYear(craResult.year);
@@ -46,8 +46,20 @@ export class CraDetailsComponent implements OnInit {
   }
 
   onEdit() {
-    this.craServices.Update(this.craInfo).subscribe(craListItem=>{      
+    this.craServices.Update(this.craInfo).subscribe(craListItem => {
       this.eventsServices.CraUpdated.emit(craListItem);
+    });
+  }
+
+  onPrint() {
+    this.craServices.Print(this.craInfo.id).subscribe(data => {
+      var blob = new Blob([data as BlobPart], { type: 'application/pdf' });
+
+      var downloadURL = window.URL.createObjectURL(data as Blob);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "help.pdf";
+      link.click();
     });
   }
 
@@ -78,7 +90,7 @@ export class CraDetailsComponent implements OnInit {
   updateDays(event: any) {
     if (event.getDate() != null) {
       const index = this.dateExists(event);
-      if (index == -1) {        
+      if (index == -1) {
         this.craInfo.days.push(new craDay(event));
       }
       else {
@@ -99,13 +111,11 @@ export class CraDetailsComponent implements OnInit {
 
   isSelected = (event: any) => {
     const index = this.dateExists(event);
-    if( index>= 0)
-    {
+    if (index >= 0) {
       const selectedDay = this.craInfo.days[index];
 
-      if(selectedDay.isHalfDay)
-      {
-          return "morning-selected";
+      if (selectedDay.isHalfDay) {
+        return "morning-selected";
       }
       return "selected"
     }

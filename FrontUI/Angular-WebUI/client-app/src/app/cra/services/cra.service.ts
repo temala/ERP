@@ -20,7 +20,7 @@ export class CraService {
     return this.http.get(`${environment.apiURL}/craList?PageNumber=1&PageSize=10`).pipe(map(response => this.mapper.Map(response)));
   }
 
-  getCra(id: string) {
+  getCra(id: number) {
     return this.http.get(`${environment.apiURL}/craList/GetCraDetails?id=${id}`).pipe(map(response => this.mapper.MapCra(response)));
   }
 
@@ -34,5 +34,12 @@ export class CraService {
 
   Delete(id:number){
     return this.http.delete(`${environment.apiURL}/craList/${id}`);
+  }
+
+  Print(id:number){
+    const httpOptions = {
+      responseType: 'blob' as 'json'
+    };
+    return this.http.get(`${environment.apiURL}/craList/Print?id=${id}`,httpOptions);
   }
 }

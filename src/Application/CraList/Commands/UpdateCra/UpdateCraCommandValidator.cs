@@ -1,7 +1,6 @@
-﻿using ERP.Application.Cras.Commands.UpdateCra;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace ERP.Application.Clients.Commands.UpdateClient;
+namespace ERP.Application.CraList.Commands.UpdateCra;
 
 public class UpdateCraCommandValidator : AbstractValidator<UpdateCraCommand>
 {

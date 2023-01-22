@@ -1,7 +1,7 @@
 using ERP.Application.Common.Mappings;
 using ERP.Domain.Entities;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
+namespace ERP.Application.Missions.Queries.GetMissionsWithPagination;
 
 public class MissionListItemDto : IMapFrom<Mission>
 {

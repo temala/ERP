@@ -1,7 +1,6 @@
-using ERP.Application.Clients.Commands.CreateClient;
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
+namespace ERP.Application.CraList.Commands.CreateCra;
 
 public class CreateCraCommandValidator: AbstractValidator<CreateCraCommand>
 {

@@ -3,7 +3,7 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
 
-namespace ERP.Application.Cras.Commands.UpdateCra;
+namespace ERP.Application.CraList.Commands.UpdateCra;
 
 public record UpdateCraCommand : IRequest<Cra>
 {
@@ -43,7 +43,7 @@ public class UpdateCraCommandHandler : IRequestHandler<UpdateCraCommand,Cra>
         entity.MissionId = request.MissionId;
         
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return entity;
     }

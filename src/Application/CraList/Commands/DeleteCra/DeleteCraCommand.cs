@@ -4,7 +4,7 @@ using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
 
-namespace ERP.Application.Cras.Commands.DeleteCra;
+namespace ERP.Application.CraList.Commands.DeleteCra;
 
 public record DeleteCraCommand(int Id) : IRequest;
 
@@ -31,7 +31,7 @@ public class DeleteCraCommandHandler : IRequestHandler<DeleteCraCommand>
 
         entity.AddDomainEvent(new CraDeletedEvent(entity));
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return Unit.Value;
     }

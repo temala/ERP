@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCraById;
+namespace ERP.Application.CraList.Queries.GetCraById;
 
 // ReSharper disable once UnusedType.Global
 public class GetCraByIdQueryValidator : AbstractValidator<GetCraByIdQuery>

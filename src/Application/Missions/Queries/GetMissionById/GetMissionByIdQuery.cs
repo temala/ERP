@@ -5,7 +5,6 @@ using MediatR;
 
 namespace Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionById;
 
-
 public record GetMissionByIdQuery : IRequest<Mission>
 {
     public int Id { get; init; }
@@ -25,6 +24,8 @@ public class GetMissionByIdQueryHandler : IRequestHandler<GetMissionByIdQuery, M
 
     public async Task<Mission?> Handle(GetMissionByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Missions.FindAsync(request.Id);
+        return await _context.Missions
+            .FindAsync(request.Id, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

@@ -1,5 +1,3 @@
-using ERP.Application.Clients.Commands.CreateClient;
-using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
@@ -7,7 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
 
-namespace Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
+namespace ERP.Application.CraList.Commands.CreateCra;
 
 public class CreateCraCommand: IRequest<CraListItemDto>
 {
@@ -15,7 +13,7 @@ public class CreateCraCommand: IRequest<CraListItemDto>
     
     public int Year { get; set; }
     
-    public DateTime[] Days { get; set; }
+    public CraDay[] Days { get; set; }
 
     public int MissionId { get; set; }
     
@@ -38,14 +36,14 @@ public class CreateCraCommandHandler : IRequestHandler<CreateCraCommand, CraList
             Month = request.Month,
             Year = request.Year,
             MissionId = request.MissionId,
-            Days = request.Days.Select(day=>new CraDay(){Year = day.Year,Month = day.Month,Day = day.Day}).ToList()
+            Days = request.Days.Select(day=>new CraDay(){Year = day.Year,Month = day.Month,Day = day.Day, IsHalfDay = day.IsHalfDay}).ToList()
         };
 
         entity.AddDomainEvent(new CraCreatedEvent(entity));
 
         _context.CraList.Add(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         var savedCra = _context.CraList.Include(cra=>cra.Mission).OrderBy(cra=>cra.Id).Last();
         

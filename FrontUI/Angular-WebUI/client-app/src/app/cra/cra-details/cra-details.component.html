@@ -7,11 +7,15 @@
           <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
             <button (click)="onEdit()" mat-flat-button color="primary" class="action">
               <mat-icon class="mr-2">save</mat-icon>
-              <span i18n>Save</span>
+              <span i18n> Save</span>
             </button>
+            <button (click)="onPrint()" mat-flat-button color="primary" class="action">
+                <mat-icon class="mr-2">print</mat-icon>
+                <span i18n> Print</span>
+              </button>
             <button (click)="onDelete()" mat-flat-button color="accent" class="action">
               <mat-icon class="mr-2">delete</mat-icon>
-              <span i18n>Delete</span>
+              <span i18n> Delete</span>
             </button>
           </div>
         </mat-toolbar>

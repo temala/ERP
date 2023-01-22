@@ -1,10 +1,9 @@
-using AutoMapper;
 using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCraById;
+namespace ERP.Application.CraList.Queries.GetCraById;
 
 
 public record GetCraByIdQuery : IRequest<Cra>
@@ -16,16 +15,16 @@ public record GetCraByIdQuery : IRequest<Cra>
 public class GetCraByIdQueryHandler : IRequestHandler<GetCraByIdQuery, Cra?>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public GetCraByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetCraByIdQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<Cra?> Handle(GetCraByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _context.CraList.Include(cra => cra.Days).Include(c=>c.Mission).FirstOrDefaultAsync(cra => cra.Id == request.Id);
+        return await _context.CraList.Include(cra => cra.Days).Include(c=>c.Mission)
+            .FirstOrDefaultAsync(cra => cra.Id == request.Id, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
     }
 }

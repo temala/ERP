@@ -1,12 +1,14 @@
+using System.Net.Mime;
 using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Application.Common.Models;
 using ERP.Application.Common.Security;
-using ERP.Application.Cras.Commands.DeleteCra;
-using ERP.Application.Cras.Commands.UpdateCra;
+using ERP.Application.CraList.Commands.CreateCra;
+using ERP.Application.CraList.Commands.DeleteCra;
+using ERP.Application.CraList.Commands.UpdateCra;
+using ERP.Application.CraList.Queries.GetCraById;
+using ERP.Application.CraList.Queries.PrintCraById;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection.Cras.Commands.CreateCra;
-using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCraById;
 using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
 
 namespace ERP.WebUI.Controllers;
@@ -24,6 +26,14 @@ public class CraListController : ApiControllerBase
     public async Task<ActionResult<Cra>> GetCraDetails([FromQuery] GetCraByIdQuery query)
     {
         return await Mediator.Send(query);
+    }
+    
+    [HttpGet("Print")]
+    public async Task<FileResult> GetCraDetails([FromQuery] PrintCraByIdQuery query)
+    {
+        var stream = await Mediator.Send(query);
+        
+        return File(stream, MediaTypeNames.Application.Pdf, "cra.pdf");
     }
 
     [HttpPost]
