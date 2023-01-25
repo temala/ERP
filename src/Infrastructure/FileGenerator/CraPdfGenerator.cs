@@ -46,7 +46,7 @@ public class CraPdfGenerator : IPdfGenerator<Cra>
         };
         table.TotalWidth = document.PageSize.Width - 70;
         table.LockedWidth = true;
-        table.SetWidths(new []{30f,10f,60f});
+        table.SetWidths(new []{35f,5f,60f});
         
         return table;
     }
@@ -78,8 +78,10 @@ public class CraPdfGenerator : IPdfGenerator<Cra>
         
         var phrase = new Phrase($"COMPTE RENDU D'ACTIVITÉ MENSUEL {new DateTime(entity.Year, entity.Month, 1):yyyy-MMMM}", PdfTheme.Header);
         var paragraph = new Paragraph(phrase) {Alignment = Element.ALIGN_CENTER};
-        
+        var mission = new Paragraph(new Phrase($"{entity.Mission.Name}", PdfTheme.CellTextBigFont)){Alignment = Element.ALIGN_CENTER};
+
         document.Add(paragraph);
+        document.Add(mission);
         
         document.Add(Chunk.SPACETABBING);
 
