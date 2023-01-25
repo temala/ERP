@@ -7,10 +7,16 @@ namespace Microsoft.Extensions.DependencyInjection.FileGenerator;
 
 public class CraPdfGenerator : IPdfGenerator<Cra>
 {
+    
     private PdfPTable GenerateDaysTable(Cra entity)
     {
-        var table = new PdfPTable(2);
-
+        var table = new PdfPTable(2)
+            {
+                DefaultCell = {Border = Rectangle.NO_BORDER},
+                SpacingBefore = 0,
+                SpacingAfter = 0
+            };
+        
         table.AddDayHeader();
 
         for (int i = 1; i <= DateTime.DaysInMonth(entity.Year, entity.Month); i++)
@@ -30,24 +36,59 @@ public class CraPdfGenerator : IPdfGenerator<Cra>
         return table;
     }
 
+    private PdfPTable GenerateLayoutTable(Document document)
+    {
+        var table = new PdfPTable(3)
+        {
+            DefaultCell = {Border = Rectangle.NO_BORDER},
+            SpacingBefore = 0,
+            SpacingAfter = 0,
+        };
+        table.TotalWidth = document.PageSize.Width - 70;
+        table.LockedWidth = true;
+        table.SetWidths(new []{30f,10f,60f});
+        
+        return table;
+    }
+
+    private PdfPTable GenerateInformationTable(Cra entity)
+    {
+        var table = new PdfPTable(1)
+        {
+            DefaultCell = {Border = Rectangle.NO_BORDER},
+            SpacingBefore = 0,
+            SpacingAfter = 0
+        };
+        table.AddCraSummaryCell(entity);
+        table.AddCraSummaryEmptyCell();
+        table.AddCraClientCell(entity);
+        table.AddCraSummaryEmptyCell();
+        table.AddCraEmployeeCell(entity);
+        table.AddCraSummaryEmptyCell();
+        table.AddCraNoteCell();
+        
+        return table;
+    }
     public Stream GeneratePdf(Cra entity)
     {
         var document = new Document();
         var stream = new MemoryStream();
         var pdfWriter = PdfWriter.GetInstance(document, stream);
         document.Open();
+        
+        var phrase = new Phrase($"COMPTE RENDU D'ACTIVITÉ MENSUEL {new DateTime(entity.Year, entity.Month, 1):yyyy-MMMM}", PdfTheme.Header);
+        var paragraph = new Paragraph(phrase) {Alignment = Element.ALIGN_CENTER};
+        
+        document.Add(paragraph);
+        
+        document.Add(Chunk.SPACETABBING);
 
-        // Add invoice information to the document
-        var font = FontFactory.GetFont(FontFactory.HELVETICA, 14);
-        var phrase = new Phrase("CRA", font);
-        document.Add(phrase);
-        document.Add(new Paragraph($"Number: {new DateTime(entity.Year, entity.Month, 1):yyyy-MMMM}"));
-        document.Add(new Paragraph("Date: " + DateTime.Now));
-        document.Add(new Paragraph($"Mission: {entity.Mission.Name}"));
-        document.Add(new Paragraph($"Client: {entity.Mission!.Client!.Name}"));
+        var layout = GenerateLayoutTable(document)
+            .AddLayoutCraCell(GenerateDaysTable(entity))
+            .AddEmptyCell()
+            .AddLayoutCraCell(GenerateInformationTable(entity));
 
-
-        document.Add(GenerateDaysTable(entity));
+        document.Add(layout);
         
         pdfWriter.CloseStream = false;
         
@@ -56,33 +97,5 @@ public class CraPdfGenerator : IPdfGenerator<Cra>
         stream.Position = 0;
 
         return stream;
-    }
-}
-
-public static class PdfExtensions
-{
-    public static DateTime ToDateTime(this CraDay day)
-    {
-        return new DateTime(day.Year, day.Month, day.Day);
-    }
-
-    public static void AddDayHeader(this PdfPTable table)
-    {
-        table.AddCell("Jour");
-        table.AddCell("Durée");
-    }
-
-    public static void AddDay(this PdfPTable table, CraDay day)
-    {
-        var date = day.ToDateTime();
-
-        table.AddCell(date.ToString("dddd d"));
-        table.AddCell(day.IsHalfDay ? "0.5" : "1");
-    }
-
-    public static void AddEmptyDay(this PdfPTable table, DateTime day)
-    {
-        table.AddCell(day.ToString("dddd d"));
-        table.AddCell("0");
     }
 }
