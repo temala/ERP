@@ -58,7 +58,7 @@ export class CraDetailsComponent implements OnInit {
       var downloadURL = window.URL.createObjectURL(data as Blob);
       var link = document.createElement('a');
       link.href = downloadURL;
-      link.download = "help.pdf";
+      link.download = "CRA.pdf";
       link.click();
     });
   }
