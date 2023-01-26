@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ERP.Application.Clients.Queries.GetClientsWithPagination;
+namespace ERP.Application.Missions.Queries.GetMissionsWithPagination;
 
 // ReSharper disable once UnusedType.Global
 public class GetMissionsWithPaginationQueryValidator : AbstractValidator<GetMissionsWithPaginationQuery>

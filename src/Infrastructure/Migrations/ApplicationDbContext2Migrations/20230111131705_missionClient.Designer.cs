@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 {
-    [DbContext(typeof(ApplicationDbContext2))]
+    [DbContext(typeof(ApplicationMigrationDbContext))]
     [Migration("20230111131705_missionClient")]
     partial class missionClient
     {

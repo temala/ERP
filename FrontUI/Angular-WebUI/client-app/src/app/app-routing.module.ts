@@ -1,3 +1,4 @@
+import { CraListComponent } from './cra/cra-list/cra-list.component';
 import { LoginComponent } from './../api-authorization/login/login.component';
 import { ClientListComponent } from './client/client-list/client-list.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: '', component: ClientListComponent, canActivate: [AuthorizeGuard] },
   { path: 'client', component: ClientListComponent,canActivate: [AuthorizeGuard] },
   { path: 'mission', component: MissionListComponent,canActivate: [AuthorizeGuard] },
+  { path: 'cra', component: CraListComponent,canActivate: [AuthorizeGuard] },
   { path: 'authentication', component: LoginComponent, canActivate: [AuthorizeGuard] },
 ];
 

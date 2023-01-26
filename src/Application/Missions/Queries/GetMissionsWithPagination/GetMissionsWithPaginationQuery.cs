@@ -4,9 +4,8 @@ using ERP.Application.Common.Interfaces;
 using ERP.Application.Common.Mappings;
 using ERP.Application.Common.Models;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
 
-namespace ERP.Application.Clients.Queries.GetClientsWithPagination;
+namespace ERP.Application.Missions.Queries.GetMissionsWithPagination;
 
 public record GetMissionsWithPaginationQuery : IRequest<PaginatedList<MissionListItemDto>>
 {
@@ -31,6 +30,7 @@ public class GetMissionsWithPaginationQueryHandler : IRequestHandler<GetMissions
         return await _context.Missions
             .OrderBy(x => x.Name)
             .ProjectTo<MissionListItemDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .PaginatedListAsync(request.PageNumber, request.PageSize)
+            .ConfigureAwait(false);
     }
 }

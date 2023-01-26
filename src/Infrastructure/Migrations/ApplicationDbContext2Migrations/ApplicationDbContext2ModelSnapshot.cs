@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 {
-    [DbContext(typeof(ApplicationDbContext2))]
+    [DbContext(typeof(ApplicationMigrationDbContext))]
     partial class ApplicationDbContext2ModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -85,6 +85,72 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("ERP.Domain.Entities.Cra", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MissionId");
+
+                    b.ToTable("CraList");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.CraDay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CraId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHalfDay")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CraId");
+
+                    b.ToTable("CraDays");
+                });
+
             modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +191,28 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                     b.ToTable("Missions");
                 });
 
+            modelBuilder.Entity("ERP.Domain.Entities.Cra", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.Mission", "Mission")
+                        .WithMany()
+                        .HasForeignKey("MissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mission");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.CraDay", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.Cra", "Cra")
+                        .WithMany("Days")
+                        .HasForeignKey("CraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cra");
+                });
+
             modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>
                 {
                     b.HasOne("ERP.Domain.Entities.Client", "Client")
@@ -134,6 +222,11 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.Cra", b =>
+                {
+                    b.Navigation("Days");
                 });
 #pragma warning restore 612, 618
         }

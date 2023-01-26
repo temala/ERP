@@ -3,11 +3,11 @@ using ERP.Application.Common.Models;
 using ERP.Application.Common.Security;
 using ERP.Application.Missions.Commands.DeleteMission;
 using ERP.Application.Missions.Commands.UpdateMission;
+using ERP.Application.Missions.Queries.GetMissionsWithPagination;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
 using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionById;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
 
 namespace ERP.WebUI.Controllers;
 

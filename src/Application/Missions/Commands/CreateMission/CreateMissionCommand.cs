@@ -1,10 +1,10 @@
 using ERP.Application.Clients.Commands.CreateClient;
 using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Application.Common.Interfaces;
+using ERP.Application.Missions.Queries.GetMissionsWithPagination;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionsWithPagination;
 
 namespace Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
 
@@ -44,6 +44,6 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=entity.Client};
+        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=request.Client};
     }
 }
