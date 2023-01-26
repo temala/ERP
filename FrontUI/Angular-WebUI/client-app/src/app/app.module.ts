@@ -13,6 +13,7 @@ import {ApiAuthorizationModule} from "../api-authorization/api-authorization.mod
 import {ClientListComponent} from "./client/client-list/client-list.component";
 import { MissionModule } from './mission/mission.module';
 import { CraModule } from './cra/cra.module';
+import { InvoiceModule } from './Invoice/invoice.module';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { CraModule } from './cra/cra.module';
         ClientModule,
         MissionModule,
         CraModule,
+        InvoiceModule,
         MaterialModule,
     ],
     providers: [

@@ -36,5 +36,10 @@ export class AppComponent {
       icon: 'calendar_today',
       link: '/cra',
     },
+    {
+      title: $localize `Invoices`,
+      icon: 'receipt',
+      link: '/invoice',
+    },
   ];
 }

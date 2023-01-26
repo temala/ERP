@@ -1,0 +1,13 @@
+<mat-toolbar color="accent">
+        <span i18n>Delete invoice {{invoiceToDelete.name}}</span>
+      </mat-toolbar>
+      <div class="small-padding">
+        <h3 i18n>You are about to deleted a invoice</h3>
+        <h4 i18n>Once the invoice is delete we will not be able to restore it.</h4>
+        <h4 i18n>all related invoices will be set in a junk state. it is possible to relate them to a new invoice</h4>
+      
+      </div>
+      <mat-divider></mat-divider>
+      <div class="action-padding">
+        <button mat-button (click)="onDelete()">Ok</button>
+      </div>

@@ -1,3 +1,4 @@
+import { InvoiceListComponent } from './Invoice/invoice-list/invoice-list.component';
 import { CraListComponent } from './cra/cra-list/cra-list.component';
 import { LoginComponent } from './../api-authorization/login/login.component';
 import { ClientListComponent } from './client/client-list/client-list.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'client', component: ClientListComponent,canActivate: [AuthorizeGuard] },
   { path: 'mission', component: MissionListComponent,canActivate: [AuthorizeGuard] },
   { path: 'cra', component: CraListComponent,canActivate: [AuthorizeGuard] },
+  { path: 'invoice', component: InvoiceListComponent,canActivate: [AuthorizeGuard] },
   { path: 'authentication', component: LoginComponent, canActivate: [AuthorizeGuard] },
 ];
 

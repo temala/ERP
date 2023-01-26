@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <span i18n>New invoice</span>
+</mat-toolbar>
+
+<form [formGroup]="addInvoiceForm" (ngSubmit)="AddInvoice(addInvoiceForm)" fxLayout="column">
+  <div class="small-padding">
+    <div class="input-row">
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Client</mat-label>
+        <mat-select matInput formControlName="client">
+          <mat-option *ngFor="let client of clients" [value]="client">{{client.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <h3 class="small-padding" i18n>Invoice information</h3>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>Price H.T</mat-label>
+        <input matInput formControlName="priceHT">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label i18n>TVA %</mat-label>
+        <input matInput formControlName="tva">
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="action-padding">
+    <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+  </div>
+</form>
