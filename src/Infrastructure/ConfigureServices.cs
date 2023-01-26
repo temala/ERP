@@ -1,5 +1,6 @@
 ﻿using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
+using ERP.Infrastructure.FileGenerator;
 using ERP.Infrastructure.Identity;
 using ERP.Infrastructure.Persistence;
 using ERP.Infrastructure.Persistence.Interceptors;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection.FileGenerator;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

@@ -2,7 +2,7 @@ using ERP.Domain.Entities;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace Microsoft.Extensions.DependencyInjection.FileGenerator;
+namespace ERP.Infrastructure.FileGenerator;
 
 public static class PdfExtensions
 {
@@ -102,7 +102,28 @@ public static class PdfExtensions
         table.AddCell(cell2);
     }
     
-    public static void AddCraSummaryCell(this PdfPTable table, Cra craInfo)
+    public static void AddPdfMissionHeader(this Document document, Cra entity)
+    {
+        var mission =
+            new Paragraph(new Phrase($"{entity.Mission.Name}", PdfTheme.CellTextBigFont))
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+        
+        document.Add(mission);
+    }
+
+    public static void AddPdfFileHeader(this Document document, Cra entity)
+    {
+        var phrase =
+            new Phrase($"COMPTE RENDU D'ACTIVITÉ MENSUEL {new DateTime(entity.Year, entity.Month, 1):yyyy-MMMM}",
+                PdfTheme.Header);
+        var paragraph = new Paragraph(phrase) {Alignment = Element.ALIGN_CENTER};
+        
+        document.Add(paragraph);
+    }
+    
+    public static PdfPTable AddCraSummaryCell(this PdfPTable table, Cra craInfo)
     {
         var cell1 = new PdfPCell(new Phrase("Temps du travail",PdfTheme.CellHeaderFont)) {PaddingBottom = 10};
         cell1.AddEvenStyle(Element.ALIGN_LEFT);
@@ -123,9 +144,11 @@ public static class PdfExtensions
         table.AddCell(cell1);
         table.AddCell(cell2);
         table.AddCell(cell3);
+
+        return table;
     }
     
-    public static void AddCraClientCell(this PdfPTable table, Cra craInfo)
+    public static PdfPTable AddCraClientCell(this PdfPTable table, Cra craInfo)
     {
         var cell1 = new PdfPCell(new Phrase("Client", PdfTheme.CellHeaderFont));
         cell1.AddEvenStyle(Element.ALIGN_LEFT);
@@ -142,9 +165,11 @@ public static class PdfExtensions
         table.AddCell(cell1);
         table.AddCell(cell2);
         table.AddCell(cell3);
+
+        return table;
     }
     
-    public static void AddCraEmployeeCell(this PdfPTable table, Cra craInfo)
+    public static PdfPTable AddCraEmployeeCell(this PdfPTable table, Cra craInfo)
     {
         var cell1 = new PdfPCell(new Phrase("Prestataire", PdfTheme.CellHeaderFont));
         cell1.AddEvenStyle(Element.ALIGN_LEFT);
@@ -161,9 +186,11 @@ public static class PdfExtensions
         table.AddCell(cell1);
         table.AddCell(cell2);
         table.AddCell(cell3);
+
+        return table;
     }
     
-    public static void AddCraNoteCell(this PdfPTable table)
+    public static PdfPTable AddCraNoteCell(this PdfPTable table)
     {
         var cell1 = new PdfPCell(new Phrase("Note", PdfTheme.CellHeaderFont));
         cell1.AddEvenStyle(Element.ALIGN_LEFT);
@@ -176,16 +203,19 @@ public static class PdfExtensions
 
         table.AddCell(cell1);
         table.AddCell(cell2);
+
+        return table;
     }
     
-    public static void AddCraSummaryEmptyCell(this PdfPTable table)
+    public static PdfPTable AddCraSummaryEmptyCell(this PdfPTable table)
     {
         var cell1 = new PdfPCell(new Phrase(" ")) {PaddingBottom = 10};
         cell1.AddOddStyle(Element.ALIGN_LEFT);
 
         table.AddCell(cell1);
+
+        return table;
     }
-    
     
     public static PdfPTable AddLayoutCraCell(this PdfPTable table, PdfPTable craTable)
     {
@@ -201,7 +231,7 @@ public static class PdfExtensions
         return table;
     }
     
-    public static PdfPTable AddEmptyCell(this PdfPTable table)
+    public static PdfPTable AddLayoutEmptyCell(this PdfPTable table)
     {
         var craCell = new PdfPCell()
         {
@@ -212,5 +242,4 @@ public static class PdfExtensions
         table.AddCell(craCell);
         return table;
     }
-
 }
