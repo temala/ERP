@@ -6,6 +6,7 @@ import { ClientListItem } from 'src/app/client/model/client-list-item';
 import { ClientService } from 'src/app/client/services/client.service';
 import { MissionEventsService } from '../services/mission-events.service';
 import { MissionService } from '../services/mission.service';
+import { Mission } from '../model/mission';
 
 @Component({
   selector: 'app-mission-add',
@@ -36,13 +37,12 @@ export class MissionAddComponent implements OnInit {
   }
 
   AddMission(form: UntypedFormGroup) {
-    this.missionServices.Add({
-      id: 0,
-      name: form.value.name,
-      priceHT: form.value.priceHT,
-      tva: form.value.tva,
-      client:new Client(form.value.client.id,form.value.client.name),      
-    }).subscribe(result => {
+    let mission = new Mission(form.value.id, form.value.name);
+    mission.priceHT = form.value.priceHT;
+    mission.tva = form.value.tva;
+    mission.client = new Client(form.value.client.id, form.value.client.name);
+    
+    this.missionServices.Add(mission).subscribe(result => {
       this.dialogRef.close();
       this.missionEventsServices.MissionCreated.emit(result);
     });

@@ -16,29 +16,28 @@ import { ClientService } from 'src/app/client/services/client.service';
 })
 export class InvoiceUpdateComponent implements OnInit {
 
-  
-  constructor(private invoiceServices: InvoiceService,private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<InvoiceUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: InvoiceListItem,private eventsServices: InvoiceEventsService) { }
+
+  constructor(private invoiceServices: InvoiceService, private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<InvoiceUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: InvoiceListItem, private eventsServices: InvoiceEventsService) { }
 
   updateInvoiceForm: UntypedFormGroup = new UntypedFormGroup({});
 
-  clients!:ClientListItem[];
-  
+  clients!: ClientListItem[];
+
   ngOnInit(): void {
     this.updateInvoiceForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.maxLength(70)]],
       id: [null, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]],
       priceHT: [null],
-      tva: [null],    
-      client:[null], 
+      tva: [null],
+      client: [null],
     });
 
     if (this.data) {
       this.updateInvoiceForm.setValue({
-        id: this.data.id,
-        name: this.data.name,
-        priceHT: this.data.HT,
-        tva: this.data.TVA,
-        client:this.data.Client,   
+        invoiceId: [null, [Validators.required, Validators.maxLength(70)]],
+        billingDate: [null],
+        dueDate: [null],
+        client: [null],
       });
     }
 
@@ -49,12 +48,12 @@ export class InvoiceUpdateComponent implements OnInit {
 
   UpdateInvoice(form: UntypedFormGroup) {
     this.invoiceServices.Update({
-      id: form.value.id,
-      name: form.value.name,
-      priceHT: form.value.priceHT,
-      tva: form.value.tva,
-      client:new Client(form.value.client.id,form.value.client.name),   
-    }).subscribe(invoiceListItem=>{
+      invoiceId: form.value.invoiceId,
+      billingDate: form.value.billingDate,
+      dueDate: form.value.dueDate,
+      message: form.value.message,
+      client: new Client(form.value.client.id, form.value.client.name),
+    }).subscribe(invoiceListItem => {
       this.dialogRef.close();
       this.eventsServices.InvoiceUpdated.emit(invoiceListItem);
     });

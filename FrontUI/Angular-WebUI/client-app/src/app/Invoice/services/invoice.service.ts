@@ -25,7 +25,7 @@ export class InvoiceService {
   }
 
   Update(invoice:Invoice){
-    return this.http.put(`${environment.apiURL}/invoices?id=${invoice.id}`,invoice).pipe(map(response => this.mapper.MapInvoice(response)));
+    return this.http.put(`${environment.apiURL}/invoices?id=${invoice.invoiceId}`,invoice).pipe(map(response => this.mapper.MapInvoice(response)));
   }
 
   Add(invoice:Invoice){

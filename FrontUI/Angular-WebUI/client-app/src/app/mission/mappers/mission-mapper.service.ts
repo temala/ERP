@@ -7,14 +7,12 @@ import {MissionListItem} from "../model/mission-list-item";
 export class MissionMapper {
 
   MapMission(response: any): Mission {
-    let result: Mission = {
-      id: response.id,
-      name: response.name,
-      priceHT: response.priceHT,
-      tva: response.tva,
-      client:response.client,    
-    };
-
+    let result =new  Mission(response.id,response.name);
+    
+    result.priceHT= response.priceHT;
+    result.tva= response.tva;
+    result.client=response.client;
+    
     return result;
   }
 

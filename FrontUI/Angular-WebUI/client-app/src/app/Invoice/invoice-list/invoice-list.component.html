@@ -4,10 +4,10 @@
             <span i18n>Invoices</span>
             <div fxLayout="row" fxLayoutAlign="space-between center">
               <app-search (searching)="find($event)"></app-search>
-              <button (click)="openDialog()" mat-flat-button color="primary" class="action">
+              <a [routerLink]="['create-invoice']" mat-flat-button color="primary" class="action">
                 <mat-icon class="mr-2">add</mat-icon>
                 <span i18n>New invoice</span>
-              </button>
+              </a>
             </div>
           </mat-toolbar>
           <div>

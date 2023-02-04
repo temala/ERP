@@ -8,10 +8,10 @@ export class InvoiceMapper {
 
   MapInvoice(response: any): Invoice {
     let result: Invoice = {
-      id: response.id,
-      name: response.name,
-      priceHT: response.priceHT,
-      tva: response.tva,
+      invoiceId: response.id,
+      dueDate: response.dueDate,
+      billingDate: response.billingDate,
+      message: response.message,
       client:response.client,    
     };
 

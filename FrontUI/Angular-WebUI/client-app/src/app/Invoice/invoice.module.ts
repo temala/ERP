@@ -8,7 +8,8 @@ import { InvoiceDetailsEmptyComponent } from './invoice-details-empty/invoice-de
 import { InvoiceAddComponent } from './invoice-add/invoice-add.component';
 import { InvoiceUpdateComponent } from './invoice-update/invoice-update.component';
 import { InvoiceDeleteMessageComponent } from './invoice-delete-message/invoice-delete-message.component';
-
+import {RouterModule} from '@angular/router';
+import { InvoiceLineComponent } from './invoice-line/invoice-line.component';
 
 
 @NgModule({
@@ -18,11 +19,13 @@ import { InvoiceDeleteMessageComponent } from './invoice-delete-message/invoice-
     InvoiceDetailsEmptyComponent,
     InvoiceAddComponent,
     InvoiceUpdateComponent,
-    InvoiceDeleteMessageComponent
+    InvoiceDeleteMessageComponent,
+    InvoiceLineComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    RouterModule,
   ],
   providers: [InvoiceMapper]
 })

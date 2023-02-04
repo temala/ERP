@@ -34,7 +34,7 @@ export class InvoiceDetailsComponent implements OnInit , OnChanges{
   getInvoiceInfo() {
     if (this.selectedInvoice)
       this.clientServices.getInvoice(this.selectedInvoice.id).subscribe(invoiceResult => {
-        this.invoiceInfo = new InvoiceListItem(invoiceResult.id.toString(),invoiceResult.name,invoiceResult.priceHT,invoiceResult.tva,this.selectedInvoice.Client);
+        // this.invoiceInfo = new InvoiceListItem(invoiceResult.id.toString(),invoiceResult.name,invoiceResult.priceHT,invoiceResult.tva,this.selectedInvoice.Client);
       });
   }
 
@@ -57,11 +57,11 @@ export class InvoiceDetailsComponent implements OnInit , OnChanges{
   }
 
   updateItem(invoice:Invoice) {
-    this.invoiceInfo = new InvoiceListItem(invoice.id.toString(),invoice.name,invoice.priceHT,invoice.tva,invoice.client);
-    this.selectedInvoice.name = invoice.name;
-    this.selectedInvoice.HT = invoice.priceHT;
-    this.selectedInvoice.TVA = invoice.tva;
-    this.selectedInvoice.Client = invoice.client;
+    //this.invoiceInfo = new InvoiceListItem(invoice.id.toString(),invoice.name,invoice.priceHT,invoice.tva,invoice.client);
+    //this.selectedInvoice.name = invoice.name;
+    //this.selectedInvoice.HT = invoice.priceHT;
+    //this.selectedInvoice.TVA = invoice.tva;
+    //this.selectedInvoice.Client = invoice.client;
   }
 
 }
