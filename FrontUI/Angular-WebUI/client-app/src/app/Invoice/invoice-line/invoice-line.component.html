@@ -1,0 +1,40 @@
+<div class="input-row">
+        <div fxLayout="row" fxLayoutAlign="space-around">
+
+                <div  fxFlex="30" class="me-2">
+                        <mat-label i18n>Description</mat-label>
+                        <mat-select matInput (selectionChange)="productSelectionChange($event)">
+                                <mat-option *ngFor="let selectedProduct of products" [value]="selectedProduct">{{selectedProduct.name}}</mat-option>
+                        </mat-select>
+                </div>
+                <div  fxFlex="20">
+                        <mat-label i18n>Date</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="invoiceLine.date">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <div fxFlex="5">
+                        <mat-label i18n>Qte</mat-label>
+                        <input matInput [(ngModel)]="invoiceLine.quantity">
+                </div>
+                <div  fxFlex="5">
+                        <mat-label i18n>Unit</mat-label>
+                        <mat-select matInput [(ngModel)]="invoiceLine.unit">
+                                <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
+                        </mat-select>
+                </div>
+                <div fxFlex="10">
+                        <mat-label i18n>Price H.T</mat-label>
+                        <input matInput [(ngModel)]="invoiceLine.priceHT">
+                </div>
+                <div fxFlex="10">
+                        <mat-label i18n>TVA %</mat-label>
+                        <input matInput [(ngModel)]="invoiceLine.tva">
+                </div>
+                <div fxFlex="10">
+                        <mat-label i18n>Price T.T.C</mat-label>
+                        <input matInput [ngModel]="invoiceLine.TTC">
+                </div>
+        </div>
+
+</div>
