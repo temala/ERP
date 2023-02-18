@@ -10,18 +10,18 @@ import { MissionListComponent } from './mission/mission-list/mission-list.compon
 import { InvoiceAddComponent } from './Invoice/invoice-add/invoice-add.component';
 
 const routes: Routes = [
-  { path: '', component: ClientListComponent, canActivate: [AuthorizeGuard] },
-  { path: 'client', component: ClientListComponent, canActivate: [AuthorizeGuard] },
-  { path: 'mission', component: MissionListComponent, canActivate: [AuthorizeGuard] },
-  { path: 'cra', component: CraListComponent, canActivate: [AuthorizeGuard] },
+  { path: '', component: ClientListComponent, canLoad: [AuthorizeGuard] },
+  { path: 'client', component: ClientListComponent, canLoad: [AuthorizeGuard] },
+  { path: 'mission', component: MissionListComponent, canLoad: [AuthorizeGuard] },
+  { path: 'cra', component: CraListComponent, canLoad: [AuthorizeGuard] },
   {
     path: 'invoice',    
     children: [
-      { path: '', component: InvoiceListComponent, pathMatch: 'full' },
-      { path: 'create-invoice', component: InvoiceAddComponent, canActivate: [AuthorizeGuard] }
+      { path: '', component: InvoiceListComponent, pathMatch: 'full',canLoad: [AuthorizeGuard] },
+      { path: 'create-invoice', component: InvoiceAddComponent, canLoad: [AuthorizeGuard] }
     ]
   },
-  { path: 'authentication', component: LoginComponent, canActivate: [AuthorizeGuard] },
+  { path: 'authentication', component: LoginComponent, canLoad: [AuthorizeGuard] },
 ];
 
 @NgModule({

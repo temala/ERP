@@ -151,13 +151,16 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                     b.ToTable("CraDays");
                 });
 
-            modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>
+            modelBuilder.Entity("ERP.Domain.Entities.Invoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BilligDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -166,6 +169,83 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DueDate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Identifier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.InvoiceLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("InvoiceLines");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModified")
@@ -186,9 +266,38 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("Product");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("InvoiceLinesMap", b =>
+                {
+                    b.Property<int>("InvoiceLinesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InvoicesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InvoiceLinesId", "InvoicesId");
+
+                    b.HasIndex("InvoicesId");
+
+                    b.ToTable("InvoiceLinesMap");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>
+                {
+                    b.HasBaseType("ERP.Domain.Entities.Product");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Missions");
+                    b.HasDiscriminator().HasValue("Mission");
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Cra", b =>
@@ -211,6 +320,43 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                         .IsRequired();
 
                     b.Navigation("Cra");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.Invoice", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.InvoiceLine", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("InvoiceLinesMap", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.InvoiceLine", null)
+                        .WithMany()
+                        .HasForeignKey("InvoiceLinesId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ERP.Domain.Entities.Invoice", null)
+                        .WithMany()
+                        .HasForeignKey("InvoicesId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>

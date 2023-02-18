@@ -3,8 +3,8 @@ using ERP.Application.Clients.Commands.CreateClient;
 using ERP.Application.Clients.Commands.DeleteClient;
 using ERP.Application.Clients.Commands.UpdateClient;
 using ERP.Application.Clients.Queries.GetClientsWithPagination;
+using ERP.Application.Common.Security;
 using ERP.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection.Clients.Queries.GetClientById;
 

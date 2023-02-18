@@ -8,6 +8,7 @@ import { InvoiceEventsService } from '../services/invoice-events.service';
 import { InvoiceService } from '../services/invoice.service';
 import { ClientListItem } from 'src/app/client/model/client-list-item';
 import { ClientService } from 'src/app/client/services/client.service';
+import { InvoiceLine } from '../model/InvoiceLine';
 
 @Component({
   selector: 'app-invoice-update',
@@ -22,7 +23,8 @@ export class InvoiceUpdateComponent implements OnInit {
   updateInvoiceForm: UntypedFormGroup = new UntypedFormGroup({});
 
   clients!: ClientListItem[];
-
+  lines:InvoiceLine[] = [];
+  
   ngOnInit(): void {
     this.updateInvoiceForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.maxLength(70)]],
@@ -48,11 +50,13 @@ export class InvoiceUpdateComponent implements OnInit {
 
   UpdateInvoice(form: UntypedFormGroup) {
     this.invoiceServices.Update({
+      id:"",
       invoiceId: form.value.invoiceId,
       billingDate: form.value.billingDate,
       dueDate: form.value.dueDate,
       message: form.value.message,
       client: new Client(form.value.client.id, form.value.client.name),
+      invoiceLines:this.lines,
     }).subscribe(invoiceListItem => {
       this.dialogRef.close();
       this.eventsServices.InvoiceUpdated.emit(invoiceListItem);

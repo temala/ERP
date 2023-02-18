@@ -19,10 +19,19 @@ public class ApplicationMigrationDbContext: DbContext
     public DbSet<Cra> CraList => Set<Cra>();
     public DbSet<CraDay> CraDays => Set<CraDay>();
     
+    public DbSet<Invoice> Invoices  => Set<Invoice>();
+    public DbSet<InvoiceLine> InvoiceLines  => Set<InvoiceLine>();
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        
+        builder.Entity<Invoice>()
+            .HasMany(i => i.InvoiceLines)
+            .WithMany(l => l.Invoices)
+            .UsingEntity<Dictionary<string, Object>>(
+                "InvoiceLinesMap",
+                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.NoAction)
+            );
         base.OnModelCreating(builder);
     }
 
@@ -53,11 +62,21 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Mission> Missions => Set<Mission>();
     public DbSet<Cra> CraList => Set<Cra>();
     public DbSet<CraDay> CraDays => Set<CraDay>();
+
+    public DbSet<Invoice> Invoices  => Set<Invoice>();
+    public DbSet<InvoiceLine> InvoiceLines  => Set<InvoiceLine>();
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        
+        builder.Entity<Invoice>()
+            .HasMany(i => i.InvoiceLines)
+            .WithMany(l => l.Invoices)
+            .UsingEntity<Dictionary<string, Object>>(
+                "InvoiceLinesMap",
+                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.NoAction),
+                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.NoAction)
+                );
         base.OnModelCreating(builder);
     }
 

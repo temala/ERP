@@ -11,6 +11,7 @@ import { ClientInvoiceStatusPipe } from './pipe/client-invoice-status.pipe';
 import { ClientInvoiceStatusColorPipe } from './pipe/client-invoice-status-color.pipe';
 import { ClientDeleteMessageComponent } from './client-delete-message/client-delete-message.component';
 import { ClientDetailsEmptyComponent } from './client-details-empty/client-details-empty.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ClientListComponent,
@@ -25,6 +26,7 @@ import { ClientDetailsEmptyComponent } from './client-details-empty/client-detai
   imports: [
     CommonModule,
     MaterialModule,
+    RouterModule
   ],
   providers: [ClientMapper]
 })

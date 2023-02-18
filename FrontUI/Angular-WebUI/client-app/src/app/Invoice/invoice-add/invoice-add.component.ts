@@ -1,3 +1,4 @@
+import { Invoice } from './../model/invoice';
 import { Client } from '../../client/model/client';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
@@ -14,33 +15,33 @@ import { InvoiceLine } from "../model/InvoiceLine";
 })
 export class InvoiceAddComponent implements OnInit {
 
-  public get totalHT() : number {
-    return this.lines.map(l=>l.priceHT).reduce((x,y)=>x+y);
+  public get totalHT(): number {
+    return this.lines.map(l => l.priceHT).reduce((x, y) => x + y);
   }
 
-  public get tva() : number {
-    return this.lines.map(l=>(l.priceHT*l.tva)/100).reduce((x,y)=>x+y);
-  }   
+  public get tva(): number {
+    return this.lines.map(l => (l.priceHT * l.tva) / 100).reduce((x, y) => x + y);
+  }
 
-  public get total() : number {
-    return this.totalHT+this.tva;
-  }  
+  public get total(): number {
+    return this.totalHT + this.tva;
+  }
 
-  constructor(private invoiceServices: InvoiceService,private clientServices: ClientService, private formBuilder: UntypedFormBuilder,private invoiceEventsServices:InvoiceEventsService) {
+  constructor(private invoiceServices: InvoiceService, private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private invoiceEventsServices: InvoiceEventsService) {
   }
 
   addInvoiceForm: UntypedFormGroup = new UntypedFormGroup({});
-  
-  clients!:ClientListItem[];
-  lines:InvoiceLine[] = [];
+
+  clients!: ClientListItem[];
+  lines: InvoiceLine[] = [];
 
   ngOnInit(): void {
     this.addInvoiceForm = this.formBuilder.group({
-      invoiceId: [null, [Validators.required, Validators.maxLength(70)]],    
-      billingDate: [new Date(),[Validators.required]],
+      invoiceId: [null, [Validators.required, Validators.maxLength(70)]],
+      billingDate: [new Date(), [Validators.required]],
       dueDate: [45],
       message: [null],
-      client:[null,[Validators.required]],     
+      client: [null, [Validators.required]],
     });
 
     this.clientServices.getlist().subscribe(clients => {
@@ -51,19 +52,21 @@ export class InvoiceAddComponent implements OnInit {
   }
 
   AddInvoice(form: UntypedFormGroup) {
-    this.invoiceServices.Add({
-      invoiceId: form.value.invoiceId,
-      billingDate: form.value.billingDate,
-      dueDate: form.value.dueDate,
-      message: form.value.message,
-      client:new Client(form.value.client.id,form.value.client.name),      
-    }).subscribe(result => {
+    let invoice = new Invoice(form.value.id);
+    invoice.invoiceId = form.value.invoiceId;
+    invoice.billingDate = form.value.billingDate;
+    invoice.dueDate = form.value.dueDate;
+    invoice.message = form.value.message;
+    invoice.client = new Client(form.value.client.id, form.value.client.name);
+    invoice.invoiceLines = this.lines;
+
+
+    this.invoiceServices.Add(invoice).subscribe(result => {
       this.invoiceEventsServices.InvoiceCreated.emit(result);
     });
   }
 
-  AddNewLine()
-  {
+  AddNewLine() {
     this.lines.push(new InvoiceLine());
   }
 

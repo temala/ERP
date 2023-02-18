@@ -10,5 +10,7 @@ public interface IApplicationDbContext
     DbSet<Cra> CraList { get; }
     DbSet<CraDay> CraDays { get; }
 
+    DbSet<Invoice> Invoices { get; }
+    DbSet<InvoiceLine> InvoiceLines { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -1,16 +1,19 @@
 import * as moment from 'moment';
 import { Client } from '../../client/model/client';
 import { ISearchable } from '../../common/ISearchable';
+import { InvoiceLine } from './InvoiceLine';
 
 export class Invoice implements ISearchable {
 
         constructor(id: string) {
-                this.invoiceId = id;
+                this.id = id;
         }
-
-        invoiceId: string;
+        
+        id: string;
+        invoiceId!: string;
         billingDate!: Date;        
         dueDate: number =45;                   
-        message!: string;                   
+        message: string = "";                   
         client!:Client;
+        invoiceLines!:InvoiceLine[];
 }
