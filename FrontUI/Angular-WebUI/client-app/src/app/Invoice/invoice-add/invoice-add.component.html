@@ -4,7 +4,15 @@
       <h3 i18n>New invoice</h3>
       <span class="spacer"></span>
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+        <button type="button" mat-flat-button color="primary" (click)="AddNewLine()">
+          <mat-icon class="mr-2">add</mat-icon>
+          <span i18n>Add new line</span>
+        </button>
 
+        <button mat-flat-button color="primary" onclick="">
+          <mat-icon class="mr-2">save</mat-icon>
+          <span i18n>Save</span>
+        </button>           
       </div>
     </mat-toolbar>
 
@@ -22,7 +30,7 @@
         </div>
         <mat-divider></mat-divider>
         <h3 class="small-padding" i18n>Invoice information</h3>
-        <div class="input-row">
+        <div class="input-row" >
           <div fxFlex="30">
             <div class="input-row">
               <mat-form-field appearance="outline">
@@ -55,87 +63,75 @@
             </div>
           </div>
         </div>
+        <mat-divider></mat-divider>        
+        <div class="small-padding m-20">      
+          <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20">
+            <div class="input-row">
+              <div fxLayout="row" fxLayoutAlign="space-around">
+                <div fxFlex="30" class="me-2">
+                  <h3 class="bold" i18n>Description</h3>
+                </div>
+                <div fxFlex="20">
+                  <h3 class="bold" i18n>Date</h3>
+                </div>
+                <div fxFlex="5">
+                  <h3 class="bold" i18n>Qte</h3>
+                </div>
+                <div fxFlex="5">
+                  <h3 class="bold" i18n>Unit</h3>
+                </div>
+                <div fxFlex="10">
+                  <h3 class="bold" i18n>Price H.T</h3>
+                </div>
+                <div fxFlex="10">
+                  <h3 class="bold" i18n>TVA %</h3>
+                </div>
+                <div fxFlex="10">
+                  <h3 class="bold" i18n>Price T.T.C</h3>
+                </div>
+              </div>
+            </div>
+            <app-invoice-line [invoiceLine]="invoiceLine" *ngFor="let invoiceLine of lines"></app-invoice-line>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="small-padding m-20">
+          <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="m-20">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+              <div fxFlex="60"></div>
+              <div fxFlex="40">
+                <table style="width: 100%;">
+                  <tr>
+                    <td>
+                      <h3>Total HT:</h3>
+                    </td>
+                    <td>
+                      <h4>{{ totalHT | currency}}</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h3>VAT rate:</h3>
+                    </td>
+                    <td>
+                      <h4>{{ tva | currency }}</h4>
+                    </td>
+                  </tr>
+                  <tr  class="sum">
+                    <td  class="sum">
+                      <h2>Total to pay:</h2>
+                    </td>
+                    <td  class="sum">
+                      <h2>{{ total | currency}}</h2>
+                    </td>
+                  </tr>
+                </table>               
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </mat-card>
-  <div class="m-20">
-    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="20">
-      <h3 class="small-padding" i18n>Invoice details</h3>
-      <button type="button" mat-flat-button color="primary" (click)="AddNewLine()" i18n>Add new line</button>
-    </div>
 
-    <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20">
-      <div class="input-row">
-        <div fxLayout="row" fxLayoutAlign="space-around">
-          <div fxFlex="30" class="me-2">
-            <h3 class="bold" i18n>Description</h3>
-          </div>
-          <div fxFlex="20">
-            <h3 class="bold" i18n>Date</h3>
-          </div>
-          <div fxFlex="5">
-            <h3 class="bold" i18n>Qte</h3>
-          </div>
-          <div fxFlex="5">
-            <h3 class="bold" i18n>Unit</h3>
-          </div>
-          <div fxFlex="10">
-            <h3 class="bold" i18n>Price H.T</h3>
-          </div>
-          <div fxFlex="10">
-            <h3 class="bold" i18n>TVA %</h3>
-          </div>
-          <div fxFlex="10">
-            <h3 class="bold" i18n>Price T.T.C</h3>
-          </div>
-        </div>
-      </div>
-      <app-invoice-line [invoiceLine]="invoiceLine" *ngFor="let invoiceLine of lines"></app-invoice-line>
-    </div>
-  </div>
-
-  <div class="m-20">
-    <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="m-20">
-      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
-        <div fxFlex="60">
-
-        </div>
-        <mat-card fxFlex="40">
-          <table style="width: 100%;">
-            <tr>
-              <td>
-                <h3>Total HT:</h3>
-              </td>
-              <td>
-                <h4>{{ totalHT | currency}}</h4>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h3>VAT rate:</h3>
-              </td>
-              <td>
-                <h4>{{ tva | currency }}</h4>
-              </td>
-            </tr>
-          </table>
-          <mat-divider [inset]="true"></mat-divider>
-          <table style="width: 100%;">
-            <tr>
-              <td>
-                <h2>Total to pay:</h2>
-              </td>
-              <td>
-                <h2>{{ total | currency}}</h2>
-              </td>
-            </tr>
-          </table>
-        </mat-card>
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="action-padding">
-      <button mat-flat-button color="primary" onclick="" i18n>Save</button>
-    </div>
-  </div>
 </form>

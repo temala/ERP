@@ -1,5 +1,5 @@
-<mat-card class="mat-card-container">
-        <mat-card-content fxLayout="row" fxLayoutAlign="space-around">
+<div class="mat-card-container">
+        <div fxLayout="row" fxLayoutAlign="space-around">
                 <div  fxFlex="30" class="me-2">                    
                         <mat-select matInput (selectionChange)="productSelectionChange($event)">
                                 <mat-option *ngFor="let selectedProduct of products" [value]="selectedProduct">{{selectedProduct.name}}</mat-option>
@@ -27,6 +27,6 @@
                 <div fxFlex="10">                       
                         <input matInput [ngModel]="invoiceLine.TTC">
                 </div>
-        </mat-card-content>
+        </div>
 
-</mat-card>
+</div>
