@@ -82,7 +82,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Cra", b =>
@@ -118,7 +118,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasIndex("MissionId");
 
-                    b.ToTable("CraList");
+                    b.ToTable("CraList", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.CraDay", b =>
@@ -148,7 +148,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasIndex("CraId");
 
-                    b.ToTable("CraDays");
+                    b.ToTable("CraDays", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Invoice", b =>
@@ -159,7 +159,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BilligDate")
+                    b.Property<DateTime>("BillingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ClientId")
@@ -187,11 +187,14 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.InvoiceLine", b =>
@@ -227,7 +230,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InvoiceLines");
+                    b.ToTable("InvoiceLines", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Product", b =>
@@ -266,7 +269,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Product");
 
@@ -285,7 +288,7 @@ namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 
                     b.HasIndex("InvoicesId");
 
-                    b.ToTable("InvoiceLinesMap");
+                    b.ToTable("InvoiceLinesMap", (string)null);
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.Mission", b =>

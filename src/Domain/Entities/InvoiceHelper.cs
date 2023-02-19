@@ -9,11 +9,11 @@ public static class InvoiceHelper
     
     public static decimal? GetTotalTTC(this Invoice invoice)
     {
-        return invoice.InvoiceLines.Sum(l => l.Product!.GetTotalTTC());
+        return invoice.InvoiceLines.Sum(l => l.Product!.GetTotalTTC() * l.Quantity);
     }
     
     public static DateTime GetDueDate(this Invoice invoice)
     {
-        return invoice.BilligDate.AddDays(invoice.DueDate);
+        return invoice.BillingDate.AddDays(invoice.DueDate);
     }
 }

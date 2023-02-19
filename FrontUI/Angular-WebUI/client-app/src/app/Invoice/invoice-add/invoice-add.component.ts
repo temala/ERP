@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Invoice } from './../model/invoice';
 import { Client } from '../../client/model/client';
 import { Component, OnInit } from '@angular/core';
@@ -27,7 +28,7 @@ export class InvoiceAddComponent implements OnInit {
     return this.totalHT + this.tva;
   }
 
-  constructor(private invoiceServices: InvoiceService, private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private invoiceEventsServices: InvoiceEventsService) {
+  constructor(private invoiceServices: InvoiceService, private clientServices: ClientService, private formBuilder: UntypedFormBuilder, private invoiceEventsServices: InvoiceEventsService,private router:Router,private route: ActivatedRoute) {
   }
 
   addInvoiceForm: UntypedFormGroup = new UntypedFormGroup({});
@@ -63,6 +64,8 @@ export class InvoiceAddComponent implements OnInit {
 
     this.invoiceServices.Add(invoice).subscribe(result => {
       this.invoiceEventsServices.InvoiceCreated.emit(result);
+
+      this.router.navigate(['invoice/']);
     });
   }
 

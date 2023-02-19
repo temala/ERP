@@ -45,7 +45,7 @@ public class UpdateInvoiceCommandHandler : IRequestHandler<UpdateInvoiceCommand,
         entity.Client = request.Client;
         entity.InvoiceLines = request.InvoiceLines.ToList();
         entity.Message = request.Message;
-        entity.BilligDate = request.BilligDate;
+        entity.BillingDate = request.BilligDate;
 
         await _context.SaveChangesAsync(cancellationToken);
 

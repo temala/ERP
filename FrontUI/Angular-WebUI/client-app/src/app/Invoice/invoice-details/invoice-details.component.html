@@ -1,6 +1,6 @@
 <mat-card class="m-20 full-height">
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-    <h3>{{selectedInvoice.name}}</h3>
+    <h3>{{selectedInvoice.identifier}}</h3>
     <span class="spacer"></span>
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
       <button (click)="onEdit()" mat-flat-button color="primary" class="action">
@@ -20,24 +20,24 @@
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20"
           *ngIf="invoiceInfo!=undefined">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Invoice name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.name}}</mat-label>
+            <mat-label fxFlex="50" i18n>Invoice id</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.identifier}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Client name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.name}}</mat-label>
+            <mat-label fxFlex="50" i18n>Client</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.name}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Price H.T</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.HT | currency:' €'}}</mat-label>
+            <mat-label fxFlex="50" i18n>Creation date</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.date | date }}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>TVA %</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.TVA | currency:' %'}}</mat-label>
+            <mat-label fxFlex="50" i18n>Due date</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | date}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Price T.T.C</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.TTC | currency:' €'}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.totalTTc | currency:' €'}}</mat-label>
           </div>
         </div>
       </mat-tab>
@@ -45,33 +45,33 @@
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>N° Tel</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.telephone}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.telephone}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Contact Name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.contactName}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.contactName}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>E-Mail</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.email}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.email}}</mat-label>
           </div>
         </div>
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Company name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.companyName}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.companyName}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>N° Siret</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.siret}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.siret}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>N° TVA</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.tva}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.tva}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Contact Title</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.Client.title}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.title}}</mat-label>
           </div>
         </div>
       </mat-tab>

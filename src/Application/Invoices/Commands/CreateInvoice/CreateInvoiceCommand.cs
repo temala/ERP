@@ -5,6 +5,7 @@ using ERP.Application.Invoices.Queries.GetInvoicesWithPagination;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection.Invoices.Commands.CreateInvoice;
 
@@ -18,10 +19,11 @@ public class CreateInvoiceCommand: IRequest<InvoiceListItemDto>
     
     public int DueDate { get; set; }
     
-    public DateTime BilligDate { get; set; }
+    public DateTime BillingDate { get; set; }
     
     public string Message { get; set; }
 
+    public InvoiceStatus Status { get; set; }
     public InvoiceLine[] InvoiceLines { get; set; }
 }
 
@@ -41,7 +43,7 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
             Identifier = request.invoiceId,
             DueDate = request.DueDate,
             Message = request.Message,
-            BilligDate = request.BilligDate,
+            BillingDate = request.BillingDate,
             ClientId = request.Client.Id,
             InvoiceLines = request.InvoiceLines.Select(l=>new InvoiceLine(){ProductId = l.Product.Id,Date = l.Date,Quantity = l.Quantity}).ToList()
         };
@@ -52,6 +54,16 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new InvoiceListItemDto() {Id = entity.Id,BilligDate = entity.BilligDate,DueDate = entity.DueDate,Identifier = entity.Identifier,TotalTTC = entity.GetTotalTTC(), Client=request.Client};
+        var result =await _context.Invoices.Include(i=>i.Client).Include(i => i.InvoiceLines).ThenInclude(l => l.Product).FirstAsync(i => i.Id == entity.Id);
+            
+        return new InvoiceListItemDto() {Id = entity.Id,
+            BilligDate = result.BillingDate,
+            DueDate = result.DueDate,
+            Identifier = result.Identifier,
+            TotalTTC = result.GetTotalTTC(),
+            Client=result.Client,
+            Status = result.Status,
+            InvoiceLines = result.InvoiceLines.ToList()
+        };
     }
 }

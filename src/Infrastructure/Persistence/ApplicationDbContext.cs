@@ -29,8 +29,8 @@ public class ApplicationMigrationDbContext: DbContext
             .WithMany(l => l.Invoices)
             .UsingEntity<Dictionary<string, Object>>(
                 "InvoiceLinesMap",
-                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.NoAction),
-                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.NoAction)
+                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.Cascade),
+                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.Cascade)
             );
         base.OnModelCreating(builder);
     }
@@ -74,8 +74,8 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
             .WithMany(l => l.Invoices)
             .UsingEntity<Dictionary<string, Object>>(
                 "InvoiceLinesMap",
-                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.NoAction),
-                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.NoAction)
+                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.Cascade),
+                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.Cascade)
                 );
         base.OnModelCreating(builder);
     }

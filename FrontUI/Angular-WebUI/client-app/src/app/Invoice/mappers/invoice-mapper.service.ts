@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+import * as moment from "moment";
 import {Invoice} from "../model/invoice";
 import {InvoiceListItem} from "../model/invoice-list-item";
 
@@ -9,7 +10,7 @@ export class InvoiceMapper {
   MapInvoice(response: any): Invoice {
     let result: Invoice = {
       id:response.id,
-      invoiceId: response.id,
+      invoiceId: response.identifier,
       dueDate: response.dueDate,
       billingDate: response.billingDate,
       message: response.message,
@@ -21,7 +22,7 @@ export class InvoiceMapper {
   }
 
   MapInvoiceListItem(serviceResponsItem: any): InvoiceListItem {
-    return new InvoiceListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva,serviceResponsItem.client)
+    return new InvoiceListItem(serviceResponsItem.id,serviceResponsItem.identifier, serviceResponsItem.client, moment(serviceResponsItem.billigDate).toDate(),moment(serviceResponsItem.billigDate).add(serviceResponsItem.dueDate,'d').toDate(),serviceResponsItem.totalTTC, serviceResponsItem.status);
   }
 
   MapInvoiceNextId(response: any): number {
@@ -32,9 +33,8 @@ export class InvoiceMapper {
 
     let result: InvoiceListItem[] = [];
     serviceRespons.items.forEach((serviceResponsItem: any) => {
-      result.push(new InvoiceListItem(serviceResponsItem.id, serviceResponsItem.name, serviceResponsItem.priceHT, serviceResponsItem.tva,serviceResponsItem.client));
+      result.push(new InvoiceListItem(serviceResponsItem.id,serviceResponsItem.identifier, serviceResponsItem.client, moment(serviceResponsItem.billigDate).toDate(), moment(serviceResponsItem.billigDate).add(serviceResponsItem.dueDate,'d').toDate(),serviceResponsItem.totalTTC, serviceResponsItem.status));
     });
-
 
     return result;
   }

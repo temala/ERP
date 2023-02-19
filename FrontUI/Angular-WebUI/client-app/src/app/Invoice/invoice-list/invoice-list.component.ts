@@ -18,7 +18,7 @@ export class InvoiceListComponent implements AfterViewInit {
   
   @ViewChild(MatSort) sort = new MatSort();
 
-  public displayedColumns: string[] = ['id', 'name','client','HT','TVA','TTC', 'actions'];
+  public displayedColumns: string[] = ['identifier', 'client','date','dueDate','TTC','status', 'actions'];
 
   public invoices!: MatTableDataSource<InvoiceListItem>;
 

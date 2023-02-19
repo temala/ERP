@@ -4,6 +4,7 @@ using ERP.Application.Common.Interfaces;
 using ERP.Application.Common.Mappings;
 using ERP.Application.Common.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ERP.Application.Invoices.Queries.GetInvoicesWithPagination;
 
@@ -28,7 +29,8 @@ public class GetInvoicesWithPaginationQueryHandler : IRequestHandler<GetInvoices
     public async Task<PaginatedList<InvoiceListItemDto>> Handle(GetInvoicesWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Invoices
-            .OrderBy(x => x.BilligDate)
+            .Include(invoice=>invoice.InvoiceLines).ThenInclude(l=>l.Product)
+            .OrderBy(invoice => invoice.BillingDate)
             .ProjectTo<InvoiceListItemDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize)
             .ConfigureAwait(false);

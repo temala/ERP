@@ -1,3 +1,4 @@
+using AutoMapper;
 using ERP.Application.Common.Mappings;
 using ERP.Domain.Entities;
 
@@ -17,12 +18,12 @@ public class
     
     public decimal? TotalTTC { get; set; }
     public Client Client { get; set; }
-}
+    
+    public List<InvoiceLine> InvoiceLines { get; set; }
 
-public enum InvoiceStatus
-{
-    Created,
-    Sent,
-    Paid,
-    Late
+    public void Mapping(Profile profile)
+    {
+        var map = profile.CreateMap<Invoice, InvoiceListItemDto>()
+            .ForMember(invoice=>invoice.TotalTTC,invoiceListItem=>invoiceListItem.MapFrom(l=>l.GetTotalTTC()));
+    }
 }

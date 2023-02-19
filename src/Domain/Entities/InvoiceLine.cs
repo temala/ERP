@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ERP.Domain.Entities;
 
 public class InvoiceLine : BaseAuditableEntity
@@ -10,5 +12,6 @@ public class InvoiceLine : BaseAuditableEntity
 
     public int Quantity { get; set; }
     
+    [JsonIgnore]
     public List<Invoice> Invoices { get; set; }
 }

@@ -1,3 +1,4 @@
+import { invoiceStatusPipe } from './pipes/invoice-status.pipe';
 import { InvoiceMapper } from './mappers/invoice-mapper.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,8 @@ import { InvoiceLineComponent } from './invoice-line/invoice-line.component';
     InvoiceAddComponent,
     InvoiceUpdateComponent,
     InvoiceDeleteMessageComponent,
-    InvoiceLineComponent
+    InvoiceLineComponent,
+    invoiceStatusPipe,
   ],
   imports: [
     CommonModule,

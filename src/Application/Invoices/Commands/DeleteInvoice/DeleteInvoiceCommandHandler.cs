@@ -3,6 +3,7 @@ using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ERP.Application.Invoices.Commands.DeleteInvoice;
 
@@ -27,6 +28,9 @@ public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand>
             throw new NotFoundException(nameof(Invoice), request.Id);
         }
 
+        await _context.Invoices.Entry(entity).Collection(i => i.InvoiceLines).LoadAsync(cancellationToken);
+        
+        _context.InvoiceLines.RemoveRange(entity.InvoiceLines);
         _context.Invoices.Remove(entity);
 
         entity.AddDomainEvent(new InvoiceDeletedEvent(entity));
