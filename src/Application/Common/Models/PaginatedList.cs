@@ -4,12 +4,12 @@ namespace ERP.Application.Common.Models;
 
 public class PaginatedList<T>
 {
-    public List<T> Items { get; }
+    public IEnumerable<T> Items { get; }
     public int PageNumber { get; }
     public int TotalPages { get; }
     public int TotalCount { get; }
 
-    public PaginatedList(List<T> items, int count, int pageNumber, int pageSize)
+    public PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
     {
         PageNumber = pageNumber;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);
@@ -23,8 +23,9 @@ public class PaginatedList<T>
 
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
     {
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        var list = await source.ToListAsync();
+        var count = list.Count;
+        var items = list.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
         return new PaginatedList<T>(items, count, pageNumber, pageSize);
     }

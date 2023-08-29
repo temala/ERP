@@ -13,5 +13,8 @@ public class CreateCraCommandValidator: AbstractValidator<CreateCraCommand>
         RuleFor(v => v.Year)
             .GreaterThan(DateTime.Now.Year-10)
             .LessThan(DateTime.Now.Year+10);
+        
+        RuleFor(v => v.Days)
+            .Must(days=>days.Length<=31);
     }
 }

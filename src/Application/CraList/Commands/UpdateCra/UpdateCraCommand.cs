@@ -2,6 +2,7 @@
 using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ERP.Application.CraList.Commands.UpdateCra;
 
@@ -29,14 +30,16 @@ public class UpdateCraCommandHandler : IRequestHandler<UpdateCraCommand,Cra>
 
     public async Task<Cra> Handle(UpdateCraCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.CraList
-            .FindAsync(new object[] {request.Id}, cancellationToken);
+        var entity = await _context.CraList.Include(cra=>cra.Days)
+            .FirstOrDefaultAsync(cra=>cra.Id == request.Id, cancellationToken).ConfigureAwait(false);
 
         if (entity == null)
         {
             throw new NotFoundException(nameof(Cra), request.Id);
         }
 
+        _context.CraDays.RemoveRange(entity.Days);
+        
         entity.Month = request.Month;
         entity.Year = request.Year;
         entity.Days = request.days.ToList();

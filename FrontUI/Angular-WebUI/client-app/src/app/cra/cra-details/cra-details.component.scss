@@ -15,7 +15,7 @@
         min-height: 900px;
 }
 
-.mat-calendar-body-cell 
+.mat-calendar-body-cell
 {
         height: 95% !important;
 }
@@ -39,7 +39,7 @@
 
 .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical)
 {
-        
+
         background-color: #a1e4cd00 !important;
 }
 
