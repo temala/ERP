@@ -11,6 +11,8 @@ import { InvoiceUpdateComponent } from './invoice-update/invoice-update.componen
 import { InvoiceDeleteMessageComponent } from './invoice-delete-message/invoice-delete-message.component';
 import {RouterModule} from '@angular/router';
 import { InvoiceLineComponent } from './invoice-line/invoice-line.component';
+import { invoiceDuedatePipe } from './pipes/invoice-duedate.pipe';
+import { InvoiceLineDetailComponent } from './invoice-line-detail/invoice-line-detail.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { InvoiceLineComponent } from './invoice-line/invoice-line.component';
     InvoiceDeleteMessageComponent,
     InvoiceLineComponent,
     invoiceStatusPipe,
+    invoiceDuedatePipe,
+    InvoiceLineDetailComponent,
   ],
   imports: [
     CommonModule,

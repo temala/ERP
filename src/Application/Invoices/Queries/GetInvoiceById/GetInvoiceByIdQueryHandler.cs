@@ -2,6 +2,7 @@ using AutoMapper;
 using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection.Invoices.Queries.GetInvoiceById;
 
@@ -25,7 +26,9 @@ public class GetInvoiceByIdQueryHandler : IRequestHandler<GetInvoiceByIdQuery, I
     public async Task<Invoice?> Handle(GetInvoiceByIdQuery request, CancellationToken cancellationToken)
     {
         return await _context.Invoices
-            .FindAsync(request.Id, cancellationToken)
+            .Include(invoice => invoice.Client)
+            .Include(invoice=>invoice.InvoiceLines).ThenInclude(l=>l.Product)
+            .FirstOrDefaultAsync(invoice => invoice.Id == request.Id, cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
 }

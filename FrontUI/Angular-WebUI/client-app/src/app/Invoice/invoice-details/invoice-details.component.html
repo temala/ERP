@@ -16,12 +16,110 @@
   <div class="m-20">
     <h4 i18n>Invoice identification number: <b>{{selectedInvoice.id}}</b></h4>
     <mat-tab-group animationDuration="0ms" *ngIf="invoiceInfo!=undefined">
+      <mat-tab label="Invoice details">
+        <div class="m-20">
+          <div class="small-padding">
+            <div class="input-row">
+              <div fxFlex="100">
+                {{invoiceInfo.client.name}}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20"
+            *ngIf="invoiceInfo!=undefined">
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <mat-label fxFlex="50" i18n>Invoice id</mat-label>
+                  <mat-label fxFlex="50" i18n> {{invoiceInfo.invoiceId}}</mat-label>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>Billing date</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.billingDate | date}}</mat-label>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <mat-label fxFlex="50" i18n>Due date</mat-label>
+                  <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | invoiceDuedate:invoiceInfo.billingDate | date}}</mat-label>
+              </div>
+              <div fxLayout="row" *ngIf="invoiceInfo.message!=undefined">
+                  <mat-label fxFlex="50" i18n>Message</mat-label>
+                  <mat-label fxFlex="50" i18n>{{invoiceInfo.message}}</mat-label>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="small-padding m-20">
+              <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20">
+                <div class="input-row">
+                  <div fxLayout="row" fxLayoutAlign="space-around">
+                    <div fxFlex="30" class="me-2">
+                      <h3 class="bold" i18n>Description</h3>
+                    </div>
+                    <div fxFlex="20">
+                      <h3 class="bold" i18n>Date</h3>
+                    </div>
+                    <div fxFlex="5">
+                      <h3 class="bold" i18n>Qte</h3>
+                    </div>
+                    <div fxFlex="5">
+                      <h3 class="bold" i18n>Unit</h3>
+                    </div>
+                    <div fxFlex="10">
+                      <h3 class="bold" i18n>Price H.T</h3>
+                    </div>
+                    <div fxFlex="10">
+                      <h3 class="bold" i18n>TVA %</h3>
+                    </div>
+                    <div fxFlex="10">
+                      <h3 class="bold" i18n>Price T.T.C</h3>
+                    </div>
+                  </div>
+                </div>
+                <app-invoice-line-detail [invoiceLine]="invoiceLine" *ngFor="let invoiceLine of invoiceInfo.invoiceLines"></app-invoice-line-detail>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="small-padding m-20">
+              <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="m-20">
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
+                  <div fxFlex="60"></div>
+                  <div fxFlex="40">
+                    <table style="width: 100%;">
+                      <tr>
+                        <td>
+                          <h3>Total HT:</h3>
+                        </td>
+                        <td>
+                          <h4>{{ totalHT | currency}}</h4>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <h3>VAT rate:</h3>
+                        </td>
+                        <td>
+                          <h4>{{ tva | currency }}</h4>
+                        </td>
+                      </tr>
+                      <tr  class="sum">
+                        <td  class="sum">
+                          <h2>Total to pay:</h2>
+                        </td>
+                        <td  class="sum">
+                          <h2>{{ total | currency}}</h2>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
       <mat-tab i18n-label label="Invoice information">
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20"
           *ngIf="invoiceInfo!=undefined">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Invoice id</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.identifier}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.invoiceId}}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Client</mat-label>
@@ -29,16 +127,16 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Creation date</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.date | date }}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.billingDate | date }}</mat-label>
           </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Due date</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | date}}</mat-label>
+            <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | invoiceDuedate:invoiceInfo.billingDate | date}}</mat-label>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <!-- <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Price T.T.C</mat-label>
             <mat-label fxFlex="50" i18n>{{invoiceInfo.totalTTc | currency:' €'}}</mat-label>
-          </div>
+          </div> -->
         </div>
       </mat-tab>
       <mat-tab i18n-label label="Client informations">

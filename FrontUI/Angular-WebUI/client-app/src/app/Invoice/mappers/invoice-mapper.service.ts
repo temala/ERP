@@ -1,3 +1,4 @@
+import { InvoiceStatus } from './../model/InvoiceStatus';
 import {Injectable} from "@angular/core";
 import * as moment from "moment";
 import {Invoice} from "../model/invoice";
@@ -8,14 +9,16 @@ import {InvoiceListItem} from "../model/invoice-list-item";
 export class InvoiceMapper {
 
   MapInvoice(response: any): Invoice {
+
     let result: Invoice = {
       id:response.id,
       invoiceId: response.identifier,
       dueDate: response.dueDate,
       billingDate: response.billingDate,
       message: response.message,
-      client:response.client,   
-      invoiceLines:response.lines, 
+      client:response.client,
+      invoiceLines:response.invoiceLines,
+      status:response.status,
     };
 
     return result;

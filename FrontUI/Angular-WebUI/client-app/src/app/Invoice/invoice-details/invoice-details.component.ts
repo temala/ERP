@@ -7,6 +7,7 @@ import { Invoice } from '../model/invoice';
 import { InvoiceListItem } from '../model/invoice-list-item';
 import { InvoiceEventsService } from '../services/invoice-events.service';
 import { InvoiceService } from '../services/invoice.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-invoice-details',
@@ -17,7 +18,19 @@ export class InvoiceDetailsComponent implements OnInit , OnChanges{
 
   @Input() selectedInvoice!: InvoiceListItem;
 
-  public invoiceInfo!: InvoiceListItem;
+  public get totalHT(): number {
+    return this.invoiceInfo.invoiceLines.map(l => l.product.priceHT).reduce((x, y) => x + y);
+  }
+
+  public get tva(): number {
+    return this.invoiceInfo.invoiceLines.map(l => (l.product.priceHT * l.product.tva) / 100).reduce((x, y) => x + y);
+  }
+
+  public get total(): number {
+    return this.totalHT + this.tva;
+  }
+
+  public invoiceInfo!: Invoice;
 
   constructor(public updateInvoiceDialog: MatDialog, public deleteInvoiceDialog: MatDialog, private clientServices: InvoiceService, private eventsServices: InvoiceEventsService) {
     eventsServices.InvoiceUpdated.subscribe(item => this.updateItem(item));
@@ -34,7 +47,7 @@ export class InvoiceDetailsComponent implements OnInit , OnChanges{
   getInvoiceInfo() {
     if (this.selectedInvoice)
       this.clientServices.getInvoice(this.selectedInvoice.id).subscribe(invoiceResult => {
-        // this.invoiceInfo = new InvoiceListItem(invoiceResult.id.toString(),invoiceResult.name,invoiceResult.priceHT,invoiceResult.tva,this.selectedInvoice.Client);
+        this.invoiceInfo =invoiceResult;
       });
   }
 
