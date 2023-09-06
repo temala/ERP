@@ -1,8 +1,11 @@
+import { unit } from './../model/unit';
+import { map } from 'rxjs';
 import { InvoiceStatus } from './../model/InvoiceStatus';
 import {Injectable} from "@angular/core";
 import * as moment from "moment";
 import {Invoice} from "../model/invoice";
 import {InvoiceListItem} from "../model/invoice-list-item";
+import { InvoiceLine } from '../model/InvoiceLine';
 
 
 @Injectable()
@@ -17,7 +20,14 @@ export class InvoiceMapper {
       billingDate: response.billingDate,
       message: response.message,
       client:response.client,
-      invoiceLines:response.invoiceLines,
+      invoiceLines: response.invoiceLines.map(l => {
+        let line = new InvoiceLine();
+        line.product = l.product;
+        line.date = new Date(l.date);
+        line.quantity = l.quantity;
+        line.unit = l.unit;
+        return line;
+      }),
       status:response.status,
     };
 

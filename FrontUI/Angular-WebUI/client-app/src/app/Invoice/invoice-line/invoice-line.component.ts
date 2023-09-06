@@ -24,10 +24,18 @@ export class InvoiceLineComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.invoiceLine.product = new Product();
-    this.invoiceLine.quantity = 1;
-    this.invoiceLine.unit = unit.day;
-    this.invoiceLine.date = new Date();
+   if (!this.invoiceLine.product) {
+        this.invoiceLine.product = new Product();
+    }
+    if (!this.invoiceLine.quantity) {
+        this.invoiceLine.quantity = 1;
+    }
+    if (!this.invoiceLine.unit) {
+        this.invoiceLine.unit = unit.day;
+    }
+    if (!this.invoiceLine.date) {
+        this.invoiceLine.date = new Date();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -53,4 +61,9 @@ export class InvoiceLineComponent implements OnInit, AfterViewInit {
   addProduct(arg0: any) {
     throw new Error('Method not implemented.');
   }
+
+  compareProducts(p1: Product, p2: Product): boolean {
+    return p1 && p2 ? p1.id === p2.id : p1 === p2;
+}
+
 }

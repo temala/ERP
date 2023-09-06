@@ -1,6 +1,6 @@
 <mat-card class="m-20 full-height">
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-    <h3>{{selectedInvoice.identifier}}</h3>
+    <h3>{{selectedInvoice.identifier}} / <b>{{invoiceInfo.client.name}}</b></h3>
     <span class="spacer"></span>
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
       <button (click)="onEdit()" mat-flat-button color="primary" class="action">
@@ -14,69 +14,76 @@
     </div>
   </mat-toolbar>
   <div class="m-20">
-    <h4 i18n>Invoice identification number: <b>{{selectedInvoice.id}}</b></h4>
     <mat-tab-group animationDuration="0ms" *ngIf="invoiceInfo!=undefined">
       <mat-tab label="Invoice details">
         <div class="m-20">
           <div class="small-padding">
-            <div class="input-row">
-              <div fxFlex="100">
-                {{invoiceInfo.client.name}}
-              </div>
-            </div>
-            <mat-divider></mat-divider>
             <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20"
             *ngIf="invoiceInfo!=undefined">
               <div fxLayout="row" fxLayoutAlign="space-between center">
-                  <mat-label fxFlex="50" i18n>Invoice id</mat-label>
-                  <mat-label fxFlex="50" i18n> {{invoiceInfo.invoiceId}}</mat-label>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-label fxFlex="50" i18n>Billing date</mat-label>
-                <mat-label fxFlex="50" i18n>{{invoiceInfo.billingDate | date}}</mat-label>
+                <mat-label fxFlex="50">{{invoiceInfo.billingDate | date}} ({{ invoiceInfo.billingDate | daysAgo }} <b i18n>days ago</b>)</mat-label>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between center">
                   <mat-label fxFlex="50" i18n>Due date</mat-label>
-                  <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | invoiceDuedate:invoiceInfo.billingDate | date}}</mat-label>
+                  <mat-label fxFlex="50">{{invoiceInfo.dueDate | invoiceDuedate:invoiceInfo.billingDate | date}} ({{invoiceInfo.dueDate}} <b i18n>days</b>)</mat-label>
               </div>
               <div fxLayout="row" *ngIf="invoiceInfo.message!=undefined">
                   <mat-label fxFlex="50" i18n>Message</mat-label>
                   <mat-label fxFlex="50" i18n>{{invoiceInfo.message}}</mat-label>
               </div>
             </div>
-            <mat-divider></mat-divider>
-            <div class="small-padding m-20">
-              <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20">
-                <div class="input-row">
-                  <div fxLayout="row" fxLayoutAlign="space-around">
-                    <div fxFlex="30" class="me-2">
-                      <h3 class="bold" i18n>Description</h3>
-                    </div>
-                    <div fxFlex="20">
-                      <h3 class="bold" i18n>Date</h3>
-                    </div>
-                    <div fxFlex="5">
-                      <h3 class="bold" i18n>Qte</h3>
-                    </div>
-                    <div fxFlex="5">
-                      <h3 class="bold" i18n>Unit</h3>
-                    </div>
-                    <div fxFlex="10">
-                      <h3 class="bold" i18n>Price H.T</h3>
-                    </div>
-                    <div fxFlex="10">
-                      <h3 class="bold" i18n>TVA %</h3>
-                    </div>
-                    <div fxFlex="10">
-                      <h3 class="bold" i18n>Price T.T.C</h3>
-                    </div>
-                  </div>
-                </div>
-                <app-invoice-line-detail [invoiceLine]="invoiceLine" *ngFor="let invoiceLine of invoiceInfo.invoiceLines"></app-invoice-line-detail>
-              </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="small-padding m-20">
+            <mat-table class="invoice-content" [dataSource]="invoiceInfo.invoiceLines">
+
+              <!-- Description Column -->
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef class="flex-2 bold right-align" i18n>Description</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine" class="flex-2 bold right-align">{{invoiceLine.product.name}}</mat-cell>
+              </ng-container>
+
+              <!-- Date Column -->
+              <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef class="flex-2 bold" i18n>Date</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine" class="flex-2" >{{invoiceLine.date | date}}</mat-cell>
+              </ng-container>
+
+              <!-- Qte Column -->
+              <ng-container matColumnDef="qte">
+                <mat-header-cell *matHeaderCellDef class="flex-1 bold" i18n>Qte</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.quantity}}</mat-cell>
+              </ng-container>
+
+              <!-- Unit Column -->
+              <ng-container matColumnDef="unit">
+                <mat-header-cell *matHeaderCellDef class="flex-1 bold" i18n>Unit</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.unit}}</mat-cell>
+              </ng-container>
+
+              <!-- Price H.T Column -->
+              <ng-container matColumnDef="priceHT">
+                <mat-header-cell *matHeaderCellDef class="flex-1 bold" i18n>Price H.T</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.product.priceHT  | currency}}</mat-cell>
+              </ng-container>
+
+              <!-- TVA % Column -->
+              <ng-container matColumnDef="tva">
+                <mat-header-cell *matHeaderCellDef class="flex-1 bold" i18n>TVA %</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.product.tva | currency }}</mat-cell>
+              </ng-container>
+
+              <!-- Price T.T.C Column -->
+              <ng-container matColumnDef="priceTTC">
+                <mat-header-cell *matHeaderCellDef class="flex-1 bold" i18n>Price T.T.C</mat-header-cell>
+                <mat-cell *matCellDef="let invoiceLine">{{invoiceLine.TTC  | currency}}</mat-cell>
+              </ng-container>
+
+              <!-- Header & Row Definitions -->
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+
+            <div class="invoice-total">
               <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="m-20">
                 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
                   <div fxFlex="60"></div>
@@ -98,11 +105,15 @@
                           <h4>{{ tva | currency }}</h4>
                         </td>
                       </tr>
-                      <tr  class="sum">
-                        <td  class="sum">
+                      <tr class="bordered-row">
+                        <td colspan="2">
+                        </td>
+                      </tr>
+                      <tr class="sum">
+                        <td class="sum">
                           <h2>Total to pay:</h2>
                         </td>
-                        <td  class="sum">
+                        <td class="sum">
                           <h2>{{ total | currency}}</h2>
                         </td>
                       </tr>
@@ -117,19 +128,19 @@
       <mat-tab i18n-label label="Invoice information">
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20"
           *ngIf="invoiceInfo!=undefined">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" *ngIf="invoiceInfo.invoiceId" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Invoice id</mat-label>
             <mat-label fxFlex="50" i18n>{{invoiceInfo.invoiceId}}</mat-label>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" *ngIf="invoiceInfo.client.name" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Client</mat-label>
             <mat-label fxFlex="50" i18n>{{invoiceInfo.client.name}}</mat-label>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" *ngIf="invoiceInfo.billingDate" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Creation date</mat-label>
             <mat-label fxFlex="50" i18n>{{invoiceInfo.billingDate | date }}</mat-label>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" *ngIf="invoiceInfo.dueDate" fxLayoutAlign="space-between center">
             <mat-label fxFlex="50" i18n>Due date</mat-label>
             <mat-label fxFlex="50" i18n>{{invoiceInfo.dueDate | invoiceDuedate:invoiceInfo.billingDate | date}}</mat-label>
           </div>
@@ -141,38 +152,38 @@
       </mat-tab>
       <mat-tab i18n-label label="Client informations">
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>N° Tel</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.telephone}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Contact Name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.contactName}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>E-Mail</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.email}}</mat-label>
-          </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.telephone" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>N° Tel</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.telephone}}</mat-label>
+            </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.contactName" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>Contact Name</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.contactName}}</mat-label>
+            </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.email" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>E-Mail</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.email}}</mat-label>
+            </div>
         </div>
         <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="20" class="mt-20">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Company name</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.companyName}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>N° Siret</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.siret}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>N° TVA</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.tva}}</mat-label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-label fxFlex="50" i18n>Contact Title</mat-label>
-            <mat-label fxFlex="50" i18n>{{invoiceInfo.client.title}}</mat-label>
-          </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.companyName" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>Company name</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.companyName}}</mat-label>
+            </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.siret" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>N° Siret</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.siret}}</mat-label>
+            </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.tva" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>N° TVA</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.tva}}</mat-label>
+            </div>
+            <div fxLayout="row" *ngIf="invoiceInfo.client.title" fxLayoutAlign="space-between center">
+                <mat-label fxFlex="50" i18n>Contact Title</mat-label>
+                <mat-label fxFlex="50" i18n>{{invoiceInfo.client.title}}</mat-label>
+            </div>
         </div>
-      </mat-tab>
+    </mat-tab>
     </mat-tab-group>
   </div>
 

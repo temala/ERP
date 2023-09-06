@@ -11,7 +11,7 @@ import { Invoice } from '../model/invoice';
 export class InvoiceService {
 
   constructor(private http: HttpClient, private mapper: InvoiceMapper) { }
-  
+
   find(keyword: string) {
     return this.http.get(`${environment.fakeApiURL}/find-invoices?keyword=${keyword}`).pipe(map(response => this.mapper.Map(response)));
   }
@@ -24,7 +24,7 @@ export class InvoiceService {
     return this.http.get(`${environment.apiURL}/invoices/GetInvoiceDetails?id=${id}`).pipe(map(response => this.mapper.MapInvoice(response)));
   }
 
-  Update(invoice:Invoice){
+  Update(invoice:any){
     return this.http.put(`${environment.apiURL}/invoices?id=${invoice.invoiceId}`,invoice).pipe(map(response => this.mapper.MapInvoice(response)));
   }
 

@@ -1,30 +1,30 @@
 <div class="mat-card-container">
         <div fxLayout="row" fxLayoutAlign="space-around">
-                <div  fxFlex="30" class="me-2">                    
-                        <mat-select matInput (selectionChange)="productSelectionChange($event)">
+                <div  fxFlex="30" class="me-2">
+                        <mat-select matInput    [compareWith]="compareProducts"  *ngIf="products.length > 0" [(ngModel)]="invoiceLine.product" (selectionChange)="productSelectionChange($event)">
                                 <mat-option *ngFor="let selectedProduct of products" [value]="selectedProduct">{{selectedProduct.name}}</mat-option>
                         </mat-select>
                 </div>
-                <div  fxFlex="20">                        
+                <div  fxFlex="20">
                         <input matInput [matDatepicker]="picker" [(ngModel)]="invoiceLine.date">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                 </div>
-                <div fxFlex="5">                      
+                <div fxFlex="5">
                         <input matInput [(ngModel)]="invoiceLine.quantity">
                 </div>
-                <div  fxFlex="5">                       
+                <div  fxFlex="5">
                         <mat-select matInput [(ngModel)]="invoiceLine.unit">
                                 <mat-option *ngFor="let unit of units" [value]="unit">{{unit}}</mat-option>
                         </mat-select>
                 </div>
-                <div fxFlex="10">                       
+                <div fxFlex="10">
                         <input matInput [(ngModel)]="invoiceLine.priceHT">
                 </div>
-                <div fxFlex="10">                      
+                <div fxFlex="10">
                         <input matInput [(ngModel)]="invoiceLine.tva">
                 </div>
-                <div fxFlex="10">                       
+                <div fxFlex="10">
                         <input matInput [ngModel]="invoiceLine.TTC">
                 </div>
         </div>
