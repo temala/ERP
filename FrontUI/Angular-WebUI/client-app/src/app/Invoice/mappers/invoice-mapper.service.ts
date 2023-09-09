@@ -22,6 +22,7 @@ export class InvoiceMapper {
       client:response.client,
       invoiceLines: response.invoiceLines.map(l => {
         let line = new InvoiceLine();
+        line.id=l.id;
         line.product = l.product;
         line.date = new Date(l.date);
         line.quantity = l.quantity;

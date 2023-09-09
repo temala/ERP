@@ -1,6 +1,6 @@
 <mat-card class="m-20 full-height">
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-    <h3>{{selectedInvoice.identifier}} / <b>{{invoiceInfo.client.name}}</b></h3>
+    <h3 *ngIf="invoiceInfo!=undefined">{{selectedInvoice.identifier}} / <b>{{invoiceInfo.client.name}}</b></h3>
     <span class="spacer"></span>
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10">
       <button (click)="onEdit()" mat-flat-button color="primary" class="action">

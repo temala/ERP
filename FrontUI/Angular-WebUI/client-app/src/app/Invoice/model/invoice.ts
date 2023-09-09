@@ -6,11 +6,11 @@ import { InvoiceStatus } from './InvoiceStatus';
 
 export class Invoice implements ISearchable {
 
-        constructor(id: string) {
+        constructor(id: number) {
                 this.id = id;
         }
 
-        id: string;
+        id: number;
         invoiceId!: string;
         billingDate!: Date;
         dueDate: number =45;

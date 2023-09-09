@@ -32,9 +32,14 @@ public class InvoicesController : ApiControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<Invoice>> Update([FromQuery] int id, UpdateInvoiceCommand command)
+    public async Task<ActionResult<InvoiceListItemDto>> Update([FromQuery] int id, UpdateInvoiceCommand command)
     {
-        if (id != command.Id)
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState.SelectMany(x => x.Value.Errors.Select(p => p.ErrorMessage)).ToList();
+            return BadRequest(errors);
+        }
+        if (id != command.Id )
         {
             return BadRequest();
         }

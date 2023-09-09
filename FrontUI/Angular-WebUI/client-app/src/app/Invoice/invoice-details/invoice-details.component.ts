@@ -21,11 +21,11 @@ export class InvoiceDetailsComponent implements OnInit , OnChanges{
   displayedColumns: string[] = ['description', 'date', 'qte', 'unit', 'priceHT', 'tva', 'priceTTC'];
 
   public get totalHT(): number {
-    return this.invoiceInfo.invoiceLines.map(l => l.product.priceHT).reduce((x, y) => x + y);
+    return this.invoiceInfo.invoiceLines.map(l => l.product.priceHT * l.quantity).reduce((x, y) => x + y);
   }
 
   public get tva(): number {
-    return this.invoiceInfo.invoiceLines.map(l => (l.product.priceHT * l.product.tva) / 100).reduce((x, y) => x + y);
+    return this.invoiceInfo.invoiceLines.map(l => (l.product.priceHT* l.quantity * l.product.tva) / 100).reduce((x, y) => x + y);
   }
 
   public get total(): number {

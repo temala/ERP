@@ -20,19 +20,19 @@ export class InvoiceService {
     return this.http.get(`${environment.apiURL}/invoices?PageNumber=1&PageSize=10`).pipe(map(response => this.mapper.Map(response)));
   }
 
-  getInvoice(id: string) {
+  getInvoice(id: number) {
     return this.http.get(`${environment.apiURL}/invoices/GetInvoiceDetails?id=${id}`).pipe(map(response => this.mapper.MapInvoice(response)));
   }
 
-  Update(invoice:any){
-    return this.http.put(`${environment.apiURL}/invoices?id=${invoice.invoiceId}`,invoice).pipe(map(response => this.mapper.MapInvoice(response)));
+  Update(invoice:Invoice){
+    return this.http.put(`${environment.apiURL}/invoices?id=${invoice.id}`,invoice).pipe(map(response => this.mapper.MapInvoice(response)));
   }
 
   Add(invoice:Invoice){
     return this.http.post(`${environment.apiURL}/invoices`,invoice).pipe(map(response => this.mapper.MapInvoiceListItem(response)));
   }
 
-  Delete(id:string){
+  Delete(id:number){
     return this.http.delete(`${environment.apiURL}/invoices/${id}`);
   }
 }

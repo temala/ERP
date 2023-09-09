@@ -40,6 +40,7 @@ export class InvoiceUpdateComponent implements OnInit {
   lines:InvoiceLine[] = [];
 
   invoice!:Invoice;
+  Id!:number;
 
   ngOnInit(): void {
     this.updateInvoiceForm = this.formBuilder.group({
@@ -50,12 +51,12 @@ export class InvoiceUpdateComponent implements OnInit {
       client: [null, [Validators.required]],
     });
 
-    const id = this.router.snapshot.paramMap.get('id');
-    if (id) {
-      this.invoiceServices.getInvoice(id).subscribe(invoice => {
+    this.Id = parseInt(this.router.snapshot.paramMap.get('id')??"");
+    if (this.Id) {
+      this.invoiceServices.getInvoice(this.Id).subscribe(invoice => {
         this.invoice=invoice;
         this.updateInvoiceForm.setValue({
-          invoiceId: invoice.id,
+          invoiceId: invoice.invoiceId,
           billingDate: new Date(invoice.billingDate),
           dueDate: invoice.dueDate,
           client:  invoice.client.id,
@@ -79,17 +80,20 @@ export class InvoiceUpdateComponent implements OnInit {
   UpdateInvoice(form: UntypedFormGroup) {
     const selectedClientId = form.value.client;
     const selectedClient = this.clients.find(client => client.id === selectedClientId);
+if(this.Id)
+{
+  let invoice = new Invoice(this.Id);
+  invoice.invoiceId = form.value.invoiceId;
+  invoice.billingDate = form.value.billingDate;
+  invoice.dueDate = form.value.dueDate;
+  invoice.message = form.value.message??"";
+  invoice.client = new Client(Number(selectedClient?.id), selectedClient?.name || '')
+  invoice.invoiceLines = this.lines;
 
-    this.invoiceServices.Update({
-      id:this.invoice.id,
-      identifier: this.invoice.invoiceId,
-      billingDate: form.value.billingDate,
-      dueDate: form.value.dueDate,
-      message: form.value.message,
-      client: new Client(Number(selectedClient?.id), selectedClient?.name || ''),
-      invoiceLines:this.lines,
-    }).subscribe(invoiceListItem => {
-      this.eventsServices.InvoiceUpdated.emit(invoiceListItem);
-    });
+  this.invoiceServices.Update(invoice).subscribe(invoiceListItem => {
+    this.eventsServices.InvoiceUpdated.emit(invoiceListItem);
+  });
+}
+
   }
 }

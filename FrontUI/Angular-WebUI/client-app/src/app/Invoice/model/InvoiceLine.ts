@@ -3,6 +3,7 @@ import { unit } from "./unit";
 
 
 export class InvoiceLine {
+        id!:number;
         product!: Product;
         date!: Date;
         quantity: number = 0;
@@ -41,6 +42,6 @@ export class InvoiceLine {
         public set tva(v: number) {
                 if (this.product) {
                         this.product.tva = v;
-                }                
+                }
         }
 }

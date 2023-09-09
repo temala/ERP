@@ -7,7 +7,7 @@ public class UpdateInvoiceCommandValidator : AbstractValidator<UpdateInvoiceComm
 {
     public UpdateInvoiceCommandValidator()
     {
-        RuleFor(v => v.Identifier)
+        RuleFor(v => v.invoiceId)
             .MaximumLength(200)
             .NotEmpty();
         

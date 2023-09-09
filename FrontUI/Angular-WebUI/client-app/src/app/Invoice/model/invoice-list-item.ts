@@ -6,7 +6,7 @@ import { InvoiceStatus } from './InvoiceStatus';
 
 export class InvoiceListItem implements ISearchable {
 
-        id: string;
+        id: number;
         identifier: string;
         date: Date;
         dueDate: Date;
@@ -14,7 +14,7 @@ export class InvoiceListItem implements ISearchable {
         totalTTc: number;
         status: InvoiceStatus;
 
-        constructor(id: string, identifier: string, client: Client, date: Date, dueDate: Date, totalTTC: number,status:InvoiceStatus) {
+        constructor(id: number, identifier: string, client: Client, date: Date, dueDate: Date, totalTTC: number,status:InvoiceStatus) {
                 this.id = id;
                 this.identifier = identifier;
                 this.date = date;
