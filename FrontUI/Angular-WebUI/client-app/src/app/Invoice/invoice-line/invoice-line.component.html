@@ -27,6 +27,11 @@
                 <div fxFlex="10">
                         <input matInput [ngModel]="invoiceLine.TTC">
                 </div>
+                 <div fxFlex="10">
+                  <a (click)="onDelete(invoiceLine)" mat-flat-button color="secondary">
+                    <mat-icon class="mr-2">delete</mat-icon>
+                  </a>
+                </div>
         </div>
 
 </div>

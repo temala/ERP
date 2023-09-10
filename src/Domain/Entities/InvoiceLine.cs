@@ -11,7 +11,4 @@ public class InvoiceLine : BaseAuditableEntity
     public DateTime Date { get; set; }
 
     public int Quantity { get; set; }
-    
-    [JsonIgnore]
-    public List<Invoice> Invoices { get; set; }
 }

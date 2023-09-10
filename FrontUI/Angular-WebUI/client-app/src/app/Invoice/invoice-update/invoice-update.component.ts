@@ -69,8 +69,14 @@ export class InvoiceUpdateComponent implements OnInit {
 
     this.clientServices.getlist().subscribe(clients => {
       this.clients = clients;
-
     });
+
+    this.eventsServices.InvoiceLineDeleted.subscribe(line => {
+      this.DeleteLine(line);
+    });
+  }
+  DeleteLine(line: InvoiceLine) {
+    this.lines = this.lines.filter(l => l.id !== line.id);
   }
 
   AddNewLine() {

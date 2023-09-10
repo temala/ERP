@@ -47,13 +47,13 @@ public class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand,
             ClientId = request.Client.Id,
             InvoiceLines = request.InvoiceLines.Select(l=>new InvoiceLine(){ProductId = l.Product.Id,Date = l.Date,Quantity = l.Quantity}).ToList()
         };
-
-        entity.AddDomainEvent(new InvoiceCreatedEvent(entity));
-
+        
         _context.Invoices.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
-
+        
+        entity.AddDomainEvent(new InvoiceCreatedEvent(entity));
+        
         var result =await _context.Invoices.Include(i=>i.Client).Include(i => i.InvoiceLines).ThenInclude(l => l.Product).FirstAsync(i => i.Id == entity.Id);
             
         return new InvoiceListItemDto() {Id = entity.Id,

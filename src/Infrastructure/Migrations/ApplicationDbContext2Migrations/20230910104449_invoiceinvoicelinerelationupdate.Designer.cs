@@ -4,6 +4,7 @@ using ERP.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERP.Infrastructure.Migrations.ApplicationDbContext2Migrations
 {
     [DbContext(typeof(ApplicationMigrationDbContext))]
-    partial class ApplicationDbContext2ModelSnapshot : ModelSnapshot
+    [Migration("20230910104449_invoiceinvoicelinerelationupdate")]
+    partial class invoiceinvoicelinerelationupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

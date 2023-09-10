@@ -1,3 +1,4 @@
+import { InvoiceEventsService } from './../services/invoice-events.service';
 import { Product } from '../model/product';
 import { unit } from "../model/unit";
 import { InvoiceLine } from "../model/InvoiceLine";
@@ -19,7 +20,7 @@ export class InvoiceLineComponent implements OnInit, AfterViewInit {
 
   units: unit[] = Object.values(unit);
 
-  constructor(private missionServices: MissionService, private formBuilder: UntypedFormBuilder) {
+  constructor(private missionServices: MissionService, private formBuilder: UntypedFormBuilder, private eventService:InvoiceEventsService) {
 
   }
 
@@ -64,6 +65,10 @@ export class InvoiceLineComponent implements OnInit, AfterViewInit {
 
   compareProducts(p1: Product, p2: Product): boolean {
     return p1 && p2 ? p1.id === p2.id : p1 === p2;
-}
+  }
+
+  onDelete(invoiceLine: InvoiceLine) {
+    this.eventService.InvoiceLineDeleted.emit(invoiceLine);
+  }
 
 }

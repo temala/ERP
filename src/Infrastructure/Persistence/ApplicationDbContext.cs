@@ -25,13 +25,7 @@ public class ApplicationMigrationDbContext: DbContext
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         builder.Entity<Invoice>()
-            .HasMany(i => i.InvoiceLines)
-            .WithMany(l => l.Invoices)
-            .UsingEntity<Dictionary<string, Object>>(
-                "InvoiceLinesMap",
-                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.Cascade),
-                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.Cascade)
-            );
+            .HasMany(i => i.InvoiceLines);
         base.OnModelCreating(builder);
     }
 
@@ -70,13 +64,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         builder.Entity<Invoice>()
-            .HasMany(i => i.InvoiceLines)
-            .WithMany(l => l.Invoices)
-            .UsingEntity<Dictionary<string, Object>>(
-                "InvoiceLinesMap",
-                x => x.HasOne<InvoiceLine>().WithMany().OnDelete(DeleteBehavior.Cascade),
-                x => x.HasOne<Invoice>().WithMany().OnDelete(DeleteBehavior.Cascade)
-                );
+            .HasMany(i => i.InvoiceLines);
         base.OnModelCreating(builder);
     }
 
