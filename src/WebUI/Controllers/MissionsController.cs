@@ -6,8 +6,8 @@ using ERP.Application.Missions.Commands.UpdateMission;
 using ERP.Application.Missions.Queries.GetMissionsWithPagination;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
-using Microsoft.Extensions.DependencyInjection.Missions.Queries.GetMissionById;
+using ERP.Application.Missions.Commands.CreateMission;
+using ERP.Application.Missions.Queries.GetMissionById;
 
 namespace ERP.WebUI.Controllers;
 

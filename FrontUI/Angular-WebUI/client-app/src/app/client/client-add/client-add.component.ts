@@ -50,9 +50,14 @@ export class ClientAddComponent implements OnInit {
       postalCode: form.value.postalCode,
       town: form.value.town,
       country: form.value.country,
-    }).subscribe(result => {
-      this.dialogRef.close();
-      this.clientEventsServices.ClientCreated.emit(result);
+    }).subscribe({
+      next: (result) => {
+        this.dialogRef.close();
+        this.clientEventsServices.ClientCreated.emit(result);
+      },
+      error: (err) => {
+        console.error('Failed to create client:', err);
+      }
     });
   }
 

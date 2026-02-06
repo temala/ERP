@@ -1,5 +1,5 @@
 import { craDay } from './../model/cra';
-import { Component, Input, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ import { CraService } from '../services/cra.service';
   styleUrls: ['./cra-details.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CraDetailsComponent implements OnInit {
+export class CraDetailsComponent implements OnInit, OnChanges {
 
   @ViewChild(MatCalendar, { static: false }) calendar!: MatCalendar<Date>;
   @Input() selectedCra!: CraListItem;
@@ -39,27 +39,36 @@ export class CraDetailsComponent implements OnInit {
     if (this.selectedCra)
       this.craServices.getCra(this.selectedCra.id).subscribe(craResult => {
         this.craInfo = craResult;
-        this.selectedPeriod.setMonth(craResult.month - 1);
-        this.selectedPeriod.setFullYear(craResult.year);
-        this.calendar.updateTodaysDate();
+        this.selectedPeriod = new Date(craResult.year, craResult.month - 1, 1);
+        if (this.calendar) {
+          this.calendar.updateTodaysDate();
+        }
       });
   }
 
   onEdit() {
-    this.craServices.Update(this.craInfo).subscribe(craListItem => {
-      this.eventsServices.CraUpdated.emit(craListItem);
+    this.craServices.Update(this.craInfo).subscribe({
+      next: (craListItem) => {
+        this.eventsServices.CraUpdated.emit(craListItem);
+      },
+      error: (err) => {
+        console.error('Failed to save CRA:', err);
+      }
     });
   }
 
   onPrint() {
-    this.craServices.Print(this.craInfo.id).subscribe(data => {
-      var blob = new Blob([data as BlobPart], { type: 'application/pdf' });
-
-      var downloadURL = window.URL.createObjectURL(data as Blob);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = "CRA.pdf";
-      link.click();
+    this.craServices.Print(this.craInfo.id).subscribe({
+      next: (data) => {
+        var downloadURL = window.URL.createObjectURL(data as Blob);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "CRA.pdf";
+        link.click();
+      },
+      error: (err) => {
+        console.error('Failed to print CRA:', err);
+      }
     });
   }
 
@@ -73,7 +82,11 @@ export class CraDetailsComponent implements OnInit {
   }
 
   updateItem(cra: Cra) {
-
+    this.craInfo = cra;
+    this.selectedPeriod = new Date(cra.year, cra.month - 1, 1);
+    if (this.calendar) {
+      this.calendar.updateTodaysDate();
+    }
   }
 
   private dateExists(event: Date) {

@@ -1,7 +1,6 @@
-﻿using ERP.Application.Missions.Commands.UpdateMission;
 using FluentValidation;
 
-namespace ERP.Application.Clients.Commands.UpdateClient;
+namespace ERP.Application.Missions.Commands.UpdateMission;
 
 public class UpdateMissionCommandValidator : AbstractValidator<UpdateMissionCommand>
 {
@@ -10,13 +9,11 @@ public class UpdateMissionCommandValidator : AbstractValidator<UpdateMissionComm
         RuleFor(v => v.Name)
             .MaximumLength(200)
             .NotEmpty();
-        
+
         RuleFor(v => v.PriceHT)
-            .GreaterThan(0)
-            .NotEmpty();
-        
+            .GreaterThan(0);
+
         RuleFor(v => v.Tva)
-            .GreaterThan(0)
-            .NotEmpty();
+            .GreaterThan(0);
     }
 }

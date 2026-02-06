@@ -68,9 +68,14 @@ export class ClientUpdateComponent implements OnInit {
       postalCode: form.value.postalCode,
       town: form.value.town,
       country: form.value.country,
-    }).subscribe(clientListItem=>{
-      this.dialogRef.close();
-      this.eventsServices.ClientUpdated.emit(clientListItem);
+    }).subscribe({
+      next: (clientListItem) => {
+        this.dialogRef.close();
+        this.eventsServices.ClientUpdated.emit(clientListItem);
+      },
+      error: (err) => {
+        console.error('Failed to update client:', err);
+      }
     });
   }
 }

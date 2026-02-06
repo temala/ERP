@@ -1,11 +1,11 @@
-﻿using FluentValidation;
+using FluentValidation;
 
-namespace ERP.Application.Clients.Queries.GetClientsWithPagination;
+namespace ERP.Application.CraList.Queries.GetCraListWithPagination;
 
 // ReSharper disable once UnusedType.Global
-public class GetCrasWithPaginationQueryValidator : AbstractValidator<GetCrasWithPaginationQuery>
+public class GetCraListWithPaginationQueryValidator : AbstractValidator<GetCraListWithPaginationQuery>
 {
-    public GetCrasWithPaginationQueryValidator()
+    public GetCraListWithPaginationQueryValidator()
     {
         RuleFor(x => x.PageNumber)
             .GreaterThanOrEqualTo(1).WithMessage("PageNumber at least greater than or equal to 1.");

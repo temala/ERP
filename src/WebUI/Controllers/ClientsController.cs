@@ -6,7 +6,7 @@ using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection.Clients.Queries.GetClientById;
+using ERP.Application.Clients.Queries.GetClientById;
 
 namespace ERP.WebUI.Controllers;
 

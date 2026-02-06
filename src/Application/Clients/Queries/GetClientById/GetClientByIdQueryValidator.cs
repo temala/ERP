@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Clients.Queries.GetClientById;
+namespace ERP.Application.Clients.Queries.GetClientById;
 
 // ReSharper disable once UnusedType.Global
 public class GetClientByIdQueryValidator : AbstractValidator<GetClientByIdQuery>

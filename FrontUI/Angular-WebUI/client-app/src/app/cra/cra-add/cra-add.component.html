@@ -24,6 +24,6 @@
         </div>
         <mat-divider></mat-divider>
         <div class="action-padding">
-                <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+                <button mat-flat-button color="primary" type="submit" [disabled]="addCraForm.invalid" i18n>Save</button>
         </div>
 </form>

@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using iTextSharp.text;
 
-namespace Microsoft.Extensions.DependencyInjection.FileGenerator;
+namespace ERP.Infrastructure.FileGenerator;
 
 public static class PdfTheme
 {

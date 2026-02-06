@@ -13,6 +13,7 @@ export class ClientInvoiceStatusPipe implements PipeTransform {
       case ClientInvoiceStatus.Sent: return $localize`Sent`;
       case ClientInvoiceStatus.Late: return $localize`Late`;
       case ClientInvoiceStatus.Paid: return $localize`Paid`;
+      default: return $localize`Unknown`;
     }
   }
 }

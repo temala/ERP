@@ -1,11 +1,10 @@
-using ERP.Application.Clients.EventHandlers;
 using ERP.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.EventHandlers;
+namespace ERP.Application.Missions.EventHandlers;
 
-public class MissionCreatedEventHandler: INotificationHandler<ClientCreatedEvent>
+public class MissionCreatedEventHandler: INotificationHandler<MissionCreatedEvent>
 {
     private readonly ILogger<MissionCreatedEventHandler> _logger;
 
@@ -14,7 +13,7 @@ public class MissionCreatedEventHandler: INotificationHandler<ClientCreatedEvent
         _logger = logger;
     }
 
-    public Task Handle(ClientCreatedEvent notification, CancellationToken cancellationToken)
+    public Task Handle(MissionCreatedEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation("ERP Domain Event: {DomainEvent}", notification.GetType().Name);
 

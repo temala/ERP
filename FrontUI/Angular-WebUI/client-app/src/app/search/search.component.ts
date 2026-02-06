@@ -1,4 +1,4 @@
-import { debounceTime, distinctUntilChanged, filter, fromEvent, tap } from 'rxjs';
+import { debounceTime, fromEvent, tap } from 'rxjs';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 @Component({
@@ -21,10 +21,8 @@ export class SearchComponent implements AfterViewInit {
     // server-side search
     fromEvent(this.inputSearch.nativeElement, 'keyup')
       .pipe(
-        filter(Boolean),
         debounceTime(150),
-        distinctUntilChanged(),
-        tap((text) => {
+        tap(() => {
           this.searching.emit(this.keyword);
         })
       )

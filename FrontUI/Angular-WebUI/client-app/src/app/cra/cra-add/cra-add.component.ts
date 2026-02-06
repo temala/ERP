@@ -32,18 +32,14 @@ export class CraAddComponent implements OnInit {
     this.addCraForm = this.formBuilder.group({
       period: [this.periods[1], [Validators.required]],
       days: [null],
-      mission: [null]
+      mission: [null, [Validators.required]]
     });
 
     this.missionServices.getlist().subscribe(missions => {
       this.missions = missions;
-
-      this.addCraForm = this.formBuilder.group({
-        period: [this.periods[1], [Validators.required]],       
-        days: [null],
-        mission: [this.missions.length === 1 ? this.missions[0] : null]
-      });
-
+      if (this.missions.length === 1) {
+        this.addCraForm.patchValue({ mission: this.missions[0] });
+      }
     });
   }
 
@@ -61,9 +57,14 @@ export class CraAddComponent implements OnInit {
       days: [],
       mission:form.value.mission,
       missionId: form.value.mission.id,
-    }).subscribe(result => {
-      this.dialogRef.close();
-      this.craEventsServices.CraCreated.emit(result);
+    }).subscribe({
+      next: (result) => {
+        this.dialogRef.close();
+        this.craEventsServices.CraCreated.emit(result);
+      },
+      error: (err) => {
+        console.error('Failed to create CRA:', err);
+      }
     });
   }
 }

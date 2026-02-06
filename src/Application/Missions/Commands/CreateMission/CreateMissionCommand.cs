@@ -1,22 +1,22 @@
-using ERP.Application.Clients.Commands.CreateClient;
-using ERP.Application.Clients.Queries.GetClientsWithPagination;
 using ERP.Application.Common.Interfaces;
 using ERP.Application.Missions.Queries.GetMissionsWithPagination;
 using ERP.Domain.Entities;
 using ERP.Domain.Events;
 using MediatR;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
+namespace ERP.Application.Missions.Commands.CreateMission;
 
 public class CreateMissionCommand: IRequest<MissionListItemDto>
 {
     public string Name { get; set; }
 
     public decimal? Tva { get; set; }
-    
+
     public decimal? PriceHT { get; set; }
-    
-    public Client Client { get; set; }
+
+    public int ClientId { get; set; }
+
+    public Client? Client { get; set; }
 }
 
 public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand, MissionListItemDto>
@@ -30,12 +30,14 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
     public async Task<MissionListItemDto> Handle(CreateMissionCommand request, CancellationToken cancellationToken)
     {
+        var clientId = request.ClientId > 0 ? request.ClientId : request.Client?.Id ?? 0;
+
         var entity = new Mission
         {
             Name = request.Name,
             Tva = request.Tva,
             PriceHT = request.PriceHT,
-            ClientId = request.Client.Id,
+            ClientId = clientId,
         };
 
         entity.AddDomainEvent(new MissionCreatedEvent(entity));
@@ -44,6 +46,6 @@ public class CreateMissionCommandHandler : IRequestHandler<CreateMissionCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name,Tva = entity.Tva,PriceHT = entity.PriceHT, Client=request.Client};
+        return new MissionListItemDto() {Id = entity.Id, Name = entity.Name, Tva = entity.Tva, PriceHT = entity.PriceHT, Client = request.Client};
     }
 }

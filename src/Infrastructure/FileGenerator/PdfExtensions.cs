@@ -2,7 +2,7 @@ using ERP.Domain.Entities;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-namespace Microsoft.Extensions.DependencyInjection.FileGenerator;
+namespace ERP.Infrastructure.FileGenerator;
 
 public static class PdfExtensions
 {

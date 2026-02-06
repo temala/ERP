@@ -8,6 +8,8 @@
       <mat-form-field appearance="standard">
         <mat-label i18n>Name</mat-label>
         <input matInput formControlName="name">
+        <mat-error *ngIf="addClientForm.get('name')?.hasError('required')" i18n>Name is required</mat-error>
+        <mat-error *ngIf="addClientForm.get('name')?.hasError('maxlength')" i18n>Name must be 70 characters or less</mat-error>
       </mat-form-field>
     </div>
 
@@ -85,6 +87,6 @@
   </div>
   <mat-divider></mat-divider>
   <div class="action-padding">
-    <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="addClientForm.invalid" i18n>Save</button>
   </div>
 </form>
