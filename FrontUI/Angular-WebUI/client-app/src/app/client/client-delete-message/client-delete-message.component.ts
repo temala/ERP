@@ -18,10 +18,14 @@ export class ClientDeleteMessageComponent implements OnInit {
   }
 
   onDelete() {
-    this.clientServices.Delete(this.clientToDelete.id).subscribe(_ => {
+    this.clientServices.Delete(this.clientToDelete.id).subscribe({
+      next: () => {
         this.eventsServices.ClientDeleted.emit(this.clientToDelete);
         this.dialogRef.close();
+      },
+      error: (err) => {
+        console.error('Failed to delete client:', err);
       }
-    );
+    });
   }
 }

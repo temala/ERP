@@ -1,7 +1,6 @@
-using ERP.Application.Clients.Commands.CreateClient;
 using FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection.Missions.Commands.CreateMission;
+namespace ERP.Application.Missions.Commands.CreateMission;
 
 public class CreateMissionCommandValidator: AbstractValidator<CreateMissionCommand>
 {
@@ -10,13 +9,11 @@ public class CreateMissionCommandValidator: AbstractValidator<CreateMissionComma
         RuleFor(v => v.Name)
             .MaximumLength(200)
             .NotEmpty();
-        
+
         RuleFor(v => v.PriceHT)
-            .GreaterThan(0)
-            .NotEmpty();
-        
+            .GreaterThan(0);
+
         RuleFor(v => v.Tva)
-            .GreaterThan(0)
-            .NotEmpty();
+            .GreaterThan(0);
     }
 }

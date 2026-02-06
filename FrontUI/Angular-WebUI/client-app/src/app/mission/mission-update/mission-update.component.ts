@@ -54,9 +54,14 @@ export class MissionUpdateComponent implements OnInit {
       priceHT: form.value.priceHT,
       tva: form.value.tva,
       client:new Client(form.value.client.id,form.value.client.name),   
-    }).subscribe(missionListItem=>{
-      this.dialogRef.close();
-      this.eventsServices.MissionUpdated.emit(missionListItem);
+    }).subscribe({
+      next: (missionListItem) => {
+        this.dialogRef.close();
+        this.eventsServices.MissionUpdated.emit(missionListItem);
+      },
+      error: (err) => {
+        console.error('Failed to update mission:', err);
+      }
     });
   }
 }

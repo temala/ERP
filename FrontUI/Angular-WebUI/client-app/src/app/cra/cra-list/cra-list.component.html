@@ -27,7 +27,7 @@
                <!-- Name Column -->
                <ng-container matColumnDef="mission">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Mission</th>
-                <td mat-cell *matCellDef="let element"> {{element.mission.name}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.mission?.name}} </td>
               </ng-container>
       
              

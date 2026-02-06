@@ -25,7 +25,7 @@ export class MissionAddComponent implements OnInit {
   ngOnInit(): void {
     this.addMissionForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.maxLength(70)]],    
-      priceHT: [null,[Validators.required, Validators.pattern('/^\d+[\.]\d{2}$/i')]],
+      priceHT: [null,[Validators.required, Validators.pattern(/^\d+\.?\d{0,2}$/)]],
       tva: [null],
       client:[null]     
     });
@@ -42,9 +42,14 @@ export class MissionAddComponent implements OnInit {
       priceHT: form.value.priceHT,
       tva: form.value.tva,
       client:new Client(form.value.client.id,form.value.client.name),      
-    }).subscribe(result => {
-      this.dialogRef.close();
-      this.missionEventsServices.MissionCreated.emit(result);
+    }).subscribe({
+      next: (result) => {
+        this.dialogRef.close();
+        this.missionEventsServices.MissionCreated.emit(result);
+      },
+      error: (err) => {
+        console.error('Failed to create mission:', err);
+      }
     });
   }
 

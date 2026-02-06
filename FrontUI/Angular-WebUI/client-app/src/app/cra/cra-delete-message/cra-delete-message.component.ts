@@ -18,11 +18,15 @@ export class CraDeleteMessageComponent implements OnInit {
   }
 
   onDelete() {
-    this.craServices.Delete(this.craToDelete.id).subscribe(_ => {
+    this.craServices.Delete(this.craToDelete.id).subscribe({
+      next: () => {
         this.eventsServices.CraDeleted.emit(this.craToDelete);
         this.dialogRef.close();
+      },
+      error: (err) => {
+        console.error('Failed to delete CRA:', err);
       }
-    );
+    });
   }
 
 }

@@ -8,6 +8,7 @@
       <mat-form-field appearance="standard">
         <mat-label i18n>Name</mat-label>
         <input matInput formControlName="name">
+        <mat-error *ngIf="addMissionForm.get('name')?.hasError('required')" i18n>Name is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard">
         <mat-label i18n>Client</mat-label>
@@ -21,6 +22,8 @@
       <mat-form-field appearance="standard">
         <mat-label i18n>Price H.T</mat-label>
         <input matInput formControlName="priceHT">
+        <mat-error *ngIf="addMissionForm.get('priceHT')?.hasError('required')" i18n>Price is required</mat-error>
+        <mat-error *ngIf="addMissionForm.get('priceHT')?.hasError('pattern')" i18n>Enter a valid price (e.g. 100.50)</mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard">
         <mat-label i18n>TVA %</mat-label>
@@ -30,6 +33,6 @@
   </div>
   <mat-divider></mat-divider>
   <div class="action-padding">
-    <button mat-flat-button color="primary" type="submit" i18n>Save</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="addMissionForm.invalid" i18n>Save</button>
   </div>
 </form>

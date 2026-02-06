@@ -1,9 +1,8 @@
-using AutoMapper;
 using ERP.Application.Common.Interfaces;
 using ERP.Domain.Entities;
 using MediatR;
 
-namespace Microsoft.Extensions.DependencyInjection.Clients.Queries.GetClientById;
+namespace ERP.Application.Clients.Queries.GetClientById;
 
 
 public record GetClientByIdQuery : IRequest<Client>
@@ -15,12 +14,10 @@ public record GetClientByIdQuery : IRequest<Client>
 public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Client?>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public GetClientByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetClientByIdQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<Client?> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)

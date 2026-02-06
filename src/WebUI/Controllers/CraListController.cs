@@ -9,7 +9,7 @@ using ERP.Application.CraList.Queries.GetCraById;
 using ERP.Application.CraList.Queries.PrintCraById;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
+using ERP.Application.CraList.Queries.GetCraListWithPagination;
 
 namespace ERP.WebUI.Controllers;
 
@@ -17,19 +17,19 @@ namespace ERP.WebUI.Controllers;
 public class CraListController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<CraListItemDto>>> GetCraListWithPagination([FromQuery] GetCrasWithPaginationQuery query)
+    public async Task<ActionResult<PaginatedList<CraListItemDto>>> GetCraListWithPagination([FromQuery] GetCraListWithPaginationQuery query)
     {
         return await Mediator.Send(query);
     }
-    
+
     [HttpGet("GetCraDetails")]
     public async Task<ActionResult<Cra>> GetCraDetails([FromQuery] GetCraByIdQuery query)
     {
         return await Mediator.Send(query);
     }
-    
+
     [HttpGet("Print")]
-    public async Task<FileResult> GetCraDetails([FromQuery] PrintCraByIdQuery query)
+    public async Task<FileResult> PrintCra([FromQuery] PrintCraByIdQuery query)
     {
         var stream = await Mediator.Send(query);
         

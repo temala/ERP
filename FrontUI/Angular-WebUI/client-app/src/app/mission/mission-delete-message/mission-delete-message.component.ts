@@ -18,11 +18,15 @@ export class MissionDeleteMessageComponent implements OnInit {
   }
 
   onDelete() {
-    this.missionServices.Delete(this.missionToDelete.id).subscribe(_ => {
+    this.missionServices.Delete(this.missionToDelete.id).subscribe({
+      next: () => {
         this.eventsServices.MissionDeleted.emit(this.missionToDelete);
         this.dialogRef.close();
+      },
+      error: (err) => {
+        console.error('Failed to delete mission:', err);
       }
-    );
+    });
   }
 
 }

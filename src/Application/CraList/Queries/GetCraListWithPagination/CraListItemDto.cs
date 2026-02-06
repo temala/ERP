@@ -1,8 +1,7 @@
-using System.Collections.ObjectModel;
 using ERP.Application.Common.Mappings;
 using ERP.Domain.Entities;
 
-namespace Microsoft.Extensions.DependencyInjection.Cras.Queries.GetCrasWithPagination;
+namespace ERP.Application.CraList.Queries.GetCraListWithPagination;
 
 public class CraListItemDto : IMapFrom<Cra>
 {

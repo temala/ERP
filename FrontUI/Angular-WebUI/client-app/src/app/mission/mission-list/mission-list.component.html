@@ -27,7 +27,7 @@
                <!-- Name Column -->
                <ng-container matColumnDef="client">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header i18n> Client</th>
-                <td mat-cell *matCellDef="let element"> {{element.Client.name}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.Client?.name}} </td>
               </ng-container>
       
               <!-- Weight Column -->

@@ -35,6 +35,6 @@
 
         <mat-divider></mat-divider>
         <div class="action-padding">
-                <button mat-flat-button color="primary" type="submit" i18n>Update</button>
+                <button mat-flat-button color="primary" type="submit" [disabled]="updateMissionForm.invalid" i18n>Update</button>
         </div>
 </form>
