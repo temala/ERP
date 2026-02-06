@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ERP.Application.Common.Interfaces;
 using ERP.Application.Common.Mappings;
@@ -12,6 +12,7 @@ public record GetCrasWithPaginationQuery : IRequest<PaginatedList<CraListItemDto
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
+    public string? SearchTerm { get; init; }
 }
 
 // ReSharper disable once UnusedType.Global
@@ -28,7 +29,15 @@ public class GetCrasWithPaginationQueryHandler : IRequestHandler<GetCrasWithPagi
 
     public async Task<PaginatedList<CraListItemDto>> Handle(GetCrasWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.CraList
+        var query = _context.CraList.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
+            var term = request.SearchTerm.ToLower();
+            query = query.Where(c => c.Mission.Name.ToLower().Contains(term));
+        }
+
+        return await query
             .OrderBy(x => x.Month)
             .ProjectTo<CraListItemDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);

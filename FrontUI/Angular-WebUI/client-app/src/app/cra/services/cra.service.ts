@@ -13,7 +13,7 @@ export class CraService {
   constructor(private http: HttpClient, private mapper: CraMapper) { }
   
   find(keyword: string) {
-    return this.http.get(`${environment.fakeApiURL}/find-craList?keyword=${keyword}`).pipe(map(response => this.mapper.Map(response)));
+    return this.http.get(`${environment.apiURL}/craList?PageNumber=1&PageSize=50&SearchTerm=${encodeURIComponent(keyword)}`).pipe(map(response => this.mapper.Map(response)));
   }
 
   getlist() {

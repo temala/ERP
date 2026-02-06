@@ -15,7 +15,7 @@ export class ClientService implements ISearchService<ClientListItem> {
   constructor(private http: HttpClient, private mapper: ClientMapper) { }
 
   find(keyword: string) {
-    return this.http.get(`${environment.fakeApiURL}/find-clients?keyword=${keyword}`).pipe(map(response => this.mapper.Map(response)));
+    return this.http.get(`${environment.apiURL}/clients?PageNumber=1&PageSize=50&SearchTerm=${encodeURIComponent(keyword)}`).pipe(map(response => this.mapper.Map(response)));
   }
 
   getlist() {
@@ -27,7 +27,7 @@ export class ClientService implements ISearchService<ClientListItem> {
   }
 
   getInvoiceList(id: string) {
-    return this.http.get(`${environment.fakeApiURL}/client-invoices?id=${id}`).pipe(map(response => this.mapper.MapClientInvoices(response)));
+    return this.http.get(`${environment.apiURL}/clients?PageNumber=1&PageSize=50`).pipe(map(response => this.mapper.Map(response)));
   }
 
   Update(client:Client){

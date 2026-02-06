@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ERP.Application.Common.Interfaces;
 using ERP.Application.Common.Mappings;
@@ -11,6 +11,7 @@ public record GetMissionsWithPaginationQuery : IRequest<PaginatedList<MissionLis
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
+    public string? SearchTerm { get; init; }
 }
 
 // ReSharper disable once UnusedType.Global
@@ -27,10 +28,17 @@ public class GetMissionsWithPaginationQueryHandler : IRequestHandler<GetMissions
 
     public async Task<PaginatedList<MissionListItemDto>> Handle(GetMissionsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Missions
+        var query = _context.Missions.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
+        {
+            var term = request.SearchTerm.ToLower();
+            query = query.Where(m => m.Name.ToLower().Contains(term));
+        }
+
+        return await query
             .OrderBy(x => x.Name)
             .ProjectTo<MissionListItemDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize)
-            .ConfigureAwait(false);
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

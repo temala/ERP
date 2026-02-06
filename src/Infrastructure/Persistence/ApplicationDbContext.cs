@@ -28,10 +28,8 @@ public class ApplicationMigrationDbContext: DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer("Server=127.0.0.1,1433;Database=ERPDb;User=sa;Password=abcDEF123#;TrustServerCertificate=true;MultipleActiveResultSets=true");
-        }
+        // Connection string is configured via DI in ConfigureServices.
+        // For migrations, use: dotnet ef migrations add <Name> --project src/Infrastructure --startup-project src/WebUI
     }
 }
 public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext

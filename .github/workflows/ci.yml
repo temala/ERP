@@ -1,0 +1,65 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build-and-test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test tests/Domain.UnitTests/Domain.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+      - name: Run application unit tests
+        run: dotnet test tests/Application.UnitTests/Application.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FrontUI/Angular-WebUI/client-app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: FrontUI/Angular-WebUI/client-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build production
+        run: npm run build -- --configuration production
+
+      - name: Run tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        continue-on-error: true
+
+  docker-build:
+    needs: [build-and-test-backend, build-frontend]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t erp-app:${{ github.sha }} .

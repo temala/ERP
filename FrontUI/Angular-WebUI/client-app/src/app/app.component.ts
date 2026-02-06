@@ -19,7 +19,7 @@ export class AppComponent {
     {
       title: $localize `Home`,
       icon: 'home',
-      link: '/home',
+      link: '/client',
     },
     {
       title: $localize `Clients`,

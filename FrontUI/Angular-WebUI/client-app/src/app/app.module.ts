@@ -13,6 +13,8 @@ import {ApiAuthorizationModule} from "../api-authorization/api-authorization.mod
 import {ClientListComponent} from "./client/client-list/client-list.component";
 import { MissionModule } from './mission/mission.module';
 import { CraModule } from './cra/cra.module';
+import { ErrorInterceptor } from './common/error.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -30,10 +32,12 @@ import { CraModule } from './cra/cra.module';
         MissionModule,
         CraModule,
         MaterialModule,
+        MatSnackBarModule,
     ],
     providers: [
         HttpClient,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })
